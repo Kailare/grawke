@@ -157,3 +157,5 @@ export async function setXaiApiKey(key, agentDir) {
         agentDir: resolveAuthAgentDir(agentDir),
     });
 }
+
+// commit 3
