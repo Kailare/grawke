@@ -4,7 +4,7 @@ import { parseDurationMs } from "../../../cli/parse-duration.js";
 import { upsertSharedEnvVar } from "../../../infra/env-file.js";
 import { buildTokenProfileId, validateAnthropicSetupToken } from "../../auth-token.js";
 import { applyGoogleGeminiModelDefault } from "../../google-gemini-model-default.js";
-import { applyAuthProfileConfig, applyKimiCodeConfig, applyMinimaxApiConfig, applyMinimaxConfig, applyMoonshotConfig, applyOpencodeZenConfig, applyOpenrouterConfig, applySyntheticConfig, applyVercelAiGatewayConfig, applyZaiConfig, setAnthropicApiKey, setGeminiApiKey, setKimiCodeApiKey, setMinimaxApiKey, setMoonshotApiKey, setOpencodeZenApiKey, setOpenrouterApiKey, setSyntheticApiKey, setVercelAiGatewayApiKey, setZaiApiKey, } from "../../onboard-auth.js";
+import { applyAuthProfileConfig, applyKimiCodeConfig, applyMinimaxApiConfig, applyMinimaxConfig, applyMoonshotConfig, applyOpencodeZenConfig, applyOpenrouterConfig, applySyntheticConfig, applyVercelAiGatewayConfig, applyXaiConfig, applyZaiConfig, setAnthropicApiKey, setGeminiApiKey, setKimiCodeApiKey, setMinimaxApiKey, setMoonshotApiKey, setOpencodeZenApiKey, setOpenrouterApiKey, setSyntheticApiKey, setVercelAiGatewayApiKey, setXaiApiKey, setZaiApiKey, } from "../../onboard-auth.js";
 import { applyOpenAICodexModelDefault } from "../../openai-codex-model-default.js";
 import { resolveNonInteractiveApiKey } from "../api-keys.js";
 import { shortenHomePath } from "../../../utils.js";
@@ -122,6 +122,26 @@ export async function applyNonInteractiveAuthChoice(params) {
             mode: "api_key",
         });
         return applyZaiConfig(nextConfig);
+    }
+    if (authChoice === "xai-api-key") {
+        const resolved = await resolveNonInteractiveApiKey({
+            provider: "xai",
+            cfg: baseConfig,
+            flagValue: opts.xaiApiKey,
+            flagName: "--xai-api-key",
+            envVar: "XAI_API_KEY",
+            runtime,
+        });
+        if (!resolved)
+            return null;
+        if (resolved.source !== "profile")
+            await setXaiApiKey(resolved.key);
+        nextConfig = applyAuthProfileConfig(nextConfig, {
+            profileId: "xai:default",
+            provider: "xai",
+            mode: "api_key",
+        });
+        return applyXaiConfig(nextConfig);
     }
     if (authChoice === "openai-api-key") {
         const resolved = await resolveNonInteractiveApiKey({

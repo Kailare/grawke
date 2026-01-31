@@ -78,7 +78,7 @@
   "scripts": {
     "dev": "node scripts/run-node.mjs",
     "postinstall": "node scripts/postinstall.js",
-    "prepack": "pnpm build && pnpm ui:build",
+    "prepack": "echo 'dist-only fork, no build step'",
     "docs:list": "node scripts/docs-list.js",
     "docs:bin": "node scripts/build-docs-list.mjs",
     "docs:dev": "cd docs && mint dev",

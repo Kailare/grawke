@@ -29,22 +29,12 @@ export function registerOnboardCommand(program) {
         .option("--accept-risk", "Acknowledge that agents are powerful and full system access is risky (required for --non-interactive)", false)
         .option("--flow <flow>", "Wizard flow: quickstart|advanced|manual")
         .option("--mode <mode>", "Wizard mode: local|remote")
-        .option("--auth-choice <choice>", "Auth: setup-token|claude-cli|token|chutes|openai-codex|openai-api-key|openrouter-api-key|ai-gateway-api-key|moonshot-api-key|kimi-code-api-key|synthetic-api-key|codex-cli|gemini-api-key|zai-api-key|apiKey|minimax-api|minimax-api-lightning|opencode-zen|skip")
+        .option("--auth-choice <choice>", "Auth: xai-api-key|skip")
         .option("--token-provider <id>", "Token provider id (non-interactive; used with --auth-choice token)")
         .option("--token <token>", "Token value (non-interactive; used with --auth-choice token)")
         .option("--token-profile-id <id>", "Auth profile id (non-interactive; default: <provider>:manual)")
         .option("--token-expires-in <duration>", "Optional token expiry duration (e.g. 365d, 12h)")
-        .option("--anthropic-api-key <key>", "Anthropic API key")
-        .option("--openai-api-key <key>", "OpenAI API key")
-        .option("--openrouter-api-key <key>", "OpenRouter API key")
-        .option("--ai-gateway-api-key <key>", "Vercel AI Gateway API key")
-        .option("--moonshot-api-key <key>", "Moonshot API key")
-        .option("--kimi-code-api-key <key>", "Kimi Code API key")
-        .option("--gemini-api-key <key>", "Gemini API key")
-        .option("--zai-api-key <key>", "Z.AI API key")
-        .option("--minimax-api-key <key>", "MiniMax API key")
-        .option("--synthetic-api-key <key>", "Synthetic API key")
-        .option("--opencode-zen-api-key <key>", "OpenCode Zen API key")
+        .option("--xai-api-key <key>", "xAI Grok API key")
         .option("--gateway-port <port>", "Gateway port")
         .option("--gateway-bind <mode>", "Gateway bind: loopback|tailnet|lan|auto|custom")
         .option("--gateway-auth <mode>", "Gateway auth: off|token|password")
@@ -81,17 +71,7 @@ export function registerOnboardCommand(program) {
                 token: opts.token,
                 tokenProfileId: opts.tokenProfileId,
                 tokenExpiresIn: opts.tokenExpiresIn,
-                anthropicApiKey: opts.anthropicApiKey,
-                openaiApiKey: opts.openaiApiKey,
-                openrouterApiKey: opts.openrouterApiKey,
-                aiGatewayApiKey: opts.aiGatewayApiKey,
-                moonshotApiKey: opts.moonshotApiKey,
-                kimiCodeApiKey: opts.kimiCodeApiKey,
-                geminiApiKey: opts.geminiApiKey,
-                zaiApiKey: opts.zaiApiKey,
-                minimaxApiKey: opts.minimaxApiKey,
-                syntheticApiKey: opts.syntheticApiKey,
-                opencodeZenApiKey: opts.opencodeZenApiKey,
+                xaiApiKey: opts.xaiApiKey,
                 gatewayPort: typeof gatewayPort === "number" && Number.isFinite(gatewayPort)
                     ? gatewayPort
                     : undefined,
