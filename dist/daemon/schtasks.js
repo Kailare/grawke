@@ -12,16 +12,16 @@ const formatLine = (label, value) => {
     return `${colorize(rich, theme.muted, `${label}:`)} ${colorize(rich, theme.command, value)}`;
 };
 function resolveTaskName(env) {
-    const override = env.CLAWDBOT_WINDOWS_TASK_NAME?.trim();
+    const override = env.GRAWKE_WINDOWS_TASK_NAME?.trim();
     if (override)
         return override;
-    return resolveGatewayWindowsTaskName(env.CLAWDBOT_PROFILE);
+    return resolveGatewayWindowsTaskName(env.GRAWKE_PROFILE);
 }
 export function resolveTaskScriptPath(env) {
-    const override = env.CLAWDBOT_TASK_SCRIPT?.trim();
+    const override = env.GRAWKE_TASK_SCRIPT?.trim();
     if (override)
         return override;
-    const scriptName = env.CLAWDBOT_TASK_SCRIPT_NAME?.trim() || "gateway.cmd";
+    const scriptName = env.GRAWKE_TASK_SCRIPT_NAME?.trim() || "gateway.cmd";
     const stateDir = resolveGatewayStateDir(env);
     return path.join(stateDir, scriptName);
 }
@@ -185,8 +185,8 @@ export async function installScheduledTask({ env, stdout, programArguments, work
     await fs.mkdir(path.dirname(scriptPath), { recursive: true });
     const taskDescription = description ??
         formatGatewayServiceDescription({
-            profile: env.CLAWDBOT_PROFILE,
-            version: environment?.CLAWDBOT_SERVICE_VERSION ?? env.CLAWDBOT_SERVICE_VERSION,
+            profile: env.GRAWKE_PROFILE,
+            version: environment?.GRAWKE_SERVICE_VERSION ?? env.GRAWKE_SERVICE_VERSION,
         });
     const script = buildTaskScript({
         description: taskDescription,

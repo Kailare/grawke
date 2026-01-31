@@ -7,5 +7,5 @@ export function resolveProviderDefaultAccountId(params) {
         DEFAULT_ACCOUNT_ID);
 }
 export function formatPairingApproveHint(providerId) {
-    return `Approve via: clawdbot pairing list ${providerId} / clawdbot pairing approve ${providerId} <code>`;
+    return `Approve via: grawke pairing list ${providerId} / grawke pairing approve ${providerId} <code>`;
 }

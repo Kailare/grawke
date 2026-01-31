@@ -1,13 +1,13 @@
 {
-  "name": "@clawdbot/zalouser",
+  "name": "@grawke/zalouser",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Zalo Personal Account plugin via zca-cli",
+  "description": "Grawke Zalo Personal Account plugin via zca-cli",
   "dependencies": {
-    "clawdbot": "workspace:*",
+    "grawke": "workspace:*",
     "@sinclair/typebox": "0.34.47"
   },
-  "clawdbot": {
+  "grawke": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/zalouser",
+      "npmSpec": "@grawke/zalouser",
       "localPath": "extensions/zalouser",
       "defaultChoice": "npm"
     }

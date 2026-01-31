@@ -13,7 +13,7 @@ const createEmptyRegistry = () => ({
     commands: [],
     diagnostics: [],
 });
-const REGISTRY_STATE = Symbol.for("clawdbot.pluginRegistryState");
+const REGISTRY_STATE = Symbol.for("grawke.pluginRegistryState");
 const state = (() => {
     const globalState = globalThis;
     if (!globalState[REGISTRY_STATE]) {

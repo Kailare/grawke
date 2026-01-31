@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/copilot-proxy",
+  "name": "@grawke/copilot-proxy",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Copilot Proxy provider plugin",
-  "clawdbot": {
+  "description": "Grawke Copilot Proxy provider plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ]

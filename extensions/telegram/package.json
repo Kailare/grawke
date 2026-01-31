@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/telegram",
+  "name": "@grawke/telegram",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Telegram channel plugin",
-  "clawdbot": {
+  "description": "Grawke Telegram channel plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ]

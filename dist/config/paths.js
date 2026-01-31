@@ -1,26 +1,26 @@
 import os from "node:os";
 import path from "node:path";
 /**
- * Nix mode detection: When CLAWDBOT_NIX_MODE=1, the gateway is running under Nix.
+ * Nix mode detection: When GRAWKE_NIX_MODE=1, the gateway is running under Nix.
  * In this mode:
  * - No auto-install flows should be attempted
  * - Missing dependencies should produce actionable Nix-specific error messages
  * - Config is managed externally (read-only from Nix perspective)
  */
 export function resolveIsNixMode(env = process.env) {
-    return env.CLAWDBOT_NIX_MODE === "1";
+    return env.GRAWKE_NIX_MODE === "1";
 }
 export const isNixMode = resolveIsNixMode();
 /**
  * State directory for mutable data (sessions, logs, caches).
- * Can be overridden via CLAWDBOT_STATE_DIR environment variable.
- * Default: ~/.clawdbot
+ * Can be overridden via GRAWKE_STATE_DIR environment variable.
+ * Default: ~/.grawke
  */
 export function resolveStateDir(env = process.env, homedir = os.homedir) {
-    const override = env.CLAWDBOT_STATE_DIR?.trim();
+    const override = env.GRAWKE_STATE_DIR?.trim();
     if (override)
         return resolveUserPath(override);
-    return path.join(homedir(), ".clawdbot");
+    return path.join(homedir(), ".grawke");
 }
 function resolveUserPath(input) {
     const trimmed = input.trim();
@@ -32,28 +32,28 @@ function resolveUserPath(input) {
     }
     return path.resolve(trimmed);
 }
-export const STATE_DIR_CLAWDBOT = resolveStateDir();
+export const STATE_DIR_GRAWKE = resolveStateDir();
 /**
  * Config file path (JSON5).
- * Can be overridden via CLAWDBOT_CONFIG_PATH environment variable.
- * Default: ~/.clawdbot/clawdbot.json (or $CLAWDBOT_STATE_DIR/clawdbot.json)
+ * Can be overridden via GRAWKE_CONFIG_PATH environment variable.
+ * Default: ~/.grawke/grawke.json (or $GRAWKE_STATE_DIR/grawke.json)
  */
 export function resolveConfigPath(env = process.env, stateDir = resolveStateDir(env, os.homedir)) {
-    const override = env.CLAWDBOT_CONFIG_PATH?.trim();
+    const override = env.GRAWKE_CONFIG_PATH?.trim();
     if (override)
         return resolveUserPath(override);
-    return path.join(stateDir, "clawdbot.json");
+    return path.join(stateDir, "grawke.json");
 }
-export const CONFIG_PATH_CLAWDBOT = resolveConfigPath();
+export const CONFIG_PATH_GRAWKE = resolveConfigPath();
 export const DEFAULT_GATEWAY_PORT = 18789;
 /**
  * Gateway lock directory (ephemeral).
- * Default: os.tmpdir()/clawdbot-<uid> (uid suffix when available).
+ * Default: os.tmpdir()/grawke-<uid> (uid suffix when available).
  */
 export function resolveGatewayLockDir(tmpdir = os.tmpdir) {
     const base = tmpdir();
     const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
-    const suffix = uid != null ? `clawdbot-${uid}` : "clawdbot";
+    const suffix = uid != null ? `grawke-${uid}` : "grawke";
     return path.join(base, suffix);
 }
 const OAUTH_FILENAME = "oauth.json";
@@ -61,12 +61,12 @@ const OAUTH_FILENAME = "oauth.json";
  * OAuth credentials storage directory.
  *
  * Precedence:
- * - `CLAWDBOT_OAUTH_DIR` (explicit override)
- * - `CLAWDBOT_STATE_DIR/credentials` (canonical server/default)
- * - `~/.clawdbot/credentials` (legacy default)
+ * - `GRAWKE_OAUTH_DIR` (explicit override)
+ * - `GRAWKE_STATE_DIR/credentials` (canonical server/default)
+ * - `~/.grawke/credentials` (legacy default)
  */
 export function resolveOAuthDir(env = process.env, stateDir = resolveStateDir(env, os.homedir)) {
-    const override = env.CLAWDBOT_OAUTH_DIR?.trim();
+    const override = env.GRAWKE_OAUTH_DIR?.trim();
     if (override)
         return resolveUserPath(override);
     return path.join(stateDir, "credentials");
@@ -75,7 +75,7 @@ export function resolveOAuthPath(env = process.env, stateDir = resolveStateDir(e
     return path.join(resolveOAuthDir(env, stateDir), OAUTH_FILENAME);
 }
 export function resolveGatewayPort(cfg, env = process.env) {
-    const envRaw = env.CLAWDBOT_GATEWAY_PORT?.trim();
+    const envRaw = env.GRAWKE_GATEWAY_PORT?.trim();
     if (envRaw) {
         const parsed = Number.parseInt(envRaw, 10);
         if (Number.isFinite(parsed) && parsed > 0)

@@ -10,10 +10,10 @@ import { NodeSDK } from "@opentelemetry/sdk-node";
 import { ParentBasedSampler, TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-import type { ClawdbotPluginService, DiagnosticEventPayload } from "clawdbot/plugin-sdk";
-import { onDiagnosticEvent, registerLogTransport } from "clawdbot/plugin-sdk";
+import type { GrawkePluginService, DiagnosticEventPayload } from "grawke/plugin-sdk";
+import { onDiagnosticEvent, registerLogTransport } from "grawke/plugin-sdk";
 
-const DEFAULT_SERVICE_NAME = "clawdbot";
+const DEFAULT_SERVICE_NAME = "grawke";
 
 function normalizeEndpoint(endpoint?: string): string | undefined {
   const trimmed = endpoint?.trim();
@@ -32,7 +32,7 @@ function resolveSampleRate(value: number | undefined): number | undefined {
   return value;
 }
 
-export function createDiagnosticsOtelService(): ClawdbotPluginService {
+export function createDiagnosticsOtelService(): GrawkePluginService {
   let sdk: NodeSDK | null = null;
   let logProvider: LoggerProvider | null = null;
   let stopLogTransport: (() => void) | null = null;
@@ -118,78 +118,78 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         FATAL: 21 as SeverityNumber,
       };
 
-      const meter = metrics.getMeter("clawdbot");
-      const tracer = trace.getTracer("clawdbot");
+      const meter = metrics.getMeter("grawke");
+      const tracer = trace.getTracer("grawke");
 
-      const tokensCounter = meter.createCounter("clawdbot.tokens", {
+      const tokensCounter = meter.createCounter("grawke.tokens", {
         unit: "1",
         description: "Token usage by type",
       });
-      const costCounter = meter.createCounter("clawdbot.cost.usd", {
+      const costCounter = meter.createCounter("grawke.cost.usd", {
         unit: "1",
         description: "Estimated model cost (USD)",
       });
-      const durationHistogram = meter.createHistogram("clawdbot.run.duration_ms", {
+      const durationHistogram = meter.createHistogram("grawke.run.duration_ms", {
         unit: "ms",
         description: "Agent run duration",
       });
-      const contextHistogram = meter.createHistogram("clawdbot.context.tokens", {
+      const contextHistogram = meter.createHistogram("grawke.context.tokens", {
         unit: "1",
         description: "Context window size and usage",
       });
-      const webhookReceivedCounter = meter.createCounter("clawdbot.webhook.received", {
+      const webhookReceivedCounter = meter.createCounter("grawke.webhook.received", {
         unit: "1",
         description: "Webhook requests received",
       });
-      const webhookErrorCounter = meter.createCounter("clawdbot.webhook.error", {
+      const webhookErrorCounter = meter.createCounter("grawke.webhook.error", {
         unit: "1",
         description: "Webhook processing errors",
       });
-      const webhookDurationHistogram = meter.createHistogram("clawdbot.webhook.duration_ms", {
+      const webhookDurationHistogram = meter.createHistogram("grawke.webhook.duration_ms", {
         unit: "ms",
         description: "Webhook processing duration",
       });
-      const messageQueuedCounter = meter.createCounter("clawdbot.message.queued", {
+      const messageQueuedCounter = meter.createCounter("grawke.message.queued", {
         unit: "1",
         description: "Messages queued for processing",
       });
-      const messageProcessedCounter = meter.createCounter("clawdbot.message.processed", {
+      const messageProcessedCounter = meter.createCounter("grawke.message.processed", {
         unit: "1",
         description: "Messages processed by outcome",
       });
-      const messageDurationHistogram = meter.createHistogram("clawdbot.message.duration_ms", {
+      const messageDurationHistogram = meter.createHistogram("grawke.message.duration_ms", {
         unit: "ms",
         description: "Message processing duration",
       });
-      const queueDepthHistogram = meter.createHistogram("clawdbot.queue.depth", {
+      const queueDepthHistogram = meter.createHistogram("grawke.queue.depth", {
         unit: "1",
         description: "Queue depth on enqueue/dequeue",
       });
-      const queueWaitHistogram = meter.createHistogram("clawdbot.queue.wait_ms", {
+      const queueWaitHistogram = meter.createHistogram("grawke.queue.wait_ms", {
         unit: "ms",
         description: "Queue wait time before execution",
       });
-      const laneEnqueueCounter = meter.createCounter("clawdbot.queue.lane.enqueue", {
+      const laneEnqueueCounter = meter.createCounter("grawke.queue.lane.enqueue", {
         unit: "1",
         description: "Command queue lane enqueue events",
       });
-      const laneDequeueCounter = meter.createCounter("clawdbot.queue.lane.dequeue", {
+      const laneDequeueCounter = meter.createCounter("grawke.queue.lane.dequeue", {
         unit: "1",
         description: "Command queue lane dequeue events",
       });
-      const sessionStateCounter = meter.createCounter("clawdbot.session.state", {
+      const sessionStateCounter = meter.createCounter("grawke.session.state", {
         unit: "1",
         description: "Session state transitions",
       });
-      const sessionStuckCounter = meter.createCounter("clawdbot.session.stuck", {
+      const sessionStuckCounter = meter.createCounter("grawke.session.stuck", {
         unit: "1",
         description: "Sessions stuck in processing",
       });
-      const sessionStuckAgeHistogram = meter.createHistogram("clawdbot.session.stuck_age_ms", {
+      const sessionStuckAgeHistogram = meter.createHistogram("grawke.session.stuck_age_ms", {
         unit: "ms",
         description: "Age of stuck sessions",
       });
-      const runAttemptCounter = meter.createCounter("clawdbot.run.attempt", {
+      const runAttemptCounter = meter.createCounter("grawke.run.attempt", {
         unit: "1",
         description: "Run attempts",
       });
@@ -207,7 +207,7 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
               : {}),
           }),
         );
-        const otelLogger = logProvider.getLogger("clawdbot");
+        const otelLogger = logProvider.getLogger("grawke");
 
         stopLogTransport = registerLogTransport((logObj) => {
           const safeStringify = (value: unknown) => {
@@ -265,29 +265,29 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
           }
 
           const attributes: Record<string, string | number | boolean> = {
-            "clawdbot.log.level": logLevelName,
+            "grawke.log.level": logLevelName,
           };
-          if (meta?.name) attributes["clawdbot.logger"] = meta.name;
+          if (meta?.name) attributes["grawke.logger"] = meta.name;
           if (meta?.parentNames?.length) {
-            attributes["clawdbot.logger.parents"] = meta.parentNames.join(".");
+            attributes["grawke.logger.parents"] = meta.parentNames.join(".");
           }
           if (bindings) {
             for (const [key, value] of Object.entries(bindings)) {
               if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-                attributes[`clawdbot.${key}`] = value;
+                attributes[`grawke.${key}`] = value;
               } else if (value != null) {
-                attributes[`clawdbot.${key}`] = safeStringify(value);
+                attributes[`grawke.${key}`] = safeStringify(value);
               }
             }
           }
           if (numericArgs.length > 0) {
-            attributes["clawdbot.log.args"] = safeStringify(numericArgs);
+            attributes["grawke.log.args"] = safeStringify(numericArgs);
           }
           if (meta?.path?.filePath) attributes["code.filepath"] = meta.path.filePath;
           if (meta?.path?.fileLine) attributes["code.lineno"] = Number(meta.path.fileLine);
           if (meta?.path?.method) attributes["code.function"] = meta.path.method;
           if (meta?.path?.filePathWithLine) {
-            attributes["clawdbot.code.location"] = meta.path.filePathWithLine;
+            attributes["grawke.code.location"] = meta.path.filePathWithLine;
           }
 
           otelLogger.emit({
@@ -316,48 +316,48 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
 
       const recordModelUsage = (evt: Extract<DiagnosticEventPayload, { type: "model.usage" }>) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.provider": evt.provider ?? "unknown",
-          "clawdbot.model": evt.model ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.provider": evt.provider ?? "unknown",
+          "grawke.model": evt.model ?? "unknown",
         };
 
         const usage = evt.usage;
-        if (usage.input) tokensCounter.add(usage.input, { ...attrs, "clawdbot.token": "input" });
-        if (usage.output) tokensCounter.add(usage.output, { ...attrs, "clawdbot.token": "output" });
+        if (usage.input) tokensCounter.add(usage.input, { ...attrs, "grawke.token": "input" });
+        if (usage.output) tokensCounter.add(usage.output, { ...attrs, "grawke.token": "output" });
         if (usage.cacheRead)
-          tokensCounter.add(usage.cacheRead, { ...attrs, "clawdbot.token": "cache_read" });
+          tokensCounter.add(usage.cacheRead, { ...attrs, "grawke.token": "cache_read" });
         if (usage.cacheWrite)
-          tokensCounter.add(usage.cacheWrite, { ...attrs, "clawdbot.token": "cache_write" });
+          tokensCounter.add(usage.cacheWrite, { ...attrs, "grawke.token": "cache_write" });
         if (usage.promptTokens)
-          tokensCounter.add(usage.promptTokens, { ...attrs, "clawdbot.token": "prompt" });
-        if (usage.total) tokensCounter.add(usage.total, { ...attrs, "clawdbot.token": "total" });
+          tokensCounter.add(usage.promptTokens, { ...attrs, "grawke.token": "prompt" });
+        if (usage.total) tokensCounter.add(usage.total, { ...attrs, "grawke.token": "total" });
 
         if (evt.costUsd) costCounter.add(evt.costUsd, attrs);
         if (evt.durationMs) durationHistogram.record(evt.durationMs, attrs);
         if (evt.context?.limit)
           contextHistogram.record(evt.context.limit, {
             ...attrs,
-            "clawdbot.context": "limit",
+            "grawke.context": "limit",
           });
         if (evt.context?.used)
           contextHistogram.record(evt.context.used, {
             ...attrs,
-            "clawdbot.context": "used",
+            "grawke.context": "used",
           });
 
         if (!tracesEnabled) return;
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "clawdbot.sessionKey": evt.sessionKey ?? "",
-          "clawdbot.sessionId": evt.sessionId ?? "",
-          "clawdbot.tokens.input": usage.input ?? 0,
-          "clawdbot.tokens.output": usage.output ?? 0,
-          "clawdbot.tokens.cache_read": usage.cacheRead ?? 0,
-          "clawdbot.tokens.cache_write": usage.cacheWrite ?? 0,
-          "clawdbot.tokens.total": usage.total ?? 0,
+          "grawke.sessionKey": evt.sessionKey ?? "",
+          "grawke.sessionId": evt.sessionId ?? "",
+          "grawke.tokens.input": usage.input ?? 0,
+          "grawke.tokens.output": usage.output ?? 0,
+          "grawke.tokens.cache_read": usage.cacheRead ?? 0,
+          "grawke.tokens.cache_write": usage.cacheWrite ?? 0,
+          "grawke.tokens.total": usage.total ?? 0,
         };
 
-        const span = spanWithDuration("clawdbot.model.usage", spanAttrs, evt.durationMs);
+        const span = spanWithDuration("grawke.model.usage", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -365,8 +365,8 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.received" }>,
       ) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.webhook": evt.updateType ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.webhook": evt.updateType ?? "unknown",
         };
         webhookReceivedCounter.add(1, attrs);
       };
@@ -375,16 +375,16 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.processed" }>,
       ) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.webhook": evt.updateType ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.webhook": evt.updateType ?? "unknown",
         };
         if (typeof evt.durationMs === "number") {
           webhookDurationHistogram.record(evt.durationMs, attrs);
         }
         if (!tracesEnabled) return;
         const spanAttrs: Record<string, string | number> = { ...attrs };
-        if (evt.chatId !== undefined) spanAttrs["clawdbot.chatId"] = String(evt.chatId);
-        const span = spanWithDuration("clawdbot.webhook.processed", spanAttrs, evt.durationMs);
+        if (evt.chatId !== undefined) spanAttrs["grawke.chatId"] = String(evt.chatId);
+        const span = spanWithDuration("grawke.webhook.processed", spanAttrs, evt.durationMs);
         span.end();
       };
 
@@ -392,17 +392,17 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "webhook.error" }>,
       ) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.webhook": evt.updateType ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.webhook": evt.updateType ?? "unknown",
         };
         webhookErrorCounter.add(1, attrs);
         if (!tracesEnabled) return;
         const spanAttrs: Record<string, string | number> = {
           ...attrs,
-          "clawdbot.error": evt.error,
+          "grawke.error": evt.error,
         };
-        if (evt.chatId !== undefined) spanAttrs["clawdbot.chatId"] = String(evt.chatId);
-        const span = tracer.startSpan("clawdbot.webhook.error", {
+        if (evt.chatId !== undefined) spanAttrs["grawke.chatId"] = String(evt.chatId);
+        const span = tracer.startSpan("grawke.webhook.error", {
           attributes: spanAttrs,
         });
         span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
@@ -413,8 +413,8 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.queued" }>,
       ) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.source": evt.source ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.source": evt.source ?? "unknown",
         };
         messageQueuedCounter.add(1, attrs);
         if (typeof evt.queueDepth === "number") {
@@ -426,8 +426,8 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         evt: Extract<DiagnosticEventPayload, { type: "message.processed" }>,
       ) => {
         const attrs = {
-          "clawdbot.channel": evt.channel ?? "unknown",
-          "clawdbot.outcome": evt.outcome ?? "unknown",
+          "grawke.channel": evt.channel ?? "unknown",
+          "grawke.outcome": evt.outcome ?? "unknown",
         };
         messageProcessedCounter.add(1, attrs);
         if (typeof evt.durationMs === "number") {
@@ -435,12 +435,12 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         }
         if (!tracesEnabled) return;
         const spanAttrs: Record<string, string | number> = { ...attrs };
-        if (evt.sessionKey) spanAttrs["clawdbot.sessionKey"] = evt.sessionKey;
-        if (evt.sessionId) spanAttrs["clawdbot.sessionId"] = evt.sessionId;
-        if (evt.chatId !== undefined) spanAttrs["clawdbot.chatId"] = String(evt.chatId);
-        if (evt.messageId !== undefined) spanAttrs["clawdbot.messageId"] = String(evt.messageId);
-        if (evt.reason) spanAttrs["clawdbot.reason"] = evt.reason;
-        const span = spanWithDuration("clawdbot.message.processed", spanAttrs, evt.durationMs);
+        if (evt.sessionKey) spanAttrs["grawke.sessionKey"] = evt.sessionKey;
+        if (evt.sessionId) spanAttrs["grawke.sessionId"] = evt.sessionId;
+        if (evt.chatId !== undefined) spanAttrs["grawke.chatId"] = String(evt.chatId);
+        if (evt.messageId !== undefined) spanAttrs["grawke.messageId"] = String(evt.messageId);
+        if (evt.reason) spanAttrs["grawke.reason"] = evt.reason;
+        const span = spanWithDuration("grawke.message.processed", spanAttrs, evt.durationMs);
         if (evt.outcome === "error") {
           span.setStatus({ code: SpanStatusCode.ERROR, message: evt.error });
         }
@@ -450,7 +450,7 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
       const recordLaneEnqueue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.enqueue" }>,
       ) => {
-        const attrs = { "clawdbot.lane": evt.lane };
+        const attrs = { "grawke.lane": evt.lane };
         laneEnqueueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
       };
@@ -458,7 +458,7 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
       const recordLaneDequeue = (
         evt: Extract<DiagnosticEventPayload, { type: "queue.lane.dequeue" }>,
       ) => {
-        const attrs = { "clawdbot.lane": evt.lane };
+        const attrs = { "grawke.lane": evt.lane };
         laneDequeueCounter.add(1, attrs);
         queueDepthHistogram.record(evt.queueSize, attrs);
         if (typeof evt.waitMs === "number") {
@@ -469,38 +469,38 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
       const recordSessionState = (
         evt: Extract<DiagnosticEventPayload, { type: "session.state" }>,
       ) => {
-        const attrs: Record<string, string> = { "clawdbot.state": evt.state };
-        if (evt.reason) attrs["clawdbot.reason"] = evt.reason;
+        const attrs: Record<string, string> = { "grawke.state": evt.state };
+        if (evt.reason) attrs["grawke.reason"] = evt.reason;
         sessionStateCounter.add(1, attrs);
       };
 
       const recordSessionStuck = (
         evt: Extract<DiagnosticEventPayload, { type: "session.stuck" }>,
       ) => {
-        const attrs: Record<string, string> = { "clawdbot.state": evt.state };
+        const attrs: Record<string, string> = { "grawke.state": evt.state };
         sessionStuckCounter.add(1, attrs);
         if (typeof evt.ageMs === "number") {
           sessionStuckAgeHistogram.record(evt.ageMs, attrs);
         }
         if (!tracesEnabled) return;
         const spanAttrs: Record<string, string | number> = { ...attrs };
-        if (evt.sessionKey) spanAttrs["clawdbot.sessionKey"] = evt.sessionKey;
-        if (evt.sessionId) spanAttrs["clawdbot.sessionId"] = evt.sessionId;
-        spanAttrs["clawdbot.queueDepth"] = evt.queueDepth ?? 0;
-        spanAttrs["clawdbot.ageMs"] = evt.ageMs;
-        const span = tracer.startSpan("clawdbot.session.stuck", { attributes: spanAttrs });
+        if (evt.sessionKey) spanAttrs["grawke.sessionKey"] = evt.sessionKey;
+        if (evt.sessionId) spanAttrs["grawke.sessionId"] = evt.sessionId;
+        spanAttrs["grawke.queueDepth"] = evt.queueDepth ?? 0;
+        spanAttrs["grawke.ageMs"] = evt.ageMs;
+        const span = tracer.startSpan("grawke.session.stuck", { attributes: spanAttrs });
         span.setStatus({ code: SpanStatusCode.ERROR, message: "session stuck" });
         span.end();
       };
 
       const recordRunAttempt = (evt: Extract<DiagnosticEventPayload, { type: "run.attempt" }>) => {
-        runAttemptCounter.add(1, { "clawdbot.attempt": evt.attempt });
+        runAttemptCounter.add(1, { "grawke.attempt": evt.attempt });
       };
 
       const recordHeartbeat = (
         evt: Extract<DiagnosticEventPayload, { type: "diagnostic.heartbeat" }>,
       ) => {
-        queueDepthHistogram.record(evt.queued, { "clawdbot.channel": "heartbeat" });
+        queueDepthHistogram.record(evt.queued, { "grawke.channel": "heartbeat" });
       };
 
       unsubscribe = onDiagnosticEvent((evt: DiagnosticEventPayload) => {
@@ -562,5 +562,5 @@ export function createDiagnosticsOtelService(): ClawdbotPluginService {
         sdk = null;
       }
     },
-  } satisfies ClawdbotPluginService;
+  } satisfies GrawkePluginService;
 }

@@ -35,8 +35,8 @@ export function extractHookToken(req, url) {
         if (token)
             return token;
     }
-    const headerToken = typeof req.headers["x-clawdbot-token"] === "string"
-        ? req.headers["x-clawdbot-token"].trim()
+    const headerToken = typeof req.headers["x-grawke-token"] === "string"
+        ? req.headers["x-grawke-token"].trim()
         : "";
     if (headerToken)
         return headerToken;

@@ -90,23 +90,23 @@ export function buildMinimalServicePath(options = {}) {
 }
 export function buildServiceEnvironment(params) {
     const { env, port, token, launchdLabel } = params;
-    const profile = env.CLAWDBOT_PROFILE;
+    const profile = env.GRAWKE_PROFILE;
     const resolvedLaunchdLabel = launchdLabel ||
         (process.platform === "darwin" ? resolveGatewayLaunchAgentLabel(profile) : undefined);
     const systemdUnit = `${resolveGatewaySystemdServiceName(profile)}.service`;
     return {
         HOME: env.HOME,
         PATH: buildMinimalServicePath({ env }),
-        CLAWDBOT_PROFILE: profile,
-        CLAWDBOT_STATE_DIR: env.CLAWDBOT_STATE_DIR,
-        CLAWDBOT_CONFIG_PATH: env.CLAWDBOT_CONFIG_PATH,
-        CLAWDBOT_GATEWAY_PORT: String(port),
-        CLAWDBOT_GATEWAY_TOKEN: token,
-        CLAWDBOT_LAUNCHD_LABEL: resolvedLaunchdLabel,
-        CLAWDBOT_SYSTEMD_UNIT: systemdUnit,
-        CLAWDBOT_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
-        CLAWDBOT_SERVICE_KIND: GATEWAY_SERVICE_KIND,
-        CLAWDBOT_SERVICE_VERSION: VERSION,
+        GRAWKE_PROFILE: profile,
+        GRAWKE_STATE_DIR: env.GRAWKE_STATE_DIR,
+        GRAWKE_CONFIG_PATH: env.GRAWKE_CONFIG_PATH,
+        GRAWKE_GATEWAY_PORT: String(port),
+        GRAWKE_GATEWAY_TOKEN: token,
+        GRAWKE_LAUNCHD_LABEL: resolvedLaunchdLabel,
+        GRAWKE_SYSTEMD_UNIT: systemdUnit,
+        GRAWKE_SERVICE_MARKER: GATEWAY_SERVICE_MARKER,
+        GRAWKE_SERVICE_KIND: GATEWAY_SERVICE_KIND,
+        GRAWKE_SERVICE_VERSION: VERSION,
     };
 }
 export function buildNodeServiceEnvironment(params) {
@@ -114,15 +114,15 @@ export function buildNodeServiceEnvironment(params) {
     return {
         HOME: env.HOME,
         PATH: buildMinimalServicePath({ env }),
-        CLAWDBOT_STATE_DIR: env.CLAWDBOT_STATE_DIR,
-        CLAWDBOT_CONFIG_PATH: env.CLAWDBOT_CONFIG_PATH,
-        CLAWDBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-        CLAWDBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-        CLAWDBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-        CLAWDBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-        CLAWDBOT_LOG_PREFIX: "node",
-        CLAWDBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-        CLAWDBOT_SERVICE_KIND: NODE_SERVICE_KIND,
-        CLAWDBOT_SERVICE_VERSION: VERSION,
+        GRAWKE_STATE_DIR: env.GRAWKE_STATE_DIR,
+        GRAWKE_CONFIG_PATH: env.GRAWKE_CONFIG_PATH,
+        GRAWKE_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+        GRAWKE_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+        GRAWKE_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+        GRAWKE_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+        GRAWKE_LOG_PREFIX: "node",
+        GRAWKE_SERVICE_MARKER: NODE_SERVICE_MARKER,
+        GRAWKE_SERVICE_KIND: NODE_SERVICE_KIND,
+        GRAWKE_SERVICE_VERSION: VERSION,
     };
 }

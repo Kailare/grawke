@@ -271,7 +271,7 @@ export async function statusCommand(opts, runtime) {
             Value: `${summary.sessions.count} active · default ${defaults.model ?? "unknown"}${defaultCtx} · ${storeLabel}`,
         },
     ];
-    runtime.log(theme.heading("Clawdbot status"));
+    runtime.log(theme.heading("Grawke status"));
     runtime.log("");
     runtime.log(theme.heading("Overview"));
     runtime.log(renderTable({
@@ -318,8 +318,8 @@ export async function statusCommand(opts, runtime) {
             runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
         }
     }
-    runtime.log(theme.muted(`Full report: ${formatCliCommand("clawdbot security audit")}`));
-    runtime.log(theme.muted(`Deep probe: ${formatCliCommand("clawdbot security audit --deep")}`));
+    runtime.log(theme.muted(`Full report: ${formatCliCommand("grawke security audit")}`));
+    runtime.log(theme.muted(`Deep probe: ${formatCliCommand("grawke security audit --deep")}`));
     runtime.log("");
     runtime.log(theme.heading("Channels"));
     const channelIssuesByChannel = (() => {
@@ -465,12 +465,12 @@ export async function statusCommand(opts, runtime) {
         runtime.log("");
     }
     runtime.log("Next steps:");
-    runtime.log(`  Need to share?      ${formatCliCommand("clawdbot status --all")}`);
-    runtime.log(`  Need to debug live? ${formatCliCommand("clawdbot logs --follow")}`);
+    runtime.log(`  Need to share?      ${formatCliCommand("grawke status --all")}`);
+    runtime.log(`  Need to debug live? ${formatCliCommand("grawke logs --follow")}`);
     if (gatewayReachable) {
-        runtime.log(`  Need to test channels? ${formatCliCommand("clawdbot status --deep")}`);
+        runtime.log(`  Need to test channels? ${formatCliCommand("grawke status --deep")}`);
     }
     else {
-        runtime.log(`  Fix reachability first: ${formatCliCommand("clawdbot gateway probe")}`);
+        runtime.log(`  Fix reachability first: ${formatCliCommand("grawke gateway probe")}`);
     }
 }

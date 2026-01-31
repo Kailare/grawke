@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/mattermost",
+  "name": "@grawke/mattermost",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Mattermost channel plugin",
-  "clawdbot": {
+  "description": "Grawke Mattermost channel plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ],
@@ -17,7 +17,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@clawdbot/mattermost",
+      "npmSpec": "@grawke/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

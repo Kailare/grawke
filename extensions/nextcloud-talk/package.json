@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/nextcloud-talk",
+  "name": "@grawke/nextcloud-talk",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Nextcloud Talk channel plugin",
-  "clawdbot": {
+  "description": "Grawke Nextcloud Talk channel plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/nextcloud-talk",
+      "npmSpec": "@grawke/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }

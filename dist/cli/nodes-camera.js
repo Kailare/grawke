@@ -41,7 +41,7 @@ export function cameraTempPath(opts) {
     const id = opts.id ?? randomUUID();
     const facingPart = opts.facing ? `-${opts.facing}` : "";
     const ext = opts.ext.startsWith(".") ? opts.ext : `.${opts.ext}`;
-    return path.join(tmpDir, `clawdbot-camera-${opts.kind}${facingPart}-${id}${ext}`);
+    return path.join(tmpDir, `grawke-camera-${opts.kind}${facingPart}-${id}${ext}`);
 }
 export async function writeBase64ToFile(filePath, base64) {
     const buf = Buffer.from(base64, "base64");

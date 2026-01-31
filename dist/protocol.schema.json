@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://clawdbot.dev/protocol.schema.json",
-  "title": "Clawdbot Gateway Protocol",
+  "$id": "https://grawke.dev/protocol.schema.json",
+  "title": "Grawke Gateway Protocol",
   "description": "Handshake, request/response, and event frames for the Gateway WebSocket.",
   "oneOf": [
     {
@@ -57,7 +57,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "clawdbot-control-ui",
+                  "const": "grawke-control-ui",
                   "type": "string"
                 },
                 {
@@ -73,7 +73,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "clawdbot-macos",
+                  "const": "grawke-macos",
                   "type": "string"
                 },
                 {
@@ -85,7 +85,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "clawdbot-probe",
+                  "const": "grawke-probe",
                   "type": "string"
                 }
               ]

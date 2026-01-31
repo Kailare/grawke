@@ -92,10 +92,10 @@ export function registerPairingCli(program) {
         const channelRaw = opts.channel ?? codeOrChannel;
         const resolvedCode = opts.channel ? codeOrChannel : code;
         if (!opts.channel && !code) {
-            throw new Error(`Usage: ${formatCliCommand("clawdbot pairing approve <channel> <code>")} (or: ${formatCliCommand("clawdbot pairing approve --channel <channel> <code>")})`);
+            throw new Error(`Usage: ${formatCliCommand("grawke pairing approve <channel> <code>")} (or: ${formatCliCommand("grawke pairing approve --channel <channel> <code>")})`);
         }
         if (opts.channel && code != null) {
-            throw new Error(`Too many arguments. Use: ${formatCliCommand("clawdbot pairing approve --channel <channel> <code>")}`);
+            throw new Error(`Too many arguments. Use: ${formatCliCommand("grawke pairing approve --channel <channel> <code>")}`);
         }
         const channel = parseChannel(channelRaw, channels);
         const approved = await approveChannelPairingCode({

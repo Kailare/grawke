@@ -51,7 +51,7 @@ function parseFrontmatterBool(value, fallback) {
     const parsed = parseBooleanValue(value);
     return parsed === undefined ? fallback : parsed;
 }
-export function resolveClawdbotMetadata(frontmatter) {
+export function resolveGrawkeMetadata(frontmatter) {
     const raw = getFrontmatterValue(frontmatter, "metadata");
     if (!raw)
         return undefined;
@@ -59,25 +59,25 @@ export function resolveClawdbotMetadata(frontmatter) {
         const parsed = JSON5.parse(raw);
         if (!parsed || typeof parsed !== "object")
             return undefined;
-        const clawdbot = parsed.clawdbot;
-        if (!clawdbot || typeof clawdbot !== "object")
+        const grawke = parsed.grawke;
+        if (!grawke || typeof grawke !== "object")
             return undefined;
-        const clawdbotObj = clawdbot;
-        const requiresRaw = typeof clawdbotObj.requires === "object" && clawdbotObj.requires !== null
-            ? clawdbotObj.requires
+        const grawkeObj = grawke;
+        const requiresRaw = typeof grawkeObj.requires === "object" && grawkeObj.requires !== null
+            ? grawkeObj.requires
             : undefined;
-        const installRaw = Array.isArray(clawdbotObj.install) ? clawdbotObj.install : [];
+        const installRaw = Array.isArray(grawkeObj.install) ? grawkeObj.install : [];
         const install = installRaw
             .map((entry) => parseInstallSpec(entry))
             .filter((entry) => Boolean(entry));
-        const osRaw = normalizeStringList(clawdbotObj.os);
-        const eventsRaw = normalizeStringList(clawdbotObj.events);
+        const osRaw = normalizeStringList(grawkeObj.os);
+        const eventsRaw = normalizeStringList(grawkeObj.events);
         return {
-            always: typeof clawdbotObj.always === "boolean" ? clawdbotObj.always : undefined,
-            emoji: typeof clawdbotObj.emoji === "string" ? clawdbotObj.emoji : undefined,
-            homepage: typeof clawdbotObj.homepage === "string" ? clawdbotObj.homepage : undefined,
-            hookKey: typeof clawdbotObj.hookKey === "string" ? clawdbotObj.hookKey : undefined,
-            export: typeof clawdbotObj.export === "string" ? clawdbotObj.export : undefined,
+            always: typeof grawkeObj.always === "boolean" ? grawkeObj.always : undefined,
+            emoji: typeof grawkeObj.emoji === "string" ? grawkeObj.emoji : undefined,
+            homepage: typeof grawkeObj.homepage === "string" ? grawkeObj.homepage : undefined,
+            hookKey: typeof grawkeObj.hookKey === "string" ? grawkeObj.hookKey : undefined,
+            export: typeof grawkeObj.export === "string" ? grawkeObj.export : undefined,
             os: osRaw.length > 0 ? osRaw : undefined,
             events: eventsRaw.length > 0 ? eventsRaw : [],
             requires: requiresRaw
@@ -101,5 +101,5 @@ export function resolveHookInvocationPolicy(frontmatter) {
     };
 }
 export function resolveHookKey(hookName, entry) {
-    return entry?.clawdbot?.hookKey ?? hookName;
+    return entry?.grawke?.hookKey ?? hookName;
 }

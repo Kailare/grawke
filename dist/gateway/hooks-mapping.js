@@ -1,6 +1,6 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { CONFIG_PATH_CLAWDBOT, } from "../config/config.js";
+import { CONFIG_PATH_GRAWKE, } from "../config/config.js";
 const hookPresetMappings = {
     gmail: [
         {
@@ -27,7 +27,7 @@ export function resolveHookMappings(hooks) {
     }
     if (mappings.length === 0)
         return [];
-    const configDir = path.dirname(CONFIG_PATH_CLAWDBOT);
+    const configDir = path.dirname(CONFIG_PATH_GRAWKE);
     const transformsDir = hooks?.transformsDir
         ? resolvePath(configDir, hooks.transformsDir)
         : configDir;

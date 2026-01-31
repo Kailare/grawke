@@ -143,9 +143,9 @@ export const signalOnboardingAdapter = {
             }
         }
         await prompter.note([
-            'Link device with: signal-cli link -n "Clawdbot"',
+            'Link device with: signal-cli link -n "Grawke"',
             "Scan QR in Signal → Linked Devices",
-            "Then run: clawdbot gateway call providers.status --params '{\"probe\":true}'",
+            "Then run: grawke gateway call providers.status --params '{\"probe\":true}'",
             `Docs: ${formatDocsLink("/signal", "signal")}`,
         ].join("\n"), "Signal next steps");
         return { cfg: next, accountId: signalAccountId };

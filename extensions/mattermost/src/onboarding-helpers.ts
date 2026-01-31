@@ -1,12 +1,12 @@
-import type { ClawdbotConfig, WizardPrompter } from "clawdbot/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "clawdbot/plugin-sdk";
+import type { GrawkeConfig, WizardPrompter } from "grawke/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
 
 type PromptAccountIdParams = {
-  cfg: ClawdbotConfig;
+  cfg: GrawkeConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: ClawdbotConfig) => string[];
+  listAccountIds: (cfg: GrawkeConfig) => string[];
   defaultAccountId: string;
 };
 

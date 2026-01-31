@@ -3,10 +3,10 @@ import { CONFIG_DIR } from "../utils.js";
 import { hasBinary, isConfigPathTruthy, resolveConfigPath, resolveHookConfig } from "./config.js";
 import { loadWorkspaceHookEntries } from "./workspace.js";
 function resolveHookKey(entry) {
-    return entry.clawdbot?.hookKey ?? entry.hook.name;
+    return entry.grawke?.hookKey ?? entry.hook.name;
 }
 function normalizeInstallOptions(entry) {
-    const install = entry.clawdbot?.install ?? [];
+    const install = entry.grawke?.install ?? [];
     if (install.length === 0)
         return [];
     // For hooks, we just list all install options
@@ -16,7 +16,7 @@ function normalizeInstallOptions(entry) {
         let label = (spec.label ?? "").trim();
         if (!label) {
             if (spec.kind === "bundled") {
-                label = "Bundled with Clawdbot";
+                label = "Bundled with Grawke";
             }
             else if (spec.kind === "npm" && spec.package) {
                 label = `Install ${spec.package} (npm)`;
@@ -34,21 +34,21 @@ function normalizeInstallOptions(entry) {
 function buildHookStatus(entry, config, eligibility) {
     const hookKey = resolveHookKey(entry);
     const hookConfig = resolveHookConfig(config, hookKey);
-    const managedByPlugin = entry.hook.source === "clawdbot-plugin";
+    const managedByPlugin = entry.hook.source === "grawke-plugin";
     const disabled = managedByPlugin ? false : hookConfig?.enabled === false;
-    const always = entry.clawdbot?.always === true;
-    const emoji = entry.clawdbot?.emoji ?? entry.frontmatter.emoji;
-    const homepageRaw = entry.clawdbot?.homepage ??
+    const always = entry.grawke?.always === true;
+    const emoji = entry.grawke?.emoji ?? entry.frontmatter.emoji;
+    const homepageRaw = entry.grawke?.homepage ??
         entry.frontmatter.homepage ??
         entry.frontmatter.website ??
         entry.frontmatter.url;
     const homepage = homepageRaw?.trim() ? homepageRaw.trim() : undefined;
-    const events = entry.clawdbot?.events ?? [];
-    const requiredBins = entry.clawdbot?.requires?.bins ?? [];
-    const requiredAnyBins = entry.clawdbot?.requires?.anyBins ?? [];
-    const requiredEnv = entry.clawdbot?.requires?.env ?? [];
-    const requiredConfig = entry.clawdbot?.requires?.config ?? [];
-    const requiredOs = entry.clawdbot?.os ?? [];
+    const events = entry.grawke?.events ?? [];
+    const requiredBins = entry.grawke?.requires?.bins ?? [];
+    const requiredAnyBins = entry.grawke?.requires?.anyBins ?? [];
+    const requiredEnv = entry.grawke?.requires?.env ?? [];
+    const requiredConfig = entry.grawke?.requires?.config ?? [];
+    const requiredOs = entry.grawke?.os ?? [];
     const missingBins = requiredBins.filter((bin) => {
         if (hasBinary(bin))
             return false;

@@ -1,14 +1,14 @@
 # GrokClaw 🦎⚡
 
-**A Grok-only edition of [Clawdbot/OpenClaw](https://github.com/openclaw/openclaw)** — streamlined to use xAI's Grok models exclusively.
+**A Grok-only edition of [Grawke/OpenClaw](https://github.com/openclaw/openclaw)** — streamlined to use xAI's Grok models exclusively.
 
 ## What is this?
 
-GrokClaw is a patched fork of Clawdbot that strips the onboarding flow down to a single provider: **xAI (Grok)**. No more scrolling through 15+ auth options — just enter your xAI API key and go.
+GrokClaw is a patched fork of Grawke that strips the onboarding flow down to a single provider: **xAI (Grok)**. No more scrolling through 15+ auth options — just enter your xAI API key and go.
 
 - **Default model:** `xai/grok-4`
 - **Auth:** xAI API key only (via `XAI_API_KEY`)
-- **Everything else:** Same powerful Clawdbot feature set (Telegram, Discord, WhatsApp, browser control, tools, memory, etc.)
+- **Everything else:** Same powerful Grawke feature set (Telegram, Discord, WhatsApp, browser control, tools, memory, etc.)
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ Then run:
 ```bash
 grok-claw setup
 # or
-clawdbot setup
+grawke setup
 ```
 
 ### Option B: Run directly
@@ -49,7 +49,7 @@ grok-claw gateway start
 
 ## Usage
 
-GrokClaw works exactly like Clawdbot. All commands are the same:
+GrokClaw works exactly like Grawke. All commands are the same:
 
 ```bash
 grok-claw setup          # First-time setup (xAI key only)
@@ -74,7 +74,7 @@ This is a **surgical patch** of the compiled `dist/` files — no source rebuild
 
 ## How it works
 
-xAI is already a built-in provider in Clawdbot's model system — the `XAI_API_KEY` env var and `xai/` model prefix are natively supported. GrokClaw simply:
+xAI is already a built-in provider in Grawke's model system — the `XAI_API_KEY` env var and `xai/` model prefix are natively supported. GrokClaw simply:
 
 1. Removes all other providers from the onboarding UI
 2. Adds a proper credential storage flow for xAI (matching the pattern of OpenRouter, Moonshot, etc.)
@@ -82,4 +82,4 @@ xAI is already a built-in provider in Clawdbot's model system — the `XAI_API_K
 
 ## License
 
-MIT (same as upstream Clawdbot)
+MIT (same as upstream Grawke)

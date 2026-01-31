@@ -2,7 +2,7 @@ import path from "node:path";
 import { CONFIG_DIR } from "../utils.js";
 import { hasBinary, isBundledSkillAllowed, isConfigPathTruthy, loadWorkspaceSkillEntries, resolveBundledAllowlist, resolveConfigPath, resolveSkillConfig, resolveSkillsInstallPreferences, } from "./skills.js";
 function resolveSkillKey(entry) {
-    return entry.clawdbot?.skillKey ?? entry.skill.name;
+    return entry.grawke?.skillKey ?? entry.skill.name;
 }
 function selectPreferredInstallSpec(install, prefs) {
     if (install.length === 0)
@@ -26,7 +26,7 @@ function selectPreferredInstallSpec(install, prefs) {
     return indexed[0];
 }
 function normalizeInstallOptions(entry, prefs) {
-    const install = entry.clawdbot?.install ?? [];
+    const install = entry.grawke?.install ?? [];
     if (install.length === 0)
         return [];
     const platform = process.platform;
@@ -82,18 +82,18 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
     const disabled = skillConfig?.enabled === false;
     const allowBundled = resolveBundledAllowlist(config);
     const blockedByAllowlist = !isBundledSkillAllowed(entry, allowBundled);
-    const always = entry.clawdbot?.always === true;
-    const emoji = entry.clawdbot?.emoji ?? entry.frontmatter.emoji;
-    const homepageRaw = entry.clawdbot?.homepage ??
+    const always = entry.grawke?.always === true;
+    const emoji = entry.grawke?.emoji ?? entry.frontmatter.emoji;
+    const homepageRaw = entry.grawke?.homepage ??
         entry.frontmatter.homepage ??
         entry.frontmatter.website ??
         entry.frontmatter.url;
     const homepage = homepageRaw?.trim() ? homepageRaw.trim() : undefined;
-    const requiredBins = entry.clawdbot?.requires?.bins ?? [];
-    const requiredAnyBins = entry.clawdbot?.requires?.anyBins ?? [];
-    const requiredEnv = entry.clawdbot?.requires?.env ?? [];
-    const requiredConfig = entry.clawdbot?.requires?.config ?? [];
-    const requiredOs = entry.clawdbot?.os ?? [];
+    const requiredBins = entry.grawke?.requires?.bins ?? [];
+    const requiredAnyBins = entry.grawke?.requires?.anyBins ?? [];
+    const requiredEnv = entry.grawke?.requires?.env ?? [];
+    const requiredConfig = entry.grawke?.requires?.config ?? [];
+    const requiredOs = entry.grawke?.os ?? [];
     const missingBins = requiredBins.filter((bin) => {
         if (hasBinary(bin))
             return false;
@@ -117,7 +117,7 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
             continue;
         if (skillConfig?.env?.[envName])
             continue;
-        if (skillConfig?.apiKey && entry.clawdbot?.primaryEnv === envName) {
+        if (skillConfig?.apiKey && entry.grawke?.primaryEnv === envName) {
             continue;
         }
         missingEnv.push(envName);
@@ -152,7 +152,7 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
         filePath: entry.skill.filePath,
         baseDir: entry.skill.baseDir,
         skillKey,
-        primaryEnv: entry.clawdbot?.primaryEnv,
+        primaryEnv: entry.grawke?.primaryEnv,
         emoji,
         homepage,
         always,

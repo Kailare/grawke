@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/imessage",
+  "name": "@grawke/imessage",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot iMessage channel plugin",
-  "clawdbot": {
+  "description": "Grawke iMessage channel plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ]

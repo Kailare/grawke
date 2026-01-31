@@ -3,13 +3,13 @@ import { NODE_SERVICE_KIND, NODE_SERVICE_MARKER, NODE_WINDOWS_TASK_SCRIPT_NAME, 
 function withNodeServiceEnv(env) {
     return {
         ...env,
-        CLAWDBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-        CLAWDBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-        CLAWDBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-        CLAWDBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-        CLAWDBOT_LOG_PREFIX: "node",
-        CLAWDBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-        CLAWDBOT_SERVICE_KIND: NODE_SERVICE_KIND,
+        GRAWKE_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+        GRAWKE_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+        GRAWKE_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+        GRAWKE_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+        GRAWKE_LOG_PREFIX: "node",
+        GRAWKE_SERVICE_MARKER: NODE_SERVICE_MARKER,
+        GRAWKE_SERVICE_KIND: NODE_SERVICE_KIND,
     };
 }
 function withNodeInstallEnv(args) {
@@ -18,13 +18,13 @@ function withNodeInstallEnv(args) {
         env: withNodeServiceEnv(args.env),
         environment: {
             ...args.environment,
-            CLAWDBOT_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-            CLAWDBOT_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-            CLAWDBOT_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-            CLAWDBOT_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-            CLAWDBOT_LOG_PREFIX: "node",
-            CLAWDBOT_SERVICE_MARKER: NODE_SERVICE_MARKER,
-            CLAWDBOT_SERVICE_KIND: NODE_SERVICE_KIND,
+            GRAWKE_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+            GRAWKE_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+            GRAWKE_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+            GRAWKE_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+            GRAWKE_LOG_PREFIX: "node",
+            GRAWKE_SERVICE_MARKER: NODE_SERVICE_MARKER,
+            GRAWKE_SERVICE_KIND: NODE_SERVICE_KIND,
         },
     };
 }

@@ -9,10 +9,10 @@ function readVersionFromPackageJson() {
         return null;
     }
 }
-// Single source of truth for the current clawdbot version.
+// Single source of truth for the current grawke version.
 // - Embedded/bundled builds: injected define or env var.
 // - Dev/npm builds: package.json.
-export const VERSION = (typeof __CLAWDBOT_VERSION__ === "string" && __CLAWDBOT_VERSION__) ||
-    process.env.CLAWDBOT_BUNDLED_VERSION ||
+export const VERSION = (typeof __GRAWKE_VERSION__ === "string" && __GRAWKE_VERSION__) ||
+    process.env.GRAWKE_BUNDLED_VERSION ||
     readVersionFromPackageJson() ||
     "0.0.0";

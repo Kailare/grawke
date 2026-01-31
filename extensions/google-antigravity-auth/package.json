@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/google-antigravity-auth",
+  "name": "@grawke/google-antigravity-auth",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot Google Antigravity OAuth provider plugin",
-  "clawdbot": {
+  "description": "Grawke Google Antigravity OAuth provider plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ]

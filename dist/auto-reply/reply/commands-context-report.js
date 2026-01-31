@@ -1,6 +1,6 @@
 import { resolveSessionAgentIds } from "../../agents/agent-scope.js";
 import { resolveBootstrapMaxChars } from "../../agents/pi-embedded-helpers.js";
-import { createClawdbotCodingTools } from "../../agents/pi-tools.js";
+import { createGrawkeCodingTools } from "../../agents/pi-tools.js";
 import { resolveSandboxRuntimeStatus } from "../../agents/sandbox.js";
 import { buildWorkspaceSkillSnapshot } from "../../agents/skills.js";
 import { getSkillsSnapshotVersion } from "../../agents/skills/refresh.js";
@@ -66,7 +66,7 @@ async function resolveContextReport(params) {
     });
     const tools = (() => {
         try {
-            return createClawdbotCodingTools({
+            return createGrawkeCodingTools({
                 config: params.cfg,
                 workspaceDir,
                 sessionKey: params.sessionKey,

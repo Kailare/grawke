@@ -1,9 +1,9 @@
 {
-  "name": "@clawdbot/line",
+  "name": "@grawke/line",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot LINE channel plugin",
-  "clawdbot": {
+  "description": "Grawke LINE channel plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ],
@@ -18,12 +18,12 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@clawdbot/line",
+      "npmSpec": "@grawke/line",
       "localPath": "extensions/line",
       "defaultChoice": "npm"
     }
   },
   "devDependencies": {
-    "clawdbot": "workspace:*"
+    "grawke": "workspace:*"
   }
 }

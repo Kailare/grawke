@@ -66,7 +66,7 @@ function parseFrontmatterBool(value, fallback) {
     const parsed = parseBooleanValue(value);
     return parsed === undefined ? fallback : parsed;
 }
-export function resolveClawdbotMetadata(frontmatter) {
+export function resolveGrawkeMetadata(frontmatter) {
     const raw = getFrontmatterValue(frontmatter, "metadata");
     if (!raw)
         return undefined;
@@ -74,24 +74,24 @@ export function resolveClawdbotMetadata(frontmatter) {
         const parsed = JSON5.parse(raw);
         if (!parsed || typeof parsed !== "object")
             return undefined;
-        const clawdbot = parsed.clawdbot;
-        if (!clawdbot || typeof clawdbot !== "object")
+        const grawke = parsed.grawke;
+        if (!grawke || typeof grawke !== "object")
             return undefined;
-        const clawdbotObj = clawdbot;
-        const requiresRaw = typeof clawdbotObj.requires === "object" && clawdbotObj.requires !== null
-            ? clawdbotObj.requires
+        const grawkeObj = grawke;
+        const requiresRaw = typeof grawkeObj.requires === "object" && grawkeObj.requires !== null
+            ? grawkeObj.requires
             : undefined;
-        const installRaw = Array.isArray(clawdbotObj.install) ? clawdbotObj.install : [];
+        const installRaw = Array.isArray(grawkeObj.install) ? grawkeObj.install : [];
         const install = installRaw
             .map((entry) => parseInstallSpec(entry))
             .filter((entry) => Boolean(entry));
-        const osRaw = normalizeStringList(clawdbotObj.os);
+        const osRaw = normalizeStringList(grawkeObj.os);
         return {
-            always: typeof clawdbotObj.always === "boolean" ? clawdbotObj.always : undefined,
-            emoji: typeof clawdbotObj.emoji === "string" ? clawdbotObj.emoji : undefined,
-            homepage: typeof clawdbotObj.homepage === "string" ? clawdbotObj.homepage : undefined,
-            skillKey: typeof clawdbotObj.skillKey === "string" ? clawdbotObj.skillKey : undefined,
-            primaryEnv: typeof clawdbotObj.primaryEnv === "string" ? clawdbotObj.primaryEnv : undefined,
+            always: typeof grawkeObj.always === "boolean" ? grawkeObj.always : undefined,
+            emoji: typeof grawkeObj.emoji === "string" ? grawkeObj.emoji : undefined,
+            homepage: typeof grawkeObj.homepage === "string" ? grawkeObj.homepage : undefined,
+            skillKey: typeof grawkeObj.skillKey === "string" ? grawkeObj.skillKey : undefined,
+            primaryEnv: typeof grawkeObj.primaryEnv === "string" ? grawkeObj.primaryEnv : undefined,
             os: osRaw.length > 0 ? osRaw : undefined,
             requires: requiresRaw
                 ? {
@@ -115,5 +115,5 @@ export function resolveSkillInvocationPolicy(frontmatter) {
     };
 }
 export function resolveSkillKey(skill, entry) {
-    return entry?.clawdbot?.skillKey ?? skill.name;
+    return entry?.grawke?.skillKey ?? skill.name;
 }

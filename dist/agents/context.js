@@ -1,15 +1,15 @@
 // Lazy-load pi-coding-agent model metadata so we can infer context windows when
 // the agent reports a model id. This includes custom models.json entries.
 import { loadConfig } from "../config/config.js";
-import { resolveClawdbotAgentDir } from "./agent-paths.js";
-import { ensureClawdbotModelsJson } from "./models-config.js";
+import { resolveGrawkeAgentDir } from "./agent-paths.js";
+import { ensureGrawkeModelsJson } from "./models-config.js";
 const MODEL_CACHE = new Map();
 const loadPromise = (async () => {
     try {
         const { discoverAuthStorage, discoverModels } = await import("@mariozechner/pi-coding-agent");
         const cfg = loadConfig();
-        await ensureClawdbotModelsJson(cfg);
-        const agentDir = resolveClawdbotAgentDir();
+        await ensureGrawkeModelsJson(cfg);
+        const agentDir = resolveGrawkeAgentDir();
         const authStorage = discoverAuthStorage(agentDir);
         const modelRegistry = discoverModels(authStorage, agentDir);
         const models = modelRegistry.getAll();

@@ -1,6 +1,6 @@
-# @clawdbot/voice-call
+# @grawke/voice-call
 
-Official Voice Call plugin for **Clawdbot**.
+Official Voice Call plugin for **Grawke**.
 
 Providers:
 - **Twilio** (Programmable Voice + Media Streams)
@@ -13,10 +13,10 @@ Plugin system: `https://docs.clawd.bot/plugin`
 
 ## Install (local dev)
 
-### Option A: install via Clawdbot (recommended)
+### Option A: install via Grawke (recommended)
 
 ```bash
-clawdbot plugins install @clawdbot/voice-call
+grawke plugins install @grawke/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -24,9 +24,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.clawdbot/extensions
-cp -R extensions/voice-call ~/.clawdbot/extensions/voice-call
-cd ~/.clawdbot/extensions/voice-call && pnpm install
+mkdir -p ~/.grawke/extensions
+cp -R extensions/voice-call ~/.grawke/extensions/voice-call
+cd ~/.grawke/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -99,13 +99,13 @@ Notes:
 ## CLI
 
 ```bash
-clawdbot voicecall call --to "+15555550123" --message "Hello from Clawdbot"
-clawdbot voicecall continue --call-id <id> --message "Any questions?"
-clawdbot voicecall speak --call-id <id> --message "One moment"
-clawdbot voicecall end --call-id <id>
-clawdbot voicecall status --call-id <id>
-clawdbot voicecall tail
-clawdbot voicecall expose --mode funnel
+grawke voicecall call --to "+15555550123" --message "Hello from Grawke"
+grawke voicecall continue --call-id <id> --message "Any questions?"
+grawke voicecall speak --call-id <id> --message "One moment"
+grawke voicecall end --call-id <id>
+grawke voicecall status --call-id <id>
+grawke voicecall tail
+grawke voicecall expose --mode funnel
 ```
 
 ## Tool

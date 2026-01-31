@@ -4,7 +4,7 @@ import path from "node:path";
 import { inspect } from "node:util";
 import { cancel, isCancel } from "@clack/prompts";
 import { DEFAULT_AGENT_WORKSPACE_DIR, ensureAgentWorkspace } from "../agents/workspace.js";
-import { CONFIG_PATH_CLAWDBOT } from "../config/config.js";
+import { CONFIG_PATH_GRAWKE } from "../config/config.js";
 import { resolveSessionTranscriptsDirForAgent } from "../config/sessions.js";
 import { callGateway } from "../gateway/call.js";
 import { normalizeControlUiBasePath } from "../gateway/control-ui-shared.js";
@@ -229,7 +229,7 @@ export async function moveToTrash(pathname, runtime) {
     }
 }
 export async function handleReset(scope, workspaceDir, runtime) {
-    await moveToTrash(CONFIG_PATH_CLAWDBOT, runtime);
+    await moveToTrash(CONFIG_PATH_GRAWKE, runtime);
     if (scope === "config")
         return;
     await moveToTrash(path.join(CONFIG_DIR, "credentials"), runtime);

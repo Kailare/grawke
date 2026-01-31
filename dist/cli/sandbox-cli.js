@@ -7,30 +7,30 @@ import { formatHelpExamples } from "./help-format.js";
 // --- Helpers ---
 const SANDBOX_EXAMPLES = {
     main: [
-        ["clawdbot sandbox list", "List all sandbox containers."],
-        ["clawdbot sandbox list --browser", "List only browser containers."],
-        ["clawdbot sandbox recreate --all", "Recreate all containers."],
-        ["clawdbot sandbox recreate --session main", "Recreate a specific session."],
-        ["clawdbot sandbox recreate --agent mybot", "Recreate agent containers."],
-        ["clawdbot sandbox explain", "Explain effective sandbox config."],
+        ["grawke sandbox list", "List all sandbox containers."],
+        ["grawke sandbox list --browser", "List only browser containers."],
+        ["grawke sandbox recreate --all", "Recreate all containers."],
+        ["grawke sandbox recreate --session main", "Recreate a specific session."],
+        ["grawke sandbox recreate --agent mybot", "Recreate agent containers."],
+        ["grawke sandbox explain", "Explain effective sandbox config."],
     ],
     list: [
-        ["clawdbot sandbox list", "List all sandbox containers."],
-        ["clawdbot sandbox list --browser", "List only browser containers."],
-        ["clawdbot sandbox list --json", "JSON output."],
+        ["grawke sandbox list", "List all sandbox containers."],
+        ["grawke sandbox list --browser", "List only browser containers."],
+        ["grawke sandbox list --json", "JSON output."],
     ],
     recreate: [
-        ["clawdbot sandbox recreate --all", "Recreate all containers."],
-        ["clawdbot sandbox recreate --session main", "Recreate a specific session."],
-        ["clawdbot sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-        ["clawdbot sandbox recreate --browser --all", "Recreate only browser containers."],
-        ["clawdbot sandbox recreate --all --force", "Skip confirmation."],
+        ["grawke sandbox recreate --all", "Recreate all containers."],
+        ["grawke sandbox recreate --session main", "Recreate a specific session."],
+        ["grawke sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+        ["grawke sandbox recreate --browser --all", "Recreate only browser containers."],
+        ["grawke sandbox recreate --all --force", "Skip confirmation."],
     ],
     explain: [
-        ["clawdbot sandbox explain", "Show effective sandbox config."],
-        ["clawdbot sandbox explain --session agent:main:main", "Explain a specific session."],
-        ["clawdbot sandbox explain --agent work", "Explain an agent sandbox."],
-        ["clawdbot sandbox explain --json", "JSON output."],
+        ["grawke sandbox explain", "Show effective sandbox config."],
+        ["grawke sandbox explain --session agent:main:main", "Explain a specific session."],
+        ["grawke sandbox explain --agent work", "Explain an agent sandbox."],
+        ["grawke sandbox explain --json", "JSON output."],
     ],
 };
 function createRunner(commandFn) {

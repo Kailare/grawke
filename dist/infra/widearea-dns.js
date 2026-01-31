@@ -2,8 +2,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { CONFIG_DIR, ensureDir } from "../utils.js";
-export const WIDE_AREA_DISCOVERY_DOMAIN = "clawdbot.internal.";
-export const WIDE_AREA_ZONE_FILENAME = "clawdbot.internal.db";
+export const WIDE_AREA_DISCOVERY_DOMAIN = "grawke.internal.";
+export const WIDE_AREA_ZONE_FILENAME = "grawke.internal.db";
 export function getWideAreaZonePath() {
     return path.join(CONFIG_DIR, "dns", WIDE_AREA_ZONE_FILENAME);
 }
@@ -45,7 +45,7 @@ function extractSerial(zoneText) {
     return Number.isFinite(parsed) ? parsed : null;
 }
 function extractContentHash(zoneText) {
-    const match = zoneText.match(/^\s*;\s*clawdbot-content-hash:\s*(\S+)\s*$/m);
+    const match = zoneText.match(/^\s*;\s*grawke-content-hash:\s*(\S+)\s*$/m);
     return match?.[1] ?? null;
 }
 function computeContentHash(body) {
@@ -58,9 +58,9 @@ function computeContentHash(body) {
     return (h >>> 0).toString(16).padStart(8, "0");
 }
 function renderZone(opts) {
-    const hostname = os.hostname().split(".")[0] ?? "clawdbot";
-    const hostLabel = dnsLabel(opts.hostLabel ?? hostname, "clawdbot");
-    const instanceLabel = dnsLabel(opts.instanceLabel ?? `${hostname}-gateway`, "clawdbot-gw");
+    const hostname = os.hostname().split(".")[0] ?? "grawke";
+    const hostLabel = dnsLabel(opts.hostLabel ?? hostname, "grawke");
+    const instanceLabel = dnsLabel(opts.instanceLabel ?? `${hostname}-gateway`, "grawke-gw");
     const txt = [
         `displayName=${opts.displayName.trim() || hostname}`,
         `role=gateway`,
@@ -93,15 +93,15 @@ function renderZone(opts) {
     if (opts.tailnetIPv6) {
         records.push(`${hostLabel} IN AAAA ${opts.tailnetIPv6}`);
     }
-    records.push(`_clawdbot-gw._tcp IN PTR ${instanceLabel}._clawdbot-gw._tcp`);
-    records.push(`${instanceLabel}._clawdbot-gw._tcp IN SRV 0 0 ${opts.gatewayPort} ${hostLabel}`);
-    records.push(`${instanceLabel}._clawdbot-gw._tcp IN TXT ${txt.map(txtQuote).join(" ")}`);
+    records.push(`_grawke-gw._tcp IN PTR ${instanceLabel}._grawke-gw._tcp`);
+    records.push(`${instanceLabel}._grawke-gw._tcp IN SRV 0 0 ${opts.gatewayPort} ${hostLabel}`);
+    records.push(`${instanceLabel}._grawke-gw._tcp IN TXT ${txt.map(txtQuote).join(" ")}`);
     const contentBody = `${records.join("\n")}\n`;
     const hashBody = `${records
         .map((line) => line === soaLine ? `@ IN SOA ns1 hostmaster SERIAL 7200 3600 1209600 60` : line)
         .join("\n")}\n`;
     const contentHash = computeContentHash(hashBody);
-    return `; clawdbot-content-hash: ${contentHash}\n${contentBody}`;
+    return `; grawke-content-hash: ${contentHash}\n${contentBody}`;
 }
 export function renderWideAreaGatewayZoneText(opts) {
     return renderZone(opts);

@@ -2,9 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { detectMime } from "../media/mime.js";
-export const A2UI_PATH = "/__clawdbot__/a2ui";
-export const CANVAS_HOST_PATH = "/__clawdbot__/canvas";
-export const CANVAS_WS_PATH = "/__clawdbot/ws";
+export const A2UI_PATH = "/__grawke__/a2ui";
+export const CANVAS_HOST_PATH = "/__grawke__/canvas";
+export const CANVAS_WS_PATH = "/__grawke/ws";
 let cachedA2uiRootReal;
 let resolvingA2uiRoot = null;
 async function resolveA2uiRoot() {
@@ -90,9 +90,9 @@ export function injectCanvasLiveReload(html) {
 (() => {
   // Cross-platform action bridge helper.
   // Works on:
-  // - iOS: window.webkit.messageHandlers.clawdbotCanvasA2UIAction.postMessage(...)
-  // - Android: window.clawdbotCanvasA2UIAction.postMessage(...)
-  const actionHandlerName = "clawdbotCanvasA2UIAction";
+  // - iOS: window.webkit.messageHandlers.grawkeCanvasA2UIAction.postMessage(...)
+  // - Android: window.grawkeCanvasA2UIAction.postMessage(...)
+  const actionHandlerName = "grawkeCanvasA2UIAction";
   function postToNode(payload) {
     try {
       const raw = typeof payload === "string" ? payload : JSON.stringify(payload);
@@ -117,11 +117,11 @@ export function injectCanvasLiveReload(html) {
     const action = { ...userAction, id };
     return postToNode({ userAction: action });
   }
-  globalThis.Clawdbot = globalThis.Clawdbot ?? {};
-  globalThis.Clawdbot.postMessage = postToNode;
-  globalThis.Clawdbot.sendUserAction = sendUserAction;
-  globalThis.clawdbotPostMessage = postToNode;
-  globalThis.clawdbotSendUserAction = sendUserAction;
+  globalThis.Grawke = globalThis.Grawke ?? {};
+  globalThis.Grawke.postMessage = postToNode;
+  globalThis.Grawke.sendUserAction = sendUserAction;
+  globalThis.grawkePostMessage = postToNode;
+  globalThis.grawkeSendUserAction = sendUserAction;
 
   try {
     const proto = location.protocol === "https:" ? "wss" : "ws";

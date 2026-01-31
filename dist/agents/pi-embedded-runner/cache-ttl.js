@@ -1,4 +1,4 @@
-export const CACHE_TTL_CUSTOM_TYPE = "clawdbot.cache-ttl";
+export const CACHE_TTL_CUSTOM_TYPE = "grawke.cache-ttl";
 export function isCacheTtlEligibleProvider(provider, modelId) {
     const normalizedProvider = provider.toLowerCase();
     const normalizedModelId = modelId.toLowerCase();

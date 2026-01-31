@@ -17,7 +17,7 @@
     <script>
       (() => {
         try {
-          const stored = localStorage.getItem("clawdbot:theme");
+          const stored = localStorage.getItem("grawke:theme");
           if (stored === "light" || stored === "dark") document.documentElement.dataset.theme = stored;
         } catch {
           // ignore
@@ -35,7 +35,7 @@
     <header class="shell">
       <div class="shell__frame" role="banner">
         <div class="shell__titlebar">
-          <div class="brand" aria-label="Clawdbot docs terminal">
+          <div class="brand" aria-label="Grawke docs terminal">
             <img
               class="brand__logo"
               src="{{ "/assets/pixel-lobster.svg" | relative_url }}"
@@ -45,7 +45,7 @@
               decoding="async"
             />
             <div class="brand__text">
-              <div class="brand__name">Clawdbot</div>
+              <div class="brand__name">Grawke</div>
               <div class="brand__hint">docs // lobster terminal</div>
             </div>
           </div>
@@ -90,7 +90,7 @@
     <main id="content" class="content" role="main">
       <div class="terminal">
         <div class="terminal__prompt" aria-hidden="true">
-          <span class="prompt__user">clawd</span>@<span class="prompt__host">clawdbot</span>:<span class="prompt__path">~/docs</span>$<span class="prompt__cmd">
+          <span class="prompt__user">clawd</span>@<span class="prompt__host">grawke</span>:<span class="prompt__path">~/docs</span>$<span class="prompt__cmd">
             {% if page.url == "/" %}cat index.md{% else %}less {{ page.path }}{% endif %}
           </span>
         </div>
@@ -116,7 +116,7 @@
 
         <footer class="terminal__footer" role="contentinfo">
           <div class="footer__line">
-            <span class="footer__sig">clawdbot.ai</span>
+            <span class="footer__sig">grawke.ai</span>
             <span class="footer__sep">·</span>
             <a href="https://github.com/clawdbot/clawdbot">source</a>
             <span class="footer__sep">·</span>

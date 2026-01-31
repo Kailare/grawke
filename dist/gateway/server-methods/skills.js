@@ -21,9 +21,9 @@ function listWorkspaceDirs(cfg) {
 function collectSkillBins(entries) {
     const bins = new Set();
     for (const entry of entries) {
-        const required = entry.clawdbot?.requires?.bins ?? [];
-        const anyBins = entry.clawdbot?.requires?.anyBins ?? [];
-        const install = entry.clawdbot?.install ?? [];
+        const required = entry.grawke?.requires?.bins ?? [];
+        const anyBins = entry.grawke?.requires?.anyBins ?? [];
+        const install = entry.grawke?.install ?? [];
         for (const bin of required) {
             const trimmed = bin.trim();
             if (trimmed)

@@ -1,14 +1,14 @@
 {
-  "name": "@clawdbot/memory-core",
+  "name": "@grawke/memory-core",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Clawdbot core memory search plugin",
-  "clawdbot": {
+  "description": "Grawke core memory search plugin",
+  "grawke": {
     "extensions": [
       "./index.ts"
     ]
   },
   "peerDependencies": {
-    "clawdbot": ">=2026.1.24"
+    "grawke": ">=2026.1.24"
   }
 }

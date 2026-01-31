@@ -1,6 +1,6 @@
-import { resolveClawdbotAgentDir } from "../agents/agent-paths.js";
+import { resolveGrawkeAgentDir } from "../agents/agent-paths.js";
 import { upsertAuthProfile } from "../agents/auth-profiles.js";
-const resolveAuthAgentDir = (agentDir) => agentDir ?? resolveClawdbotAgentDir();
+const resolveAuthAgentDir = (agentDir) => agentDir ?? resolveGrawkeAgentDir();
 export async function writeOAuthCredentials(provider, creds, agentDir) {
     // Write to resolved agent dir so gateway finds credentials on startup.
     upsertAuthProfile({

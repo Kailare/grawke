@@ -8,7 +8,7 @@ read_when:
 
 # Logging
 
-Clawdbot logs in two places:
+Grawke logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -20,16 +20,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/clawdbot/clawdbot-YYYY-MM-DD.log`
+`/tmp/grawke/grawke-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.clawdbot/clawdbot.json`:
+You can override this in `~/.grawke/grawke.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/clawdbot.log"
+    "file": "/path/to/grawke.log"
   }
 }
 ```
@@ -41,7 +41,7 @@ You can override this in `~/.clawdbot/clawdbot.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-clawdbot logs --follow
+grawke logs --follow
 ```
 
 Output modes:
@@ -62,7 +62,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-clawdbot doctor
+grawke doctor
 ```
 
 ### Control UI (web)
@@ -75,7 +75,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-clawdbot channels logs --channel whatsapp
+grawke channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -97,13 +97,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.clawdbot/clawdbot.json`.
+All logging configuration lives under `logging` in `~/.grawke/grawke.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/clawdbot/clawdbot-YYYY-MM-DD.log",
+    "file": "/tmp/grawke/grawke-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -151,7 +151,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- Clawdbot exports via **OTLP/HTTP (protobuf)** today.
+- Grawke exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -208,7 +208,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-CLAWDBOT_DIAGNOSTICS=telegram.http,telegram.payload
+GRAWKE_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -237,7 +237,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "clawdbot-gateway",
+      "serviceName": "grawke-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -249,7 +249,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 ```
 
 Notes:
-- You can also enable the plugin with `clawdbot plugins enable diagnostics-otel`.
+- You can also enable the plugin with `grawke plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -262,58 +262,58 @@ Notes:
 ### Exported metrics (names + types)
 
 Model usage:
-- `clawdbot.tokens` (counter, attrs: `clawdbot.token`, `clawdbot.channel`,
-  `clawdbot.provider`, `clawdbot.model`)
-- `clawdbot.cost.usd` (counter, attrs: `clawdbot.channel`, `clawdbot.provider`,
-  `clawdbot.model`)
-- `clawdbot.run.duration_ms` (histogram, attrs: `clawdbot.channel`,
-  `clawdbot.provider`, `clawdbot.model`)
-- `clawdbot.context.tokens` (histogram, attrs: `clawdbot.context`,
-  `clawdbot.channel`, `clawdbot.provider`, `clawdbot.model`)
+- `grawke.tokens` (counter, attrs: `grawke.token`, `grawke.channel`,
+  `grawke.provider`, `grawke.model`)
+- `grawke.cost.usd` (counter, attrs: `grawke.channel`, `grawke.provider`,
+  `grawke.model`)
+- `grawke.run.duration_ms` (histogram, attrs: `grawke.channel`,
+  `grawke.provider`, `grawke.model`)
+- `grawke.context.tokens` (histogram, attrs: `grawke.context`,
+  `grawke.channel`, `grawke.provider`, `grawke.model`)
 
 Message flow:
-- `clawdbot.webhook.received` (counter, attrs: `clawdbot.channel`,
-  `clawdbot.webhook`)
-- `clawdbot.webhook.error` (counter, attrs: `clawdbot.channel`,
-  `clawdbot.webhook`)
-- `clawdbot.webhook.duration_ms` (histogram, attrs: `clawdbot.channel`,
-  `clawdbot.webhook`)
-- `clawdbot.message.queued` (counter, attrs: `clawdbot.channel`,
-  `clawdbot.source`)
-- `clawdbot.message.processed` (counter, attrs: `clawdbot.channel`,
-  `clawdbot.outcome`)
-- `clawdbot.message.duration_ms` (histogram, attrs: `clawdbot.channel`,
-  `clawdbot.outcome`)
+- `grawke.webhook.received` (counter, attrs: `grawke.channel`,
+  `grawke.webhook`)
+- `grawke.webhook.error` (counter, attrs: `grawke.channel`,
+  `grawke.webhook`)
+- `grawke.webhook.duration_ms` (histogram, attrs: `grawke.channel`,
+  `grawke.webhook`)
+- `grawke.message.queued` (counter, attrs: `grawke.channel`,
+  `grawke.source`)
+- `grawke.message.processed` (counter, attrs: `grawke.channel`,
+  `grawke.outcome`)
+- `grawke.message.duration_ms` (histogram, attrs: `grawke.channel`,
+  `grawke.outcome`)
 
 Queues + sessions:
-- `clawdbot.queue.lane.enqueue` (counter, attrs: `clawdbot.lane`)
-- `clawdbot.queue.lane.dequeue` (counter, attrs: `clawdbot.lane`)
-- `clawdbot.queue.depth` (histogram, attrs: `clawdbot.lane` or
-  `clawdbot.channel=heartbeat`)
-- `clawdbot.queue.wait_ms` (histogram, attrs: `clawdbot.lane`)
-- `clawdbot.session.state` (counter, attrs: `clawdbot.state`, `clawdbot.reason`)
-- `clawdbot.session.stuck` (counter, attrs: `clawdbot.state`)
-- `clawdbot.session.stuck_age_ms` (histogram, attrs: `clawdbot.state`)
-- `clawdbot.run.attempt` (counter, attrs: `clawdbot.attempt`)
+- `grawke.queue.lane.enqueue` (counter, attrs: `grawke.lane`)
+- `grawke.queue.lane.dequeue` (counter, attrs: `grawke.lane`)
+- `grawke.queue.depth` (histogram, attrs: `grawke.lane` or
+  `grawke.channel=heartbeat`)
+- `grawke.queue.wait_ms` (histogram, attrs: `grawke.lane`)
+- `grawke.session.state` (counter, attrs: `grawke.state`, `grawke.reason`)
+- `grawke.session.stuck` (counter, attrs: `grawke.state`)
+- `grawke.session.stuck_age_ms` (histogram, attrs: `grawke.state`)
+- `grawke.run.attempt` (counter, attrs: `grawke.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `clawdbot.model.usage`
-  - `clawdbot.channel`, `clawdbot.provider`, `clawdbot.model`
-  - `clawdbot.sessionKey`, `clawdbot.sessionId`
-  - `clawdbot.tokens.*` (input/output/cache_read/cache_write/total)
-- `clawdbot.webhook.processed`
-  - `clawdbot.channel`, `clawdbot.webhook`, `clawdbot.chatId`
-- `clawdbot.webhook.error`
-  - `clawdbot.channel`, `clawdbot.webhook`, `clawdbot.chatId`,
-    `clawdbot.error`
-- `clawdbot.message.processed`
-  - `clawdbot.channel`, `clawdbot.outcome`, `clawdbot.chatId`,
-    `clawdbot.messageId`, `clawdbot.sessionKey`, `clawdbot.sessionId`,
-    `clawdbot.reason`
-- `clawdbot.session.stuck`
-  - `clawdbot.state`, `clawdbot.ageMs`, `clawdbot.queueDepth`,
-    `clawdbot.sessionKey`, `clawdbot.sessionId`
+- `grawke.model.usage`
+  - `grawke.channel`, `grawke.provider`, `grawke.model`
+  - `grawke.sessionKey`, `grawke.sessionId`
+  - `grawke.tokens.*` (input/output/cache_read/cache_write/total)
+- `grawke.webhook.processed`
+  - `grawke.channel`, `grawke.webhook`, `grawke.chatId`
+- `grawke.webhook.error`
+  - `grawke.channel`, `grawke.webhook`, `grawke.chatId`,
+    `grawke.error`
+- `grawke.message.processed`
+  - `grawke.channel`, `grawke.outcome`, `grawke.chatId`,
+    `grawke.messageId`, `grawke.sessionKey`, `grawke.sessionId`,
+    `grawke.reason`
+- `grawke.session.stuck`
+  - `grawke.state`, `grawke.ageMs`, `grawke.queueDepth`,
+    `grawke.sessionKey`, `grawke.sessionId`
 
 ### Sampling + flushing
 
@@ -337,7 +337,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `clawdbot doctor` first.
+- **Gateway not reachable?** Run `grawke doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.
