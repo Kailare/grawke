@@ -1,28 +1,28 @@
 ---
-summary: "CLI reference for `grawke update` (safe-ish source update + gateway auto-restart)"
+summary: "CLI reference for `moltx update` (safe-ish source update + gateway auto-restart)"
 read_when:
   - You want to update a source checkout safely
   - You need to understand `--update` shorthand behavior
 ---
 
-# `grawke update`
+# `moltx update`
 
-Safely update Grawke and switch between stable/beta/dev channels.
+Safely update MoltX and switch between stable/beta/dev channels.
 
 If you installed via **npm/pnpm** (global install, no git metadata), updates happen via the package manager flow in [Updating](/install/updating).
 
 ## Usage
 
 ```bash
-grawke update
-grawke update status
-grawke update wizard
-grawke update --channel beta
-grawke update --channel dev
-grawke update --tag beta
-grawke update --no-restart
-grawke update --json
-grawke --update
+moltx update
+moltx update status
+moltx update wizard
+moltx update --channel beta
+moltx update --channel dev
+moltx update --tag beta
+moltx update --no-restart
+moltx update --json
+moltx --update
 ```
 
 ## Options
@@ -40,9 +40,9 @@ Note: downgrades require confirmation because older versions can break configura
 Show the active update channel + git tag/branch/SHA (for source checkouts), plus update availability.
 
 ```bash
-grawke update status
-grawke update status --json
-grawke update status --timeout 10
+moltx update status
+moltx update status --json
+moltx update status --timeout 10
 ```
 
 Options:
@@ -57,10 +57,10 @@ offers to create one.
 
 ## What it does
 
-When you switch channels explicitly (`--channel ...`), Grawke also keeps the
+When you switch channels explicitly (`--channel ...`), MoltX also keeps the
 install method aligned:
 
-- `dev` → ensures a git checkout (default: `~/grawke`, override with `GRAWKE_GIT_DIR`),
+- `dev` → ensures a git checkout (default: `~/moltx`, override with `MOLTX_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` → installs from npm using the matching dist-tag.
 
@@ -81,16 +81,16 @@ High-level:
 5. Rebases onto the selected commit (dev only).
 6. Installs deps (pnpm preferred; npm fallback).
 7. Builds + builds the Control UI.
-8. Runs `grawke doctor` as the final “safe update” check.
+8. Runs `moltx doctor` as the final “safe update” check.
 9. Syncs plugins to the active channel (dev uses bundled extensions; stable/beta uses npm) and updates npm-installed plugins.
 
 ## `--update` shorthand
 
-`grawke --update` rewrites to `grawke update` (useful for shells and launcher scripts).
+`moltx --update` rewrites to `moltx update` (useful for shells and launcher scripts).
 
 ## See also
 
-- `grawke doctor` (offers to run update first on git checkouts)
+- `moltx doctor` (offers to run update first on git checkouts)
 - [Development channels](/install/development-channels)
 - [Updating](/install/updating)
 - [CLI reference](/cli)

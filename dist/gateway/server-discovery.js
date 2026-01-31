@@ -5,14 +5,14 @@ import { runExec } from "../process/exec.js";
 export function formatBonjourInstanceName(displayName) {
     const trimmed = displayName.trim();
     if (!trimmed)
-        return "Grawke";
-    if (/grawke/i.test(trimmed))
+        return "MoltX";
+    if (/moltx/i.test(trimmed))
         return trimmed;
-    return `${trimmed} (Grawke)`;
+    return `${trimmed} (MoltX)`;
 }
 export function resolveBonjourCliPath(opts = {}) {
     const env = opts.env ?? process.env;
-    const envPath = env.GRAWKE_CLI_PATH?.trim();
+    const envPath = env.MOLTX_CLI_PATH?.trim();
     if (envPath)
         return envPath;
     const statSync = opts.statSync ?? fs.statSync;
@@ -26,7 +26,7 @@ export function resolveBonjourCliPath(opts = {}) {
     };
     const execPath = opts.execPath ?? process.execPath;
     const execDir = path.dirname(execPath);
-    const siblingCli = path.join(execDir, "grawke");
+    const siblingCli = path.join(execDir, "moltx");
     if (isFile(siblingCli))
         return siblingCli;
     const argv = opts.argv ?? process.argv;
@@ -38,14 +38,14 @@ export function resolveBonjourCliPath(opts = {}) {
     const distCli = path.join(cwd, "dist", "index.js");
     if (isFile(distCli))
         return distCli;
-    const binCli = path.join(cwd, "bin", "grawke.js");
+    const binCli = path.join(cwd, "bin", "moltx.js");
     if (isFile(binCli))
         return binCli;
     return undefined;
 }
 export async function resolveTailnetDnsHint(opts) {
     const env = opts?.env ?? process.env;
-    const envRaw = env.GRAWKE_TAILNET_DNS?.trim();
+    const envRaw = env.MOLTX_TAILNET_DNS?.trim();
     const envValue = envRaw && envRaw.length > 0 ? envRaw.replace(/\.$/, "") : "";
     if (envValue)
         return envValue;

@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "grawke/plugin-sdk";
+import type { ChannelDirectoryEntry } from "moltx/plugin-sdk";
 
 import { GRAPH_ROOT } from "./attachments/shared.js";
 import { loadMSTeamsSdkWithAuth } from "./sdk.js";

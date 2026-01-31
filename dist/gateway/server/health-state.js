@@ -1,6 +1,6 @@
 import { resolveDefaultAgentId } from "../../agents/agent-scope.js";
 import { getHealthSnapshot } from "../../commands/health.js";
-import { CONFIG_PATH_GRAWKE, STATE_DIR_GRAWKE, loadConfig } from "../../config/config.js";
+import { CONFIG_PATH_MOLTX, STATE_DIR_MOLTX, loadConfig } from "../../config/config.js";
 import { resolveMainSessionKey } from "../../config/sessions.js";
 import { normalizeMainKey } from "../../routing/session-key.js";
 import { listSystemPresence } from "../../infra/system-presence.js";
@@ -25,8 +25,8 @@ export function buildGatewaySnapshot() {
         stateVersion: { presence: presenceVersion, health: healthVersion },
         uptimeMs,
         // Surface resolved paths so UIs can display the true config location.
-        configPath: CONFIG_PATH_GRAWKE,
-        stateDir: STATE_DIR_GRAWKE,
+        configPath: CONFIG_PATH_MOLTX,
+        stateDir: STATE_DIR_MOLTX,
         sessionDefaults: {
             defaultAgentId,
             mainKey,

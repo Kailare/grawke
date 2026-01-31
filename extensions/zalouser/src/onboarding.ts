@@ -1,16 +1,16 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  GrawkeConfig,
+  MoltXConfig,
   WizardPrompter,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
   promptAccountId,
   promptChannelAccessConfig,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import {
   listZalouserAccountIds,
@@ -24,9 +24,9 @@ import type { ZcaFriend, ZcaGroup } from "./types.js";
 const channel = "zalouser" as const;
 
 function setZalouserDmPolicy(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   dmPolicy: "pairing" | "allowlist" | "open" | "disabled",
-): GrawkeConfig {
+): MoltXConfig {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.zalouser?.allowFrom)
@@ -41,7 +41,7 @@ function setZalouserDmPolicy(
         ...(allowFrom ? { allowFrom } : {}),
       },
     },
-  } as GrawkeConfig;
+  } as MoltXConfig;
 }
 
 async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
@@ -60,10 +60,10 @@ async function noteZalouserHelp(prompter: WizardPrompter): Promise<void> {
 }
 
 async function promptZalouserAllowFrom(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   prompter: WizardPrompter;
   accountId: string;
-}): Promise<GrawkeConfig> {
+}): Promise<MoltXConfig> {
   const { cfg, prompter, accountId } = params;
   const resolved = resolveZalouserAccountSync({ cfg, accountId });
   const existingAllowFrom = resolved.config.allowFrom ?? [];
@@ -131,7 +131,7 @@ async function promptZalouserAllowFrom(params: {
             allowFrom: unique,
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     }
 
     return {
@@ -152,15 +152,15 @@ async function promptZalouserAllowFrom(params: {
           },
         },
       },
-    } as GrawkeConfig;
+    } as MoltXConfig;
   }
 }
 
 function setZalouserGroupPolicy(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   accountId: string,
   groupPolicy: "open" | "allowlist" | "disabled",
-): GrawkeConfig {
+): MoltXConfig {
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
       ...cfg,
@@ -172,7 +172,7 @@ function setZalouserGroupPolicy(
           groupPolicy,
         },
       },
-    } as GrawkeConfig;
+    } as MoltXConfig;
   }
   return {
     ...cfg,
@@ -191,14 +191,14 @@ function setZalouserGroupPolicy(
         },
       },
     },
-  } as GrawkeConfig;
+  } as MoltXConfig;
 }
 
 function setZalouserGroupAllowlist(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   accountId: string,
   groupKeys: string[],
-): GrawkeConfig {
+): MoltXConfig {
   const groups = Object.fromEntries(groupKeys.map((key) => [key, { allow: true }]));
   if (accountId === DEFAULT_ACCOUNT_ID) {
     return {
@@ -211,7 +211,7 @@ function setZalouserGroupAllowlist(
           groups,
         },
       },
-    } as GrawkeConfig;
+    } as MoltXConfig;
   }
   return {
     ...cfg,
@@ -230,11 +230,11 @@ function setZalouserGroupAllowlist(
         },
       },
     },
-  } as GrawkeConfig;
+  } as MoltXConfig;
 }
 
 async function resolveZalouserGroups(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   accountId: string;
   entries: string[];
 }): Promise<Array<{ input: string; resolved: boolean; id?: string }>> {
@@ -270,15 +270,15 @@ const dmPolicy: ChannelOnboardingDmPolicy = {
   channel,
   policyKey: "channels.zalouser.dmPolicy",
   allowFromKey: "channels.zalouser.allowFrom",
-  getCurrent: (cfg) => ((cfg as GrawkeConfig).channels?.zalouser?.dmPolicy ?? "pairing") as "pairing",
-  setPolicy: (cfg, policy) => setZalouserDmPolicy(cfg as GrawkeConfig, policy),
+  getCurrent: (cfg) => ((cfg as MoltXConfig).channels?.zalouser?.dmPolicy ?? "pairing") as "pairing",
+  setPolicy: (cfg, policy) => setZalouserDmPolicy(cfg as MoltXConfig, policy),
   promptAllowFrom: async ({ cfg, prompter, accountId }) => {
     const id =
       accountId && normalizeAccountId(accountId)
         ? normalizeAccountId(accountId) ?? DEFAULT_ACCOUNT_ID
-        : resolveDefaultZalouserAccountId(cfg as GrawkeConfig);
+        : resolveDefaultZalouserAccountId(cfg as MoltXConfig);
     return promptZalouserAllowFrom({
-      cfg: cfg as GrawkeConfig,
+      cfg: cfg as MoltXConfig,
       prompter,
       accountId: id,
     });
@@ -289,10 +289,10 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
   channel,
   dmPolicy,
   getStatus: async ({ cfg }) => {
-    const ids = listZalouserAccountIds(cfg as GrawkeConfig);
+    const ids = listZalouserAccountIds(cfg as MoltXConfig);
     let configured = false;
     for (const accountId of ids) {
-      const account = resolveZalouserAccountSync({ cfg: cfg as GrawkeConfig, accountId });
+      const account = resolveZalouserAccountSync({ cfg: cfg as MoltXConfig, accountId });
       const isAuth = await checkZcaAuthenticated(account.profile);
       if (isAuth) {
         configured = true;
@@ -324,14 +324,14 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
     }
 
     const zalouserOverride = accountOverrides.zalouser?.trim();
-    const defaultAccountId = resolveDefaultZalouserAccountId(cfg as GrawkeConfig);
+    const defaultAccountId = resolveDefaultZalouserAccountId(cfg as MoltXConfig);
     let accountId = zalouserOverride
       ? normalizeAccountId(zalouserOverride)
       : defaultAccountId;
 
     if (shouldPromptAccountIds && !zalouserOverride) {
       accountId = await promptAccountId({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         prompter,
         label: "Zalo Personal",
         currentId: accountId,
@@ -340,7 +340,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
       });
     }
 
-    let next = cfg as GrawkeConfig;
+    let next = cfg as MoltXConfig;
     const account = resolveZalouserAccountSync({ cfg: next, accountId });
     const alreadyAuthenticated = await checkZcaAuthenticated(account.profile);
 
@@ -398,7 +398,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             profile: account.profile !== "default" ? account.profile : undefined,
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     } else {
       next = {
         ...next,
@@ -417,7 +417,7 @@ export const zalouserOnboardingAdapter: ChannelOnboardingAdapter = {
             },
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     }
 
     if (forceAllowFrom) {

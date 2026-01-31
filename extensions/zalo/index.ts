@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { zaloDock, zaloPlugin } from "./src/channel.js";
 import { handleZaloWebhookRequest } from "./src/monitor.js";
@@ -10,7 +10,7 @@ const plugin = {
   name: "Zalo",
   description: "Zalo channel plugin (Bot API)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     setZaloRuntime(api.runtime);
     api.registerChannel({ plugin: zaloPlugin, dock: zaloDock });
     api.registerHttpHandler(handleZaloWebhookRequest);

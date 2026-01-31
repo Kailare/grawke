@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://grawke.dev/protocol.schema.json",
-  "title": "Grawke Gateway Protocol",
+  "$id": "https://moltx.dev/protocol.schema.json",
+  "title": "MoltX Gateway Protocol",
   "description": "Handshake, request/response, and event frames for the Gateway WebSocket.",
   "oneOf": [
     {
@@ -57,7 +57,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "grawke-control-ui",
+                  "const": "moltx-control-ui",
                   "type": "string"
                 },
                 {
@@ -73,7 +73,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "grawke-macos",
+                  "const": "moltx-macos",
                   "type": "string"
                 },
                 {
@@ -85,7 +85,7 @@
                   "type": "string"
                 },
                 {
-                  "const": "grawke-probe",
+                  "const": "moltx-probe",
                   "type": "string"
                 }
               ]

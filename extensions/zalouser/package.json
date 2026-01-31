@@ -1,13 +1,13 @@
 {
-  "name": "@grawke/zalouser",
+  "name": "@moltx/zalouser",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Zalo Personal Account plugin via zca-cli",
+  "description": "MoltX Zalo Personal Account plugin via zca-cli",
   "dependencies": {
-    "grawke": "workspace:*",
+    "moltx": "workspace:*",
     "@sinclair/typebox": "0.34.47"
   },
-  "grawke": {
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@grawke/zalouser",
+      "npmSpec": "@moltx/zalouser",
       "localPath": "extensions/zalouser",
       "defaultChoice": "npm"
     }

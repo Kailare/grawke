@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "grawke/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "moltx/plugin-sdk";
 
 type ZalouserAccountStatus = {
   accountId?: unknown;
@@ -60,7 +60,7 @@ export function collectZalouserStatusIssues(
           accountId,
           kind: "auth",
           message: "Not authenticated (no zca session).",
-          fix: "Run: grawke channels login --channel zalouser",
+          fix: "Run: moltx channels login --channel zalouser",
         });
       }
       continue;

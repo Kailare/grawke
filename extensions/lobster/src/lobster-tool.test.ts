@@ -4,10 +4,10 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import type { GrawkePluginApi, GrawkePluginToolContext } from "../../../src/plugins/types.js";
+import type { MoltXPluginApi, MoltXPluginToolContext } from "../../../src/plugins/types.js";
 import { createLobsterTool } from "./lobster-tool.js";
 
-async function writeFakeLobsterScript(scriptBody: string, prefix = "grawke-lobster-plugin-") {
+async function writeFakeLobsterScript(scriptBody: string, prefix = "moltx-lobster-plugin-") {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
   const isWindows = process.platform === "win32";
 
@@ -33,7 +33,7 @@ async function writeFakeLobster(params: { payload: unknown }) {
   return await writeFakeLobsterScript(scriptBody);
 }
 
-function fakeApi(): GrawkePluginApi {
+function fakeApi(): MoltXPluginApi {
   return {
     id: "lobster",
     name: "lobster",
@@ -52,7 +52,7 @@ function fakeApi(): GrawkePluginApi {
   };
 }
 
-function fakeCtx(overrides: Partial<GrawkePluginToolContext> = {}): GrawkePluginToolContext {
+function fakeCtx(overrides: Partial<MoltXPluginToolContext> = {}): MoltXPluginToolContext {
   return {
     config: {} as any,
     workspaceDir: "/tmp",
@@ -97,7 +97,7 @@ describe("lobster plugin tool", () => {
   it("rejects invalid JSON from lobster", async () => {
     const { binPath } = await writeFakeLobsterScript(
       `process.stdout.write("nope");\n`,
-      "grawke-lobster-plugin-bad-",
+      "moltx-lobster-plugin-bad-",
     );
 
     const tool = createLobsterTool(fakeApi());
@@ -112,7 +112,7 @@ describe("lobster plugin tool", () => {
 
   it("can be gated off in sandboxed contexts", async () => {
     const api = fakeApi();
-    const factoryTool = (ctx: GrawkePluginToolContext) => {
+    const factoryTool = (ctx: MoltXPluginToolContext) => {
       if (ctx.sandboxed) return null;
       return createLobsterTool(api);
     };

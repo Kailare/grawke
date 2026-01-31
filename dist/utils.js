@@ -187,10 +187,10 @@ export function resolveUserPath(input) {
     return path.resolve(trimmed);
 }
 export function resolveConfigDir(env = process.env, homedir = os.homedir) {
-    const override = env.GRAWKE_STATE_DIR?.trim();
+    const override = env.MOLTX_STATE_DIR?.trim();
     if (override)
         return resolveUserPath(override);
-    return path.join(homedir(), ".grawke");
+    return path.join(homedir(), ".moltx");
 }
 export function resolveHomeDir() {
     const envHome = process.env.HOME?.trim();
@@ -243,5 +243,5 @@ export function formatTerminalLink(label, url, opts) {
     }
     return `\u001b]8;;${safeUrl}\u0007${safeLabel}\u001b]8;;\u0007`;
 }
-// Configuration root; can be overridden via GRAWKE_STATE_DIR.
+// Configuration root; can be overridden via MOLTX_STATE_DIR.
 export const CONFIG_DIR = resolveConfigDir();

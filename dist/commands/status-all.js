@@ -9,7 +9,7 @@ import { buildGatewayConnectionDetails, callGateway } from "../gateway/call.js";
 import { normalizeControlUiBasePath } from "../gateway/control-ui-shared.js";
 import { probeGateway } from "../gateway/probe.js";
 import { collectChannelStatusIssues } from "../infra/channels-status-issues.js";
-import { resolveGrawkePackageRoot } from "../infra/grawke-root.js";
+import { resolveMoltXPackageRoot } from "../infra/moltx-root.js";
 import { resolveOsSummary } from "../infra/os-summary.js";
 import { inspectPortUsage } from "../infra/ports.js";
 import { readRestartSentinel } from "../infra/restart-sentinel.js";
@@ -67,7 +67,7 @@ export async function statusAllCommand(runtime, opts) {
             : null;
         progress.tick();
         progress.setLabel("Checking for updates…");
-        const root = await resolveGrawkePackageRoot({
+        const root = await resolveMoltXPackageRoot({
             moduleUrl: import.meta.url,
             argv1: process.argv[1],
             cwd: process.cwd(),
@@ -118,9 +118,9 @@ export async function statusAllCommand(runtime, opts) {
                 ? typeof remote?.token === "string" && remote.token.trim()
                     ? remote.token.trim()
                     : undefined
-                : process.env.GRAWKE_GATEWAY_TOKEN?.trim() ||
+                : process.env.MOLTX_GATEWAY_TOKEN?.trim() ||
                     (typeof authToken === "string" && authToken.trim() ? authToken.trim() : undefined);
-            const password = process.env.GRAWKE_GATEWAY_PASSWORD?.trim() ||
+            const password = process.env.MOLTX_GATEWAY_PASSWORD?.trim() ||
                 (mode === "remote"
                     ? typeof remote?.password === "string" && remote.password.trim()
                         ? remote.password.trim()
@@ -350,7 +350,7 @@ export async function statusAllCommand(runtime, opts) {
                 Item: "Gateway",
                 Value: `${gatewayMode}${remoteUrlMissing ? " (remote.url missing)" : ""} · ${gatewayTarget} (${connection.urlSource}) · ${gatewayStatus}${gatewayAuth}`,
             },
-            { Item: "Security", Value: `Run: ${formatCliCommand("grawke security audit --deep")}` },
+            { Item: "Security", Value: `Run: ${formatCliCommand("moltx security audit --deep")}` },
             gatewaySelfLine
                 ? { Item: "Gateway self", Value: gatewaySelfLine }
                 : { Item: "Gateway self", Value: "unknown" },

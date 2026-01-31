@@ -36,7 +36,7 @@ export async function resolveGlobalPackageRoot(manager, runCommand, timeoutMs) {
     const root = await resolveGlobalRoot(manager, runCommand, timeoutMs);
     if (!root)
         return null;
-    return path.join(root, "grawke");
+    return path.join(root, "moltx");
 }
 export async function detectGlobalInstallManagerForRoot(runCommand, pkgRoot, timeoutMs) {
     const pkgReal = await tryRealpath(pkgRoot);
@@ -52,13 +52,13 @@ export async function detectGlobalInstallManagerForRoot(runCommand, pkgRoot, tim
         if (!globalRoot)
             continue;
         const globalReal = await tryRealpath(globalRoot);
-        const expected = path.join(globalReal, "grawke");
+        const expected = path.join(globalReal, "moltx");
         if (path.resolve(expected) === path.resolve(pkgReal))
             return manager;
     }
     const bunGlobalRoot = resolveBunGlobalRoot();
     const bunGlobalReal = await tryRealpath(bunGlobalRoot);
-    const bunExpected = path.join(bunGlobalReal, "grawke");
+    const bunExpected = path.join(bunGlobalReal, "moltx");
     if (path.resolve(bunExpected) === path.resolve(pkgReal))
         return "bun";
     return null;
@@ -68,11 +68,11 @@ export async function detectGlobalInstallManagerByPresence(runCommand, timeoutMs
         const root = await resolveGlobalRoot(manager, runCommand, timeoutMs);
         if (!root)
             continue;
-        if (await pathExists(path.join(root, "grawke")))
+        if (await pathExists(path.join(root, "moltx")))
             return manager;
     }
     const bunRoot = resolveBunGlobalRoot();
-    if (await pathExists(path.join(bunRoot, "grawke")))
+    if (await pathExists(path.join(bunRoot, "moltx")))
         return "bun";
     return null;
 }

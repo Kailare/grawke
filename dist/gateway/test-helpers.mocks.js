@@ -163,11 +163,11 @@ export const resetTestPluginRegistry = () => {
     setActivePluginRegistry(pluginRegistryState.registry);
 };
 const testConfigRoot = {
-    value: path.join(os.tmpdir(), `grawke-gateway-test-${process.pid}-${crypto.randomUUID()}`),
+    value: path.join(os.tmpdir(), `moltx-gateway-test-${process.pid}-${crypto.randomUUID()}`),
 };
 export const setTestConfigRoot = (root) => {
     testConfigRoot.value = root;
-    process.env.GRAWKE_CONFIG_PATH = path.join(root, "grawke.json");
+    process.env.MOLTX_CONFIG_PATH = path.join(root, "moltx.json");
 };
 export const testTailnetIPv4 = hoisted.testTailnetIPv4;
 export const piSdkMock = hoisted.piSdkMock;
@@ -232,7 +232,7 @@ vi.mock("../config/sessions.js", async () => {
 });
 vi.mock("../config/config.js", async () => {
     const actual = await vi.importActual("../config/config.js");
-    const resolveConfigPath = () => path.join(testConfigRoot.value, "grawke.json");
+    const resolveConfigPath = () => path.join(testConfigRoot.value, "moltx.json");
     const hashConfigRaw = (raw) => crypto
         .createHash("sha256")
         .update(raw ?? "")
@@ -309,10 +309,10 @@ vi.mock("../config/config.js", async () => {
     });
     return {
         ...actual,
-        get CONFIG_PATH_GRAWKE() {
+        get CONFIG_PATH_MOLTX() {
             return resolveConfigPath();
         },
-        get STATE_DIR_GRAWKE() {
+        get STATE_DIR_MOLTX() {
             return path.dirname(resolveConfigPath());
         },
         get isNixMode() {
@@ -498,5 +498,5 @@ vi.mock("../cli/deps.js", async () => {
         }),
     };
 });
-process.env.GRAWKE_SKIP_CHANNELS = "1";
-process.env.GRAWKE_SKIP_CRON = "1";
+process.env.MOLTX_SKIP_CHANNELS = "1";
+process.env.MOLTX_SKIP_CRON = "1";

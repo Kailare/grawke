@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 import { resolveBlueBubblesAccount } from "./accounts.js";
 import { resolveChatGuidForTarget } from "./send.js";
 import { parseBlueBubblesTarget, normalizeBlueBubblesHandle } from "./targets.js";
@@ -16,7 +16,7 @@ export type BlueBubblesAttachmentOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: GrawkeConfig;
+  cfg?: MoltXConfig;
 };
 
 const DEFAULT_ATTACHMENT_MAX_BYTES = 8 * 1024 * 1024;

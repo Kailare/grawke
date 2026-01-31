@@ -1,4 +1,4 @@
-import { MarkdownConfigSchema } from "grawke/plugin-sdk";
+import { MarkdownConfigSchema } from "moltx/plugin-sdk";
 import { z } from "zod";
 
 const allowFromEntry = z.union([z.string(), z.number()]);

@@ -2,7 +2,7 @@ import { abortEmbeddedPiRun } from "../../agents/pi-embedded.js";
 import { updateSessionStore } from "../../config/sessions.js";
 import { logVerbose } from "../../globals.js";
 import { createInternalHookEvent, triggerInternalHook } from "../../hooks/internal-hooks.js";
-import { scheduleGatewaySigusr1Restart, triggerGrawkeRestart } from "../../infra/restart.js";
+import { scheduleGatewaySigusr1Restart, triggerMoltXRestart } from "../../infra/restart.js";
 import { parseActivationCommand } from "../group-activation.js";
 import { parseSendPolicyCommand } from "../send-policy.js";
 import { normalizeUsageDisplay, resolveResponseUsageMode } from "../thinking.js";
@@ -210,11 +210,11 @@ export const handleRestartCommand = async (params, allowTextCommands) => {
         return {
             shouldContinue: false,
             reply: {
-                text: "⚙️ Restarting grawke in-process (SIGUSR1); back in a few seconds.",
+                text: "⚙️ Restarting moltx in-process (SIGUSR1); back in a few seconds.",
             },
         };
     }
-    const restartMethod = triggerGrawkeRestart();
+    const restartMethod = triggerMoltXRestart();
     if (!restartMethod.ok) {
         const detail = restartMethod.detail ? ` Details: ${restartMethod.detail}` : "";
         return {
@@ -227,7 +227,7 @@ export const handleRestartCommand = async (params, allowTextCommands) => {
     return {
         shouldContinue: false,
         reply: {
-            text: `⚙️ Restarting grawke via ${restartMethod.method}; give me a few seconds to come back online.`,
+            text: `⚙️ Restarting moltx via ${restartMethod.method}; give me a few seconds to come back online.`,
         },
     };
 };

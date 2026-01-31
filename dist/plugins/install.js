@@ -20,14 +20,14 @@ function safeDirName(input) {
 function safeFileName(input) {
     return safeDirName(input);
 }
-async function ensureGrawkeExtensions(manifest) {
-    const extensions = manifest.grawke?.extensions;
+async function ensureMoltXExtensions(manifest) {
+    const extensions = manifest.moltx?.extensions;
     if (!Array.isArray(extensions)) {
-        throw new Error("package.json missing grawke.extensions");
+        throw new Error("package.json missing moltx.extensions");
     }
     const list = extensions.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
     if (list.length === 0) {
-        throw new Error("package.json grawke.extensions is empty");
+        throw new Error("package.json moltx.extensions is empty");
     }
     return list;
 }
@@ -55,7 +55,7 @@ async function installPluginFromPackageDir(params) {
     }
     let extensions;
     try {
-        extensions = await ensureGrawkeExtensions(manifest);
+        extensions = await ensureMoltXExtensions(manifest);
     }
     catch (err) {
         return { ok: false, error: String(err) };
@@ -153,7 +153,7 @@ export async function installPluginFromArchive(params) {
     if (!resolveArchiveKind(archivePath)) {
         return { ok: false, error: `unsupported archive: ${archivePath}` };
     }
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-plugin-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-plugin-"));
     const extractDir = path.join(tmpDir, "extract");
     await fs.mkdir(extractDir, { recursive: true });
     logger.info?.(`Extracting ${archivePath}…`);
@@ -252,7 +252,7 @@ export async function installPluginFromNpmSpec(params) {
     const spec = params.spec.trim();
     if (!spec)
         return { ok: false, error: "missing npm spec" };
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-npm-pack-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-npm-pack-"));
     logger.info?.(`Downloading ${spec}…`);
     const res = await runCommandWithTimeout(["npm", "pack", spec], {
         timeoutMs: Math.max(timeoutMs, 300_000),

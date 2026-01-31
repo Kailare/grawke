@@ -1,11 +1,11 @@
 ---
-summary: "Quick troubleshooting guide for common Grawke failures"
+summary: "Quick troubleshooting guide for common MoltX failures"
 read_when:
   - Investigating runtime issues or failures
 ---
 # Troubleshooting 🔧
 
-When Grawke misbehaves, here's how to fix it.
+When MoltX misbehaves, here's how to fix it.
 
 Start with the FAQ’s [First 60 seconds](/help/faq#first-60-seconds-if-somethings-broken) if you just want a quick triage recipe. This page goes deeper on runtime failures and diagnostics.
 
@@ -17,15 +17,15 @@ Quick triage commands (in order):
 
 | Command | What it tells you | When to use it |
 |---|---|---|
-| `grawke status` | Local summary: OS + update, gateway reachability/mode, service, agents/sessions, provider config state | First check, quick overview |
-| `grawke status --all` | Full local diagnosis (read-only, pasteable, safe-ish) incl. log tail | When you need to share a debug report |
-| `grawke status --deep` | Runs gateway health checks (incl. provider probes; requires reachable gateway) | When “configured” doesn’t mean “working” |
-| `grawke gateway probe` | Gateway discovery + reachability (local + remote targets) | When you suspect you’re probing the wrong gateway |
-| `grawke channels status --probe` | Asks the running gateway for channel status (and optionally probes) | When gateway is reachable but channels misbehave |
-| `grawke gateway status` | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error | When the service “looks loaded” but nothing runs |
-| `grawke logs --follow` | Live logs (best signal for runtime issues) | When you need the actual failure reason |
+| `moltx status` | Local summary: OS + update, gateway reachability/mode, service, agents/sessions, provider config state | First check, quick overview |
+| `moltx status --all` | Full local diagnosis (read-only, pasteable, safe-ish) incl. log tail | When you need to share a debug report |
+| `moltx status --deep` | Runs gateway health checks (incl. provider probes; requires reachable gateway) | When “configured” doesn’t mean “working” |
+| `moltx gateway probe` | Gateway discovery + reachability (local + remote targets) | When you suspect you’re probing the wrong gateway |
+| `moltx channels status --probe` | Asks the running gateway for channel status (and optionally probes) | When gateway is reachable but channels misbehave |
+| `moltx gateway status` | Supervisor state (launchd/systemd/schtasks), runtime PID/exit, last gateway error | When the service “looks loaded” but nothing runs |
+| `moltx logs --follow` | Live logs (best signal for runtime issues) | When you need the actual failure reason |
 
-**Sharing output:** prefer `grawke status --all` (it redacts tokens). If you paste `grawke status`, consider setting `GRAWKE_SHOW_SECRETS=0` first (token previews).
+**Sharing output:** prefer `moltx status --all` (it redacts tokens). If you paste `moltx status`, consider setting `MOLTX_SHOW_SECRETS=0` first (token previews).
 
 See also: [Health checks](/gateway/health) and [Logging](/logging).
 
@@ -40,13 +40,13 @@ Fix options:
 - Re-run onboarding and choose **Anthropic** for that agent.
 - Or paste a setup-token on the **gateway host**:
   ```bash
-  grawke models auth setup-token --provider anthropic
+  moltx models auth setup-token --provider anthropic
   ```
 - Or copy `auth-profiles.json` from the main agent dir to the new agent dir.
 
 Verify:
 ```bash
-grawke models status
+moltx models status
 ```
 
 ### OAuth token refresh failed (Anthropic Claude subscription)
@@ -60,20 +60,20 @@ switch to a **Claude Code setup-token** or re-sync Claude Code CLI OAuth on the
 
 ```bash
 # Run on the gateway host (runs Claude Code CLI)
-grawke models auth setup-token --provider anthropic
-grawke models status
+moltx models auth setup-token --provider anthropic
+moltx models status
 ```
 
 If you generated the token elsewhere:
 
 ```bash
-grawke models auth paste-token --provider anthropic
-grawke models status
+moltx models auth paste-token --provider anthropic
+moltx models status
 ```
 
 **If you want to keep OAuth reuse:**
-log in with Claude Code CLI on the gateway host, then run `grawke models status`
-to sync the refreshed token into Grawke’s auth store.
+log in with Claude Code CLI on the gateway host, then run `moltx models status`
+to sync the refreshed token into MoltX’s auth store.
 
 More detail: [Anthropic](/providers/anthropic) and [OAuth](/concepts/oauth).
 
@@ -102,18 +102,18 @@ can appear “loaded” while nothing is running.
 
 **Check:**
 ```bash
-grawke gateway status
-grawke doctor
+moltx gateway status
+moltx doctor
 ```
 
 Doctor/service will show runtime state (PID/last exit) and log hints.
 
 **Logs:**
-- Preferred: `grawke logs --follow`
-- File logs (always): `/tmp/grawke/grawke-YYYY-MM-DD.log` (or your configured `logging.file`)
-- macOS LaunchAgent (if installed): `$GRAWKE_STATE_DIR/logs/gateway.log` and `gateway.err.log`
-- Linux systemd (if installed): `journalctl --user -u grawke-gateway[-<profile>].service -n 200 --no-pager`
-- Windows: `schtasks /Query /TN "Grawke Gateway (<profile>)" /V /FO LIST`
+- Preferred: `moltx logs --follow`
+- File logs (always): `/tmp/moltx/moltx-YYYY-MM-DD.log` (or your configured `logging.file`)
+- macOS LaunchAgent (if installed): `$MOLTX_STATE_DIR/logs/gateway.log` and `gateway.err.log`
+- Linux systemd (if installed): `journalctl --user -u moltx-gateway[-<profile>].service -n 200 --no-pager`
+- Windows: `schtasks /Query /TN "MoltX Gateway (<profile>)" /V /FO LIST`
 
 **Enable more logging:**
 - Bump file log detail (persisted JSONL):
@@ -136,24 +136,24 @@ Gateway refuses to start.
 **Fix (recommended):**
 - Run the wizard and set the Gateway run mode to **Local**:
   ```bash
-  grawke configure
+  moltx configure
   ```
 - Or set it directly:
   ```bash
-  grawke config set gateway.mode local
+  moltx config set gateway.mode local
   ```
 
 **If you meant to run a remote Gateway instead:**
 - Set a remote URL and keep `gateway.mode=remote`:
   ```bash
-  grawke config set gateway.mode remote
-  grawke config set gateway.remote.url "wss://gateway.example.com"
+  moltx config set gateway.mode remote
+  moltx config set gateway.remote.url "wss://gateway.example.com"
   ```
 
 **Ad-hoc/dev only:** pass `--allow-unconfigured` to start the gateway without
 `gateway.mode=local`.
 
-**No config file yet?** Run `grawke setup` to create a starter config, then rerun
+**No config file yet?** Run `moltx setup` to create a starter config, then rerun
 the gateway.
 
 ### Service Environment (PATH + runtime)
@@ -164,14 +164,14 @@ The gateway service runs with a **minimal PATH** to avoid shell/manager cruft:
 
 This intentionally excludes version managers (nvm/fnm/volta/asdf) and package
 managers (pnpm/npm) because the service does not load your shell init. Runtime
-variables like `DISPLAY` should live in `~/.grawke/.env` (loaded early by the
+variables like `DISPLAY` should live in `~/.moltx/.env` (loaded early by the
 gateway).
 Exec runs on `host=gateway` merge your login-shell `PATH` into the exec environment,
 so missing tools usually mean your shell init isn’t exporting them (or set
 `tools.exec.pathPrepend`). See [/tools/exec](/tools/exec).
 
 WhatsApp + Telegram channels require **Node**; Bun is unsupported. If your
-service was installed with Bun or a version-managed Node path, run `grawke doctor`
+service was installed with Bun or a version-managed Node path, run `moltx doctor`
 to migrate to a system Node install.
 
 ### Skill missing API key in sandbox
@@ -183,7 +183,7 @@ to migrate to a system Node install.
 **Fix:**
 - set `agents.defaults.sandbox.docker.env` (or per-agent `agents.list[].sandbox.docker.env`)
 - or bake the key into your custom sandbox image
-- then run `grawke sandbox recreate --agent <id>` (or `--all`)
+- then run `moltx sandbox recreate --agent <id>` (or `--all`)
 
 ### Service Running but Port Not Listening
 
@@ -196,28 +196,28 @@ the Gateway likely refused to bind.
 - Always trust `Probe target:` + `Config (service):` as the “what did we actually try?” lines.
 
 **Check:**
-- `gateway.mode` must be `local` for `grawke gateway` and the service.
-- If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `grawke gateway status` to see the service’s resolved port + probe target (or pass `--url`).
-- `grawke gateway status` and `grawke doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
+- `gateway.mode` must be `local` for `moltx gateway` and the service.
+- If you set `gateway.mode=remote`, the **CLI defaults** to a remote URL. The service can still be running locally, but your CLI may be probing the wrong place. Use `moltx gateway status` to see the service’s resolved port + probe target (or pass `--url`).
+- `moltx gateway status` and `moltx doctor` surface the **last gateway error** from logs when the service looks running but the port is closed.
 - Non-loopback binds (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) require auth:
-  `gateway.auth.token` (or `GRAWKE_GATEWAY_TOKEN`).
+  `gateway.auth.token` (or `MOLTX_GATEWAY_TOKEN`).
 - `gateway.remote.token` is for remote CLI calls only; it does **not** enable local auth.
 - `gateway.token` is ignored; use `gateway.auth.token`.
 
-**If `grawke gateway status` shows a config mismatch**
+**If `moltx gateway status` shows a config mismatch**
 - `Config (cli): ...` and `Config (service): ...` should normally match.
 - If they don’t, you’re almost certainly editing one config while the service is running another.
-- Fix: rerun `grawke gateway install --force` from the same `--profile` / `GRAWKE_STATE_DIR` you want the service to use.
+- Fix: rerun `moltx gateway install --force` from the same `--profile` / `MOLTX_STATE_DIR` you want the service to use.
 
-**If `grawke gateway status` reports service config issues**
+**If `moltx gateway status` reports service config issues**
 - The supervisor config (launchd/systemd/schtasks) is missing current defaults.
-- Fix: run `grawke doctor` to update it (or `grawke gateway install --force` for a full rewrite).
+- Fix: run `moltx doctor` to update it (or `moltx gateway install --force` for a full rewrite).
 
 **If `Last gateway error:` mentions “refusing to bind … without auth”**
 - You set `gateway.bind` to a non-loopback mode (`lan`/`tailnet`/`custom`, or `auto` when loopback is unavailable) but left auth off.
-- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `GRAWKE_GATEWAY_TOKEN`) and restart the service.
+- Fix: set `gateway.auth.mode` + `gateway.auth.token` (or export `MOLTX_GATEWAY_TOKEN`) and restart the service.
 
-**If `grawke gateway status` says `bind=tailnet` but no tailnet interface was found**
+**If `moltx gateway status` says `bind=tailnet` but no tailnet interface was found**
 - The gateway tried to bind to a Tailscale IP (100.64.0.0/10) but none were detected on the host.
 - Fix: bring up Tailscale on that machine (or change `gateway.bind` to `loopback`/`lan`).
 
@@ -231,7 +231,7 @@ This means something is already listening on the gateway port.
 
 **Check:**
 ```bash
-grawke gateway status
+moltx gateway status
 ```
 
 It will show the listener(s) and likely causes (gateway already running, SSH tunnel).
@@ -239,7 +239,7 @@ If needed, stop the service or pick a different port.
 
 ### Extra Workspace Folders Detected
 
-If you upgraded from older installs, you might still have `~/grawke` on disk.
+If you upgraded from older installs, you might still have `~/moltx` on disk.
 Multiple workspace directories can cause confusing auth or state drift because
 only one workspace is active.
 
@@ -248,7 +248,7 @@ only one workspace is active.
 
 ### Main chat running in a sandbox workspace
 
-Symptoms: `pwd` or file tools show `~/.grawke/sandboxes/...` even though you
+Symptoms: `pwd` or file tools show `~/.moltx/sandboxes/...` even though you
 expected the host workspace.
 
 **Why:** `agents.defaults.sandbox.mode: "non-main"` keys off `session.mainKey` (default `"main"`).
@@ -272,14 +272,14 @@ The agent was interrupted mid-response.
 
 ### "Agent failed before reply: Unknown model: anthropic/claude-haiku-3-5"
 
-Grawke intentionally rejects **older/insecure models** (especially those more
+MoltX intentionally rejects **older/insecure models** (especially those more
 vulnerable to prompt injection). If you see this error, the model name is no
 longer supported.
 
 **Fix:**
 - Pick a **latest** model for the provider and update your config or model alias.
-- If you’re unsure which models are available, run `grawke models list` or
-  `grawke models scan` and choose a supported one.
+- If you’re unsure which models are available, run `moltx models list` or
+  `moltx models scan` and choose a supported one.
 - Check gateway logs for the detailed failure reason.
 
 See also: [Models CLI](/cli/models) and [Model providers](/concepts/model-providers).
@@ -288,7 +288,7 @@ See also: [Models CLI](/cli/models) and [Model providers](/concepts/model-provid
 
 **Check 1:** Is the sender allowlisted?
 ```bash
-grawke status
+moltx status
 ```
 Look for `AllowFrom: ...` in the output.
 
@@ -297,14 +297,14 @@ Look for `AllowFrom: ...` in the output.
 # The message must match mentionPatterns or explicit mentions; defaults live in channel groups/guilds.
 # Multi-agent: `agents.list[].groupChat.mentionPatterns` overrides global patterns.
 grep -n "agents\\|groupChat\\|mentionPatterns\\|channels\\.whatsapp\\.groups\\|channels\\.telegram\\.groups\\|channels\\.imessage\\.groups\\|channels\\.discord\\.guilds" \
-  "${GRAWKE_CONFIG_PATH:-$HOME/.grawke/grawke.json}"
+  "${MOLTX_CONFIG_PATH:-$HOME/.moltx/moltx.json}"
 ```
 
 **Check 3:** Check the logs
 ```bash
-grawke logs --follow
+moltx logs --follow
 # or if you want quick filters:
-tail -f "$(ls -t /tmp/grawke/grawke-*.log | head -1)" | grep "blocked\\|skip\\|unauthorized"
+tail -f "$(ls -t /tmp/moltx/moltx-*.log | head -1)" | grep "blocked\\|skip\\|unauthorized"
 ```
 
 ### Pairing Code Not Arriving
@@ -313,14 +313,14 @@ If `dmPolicy` is `pairing`, unknown senders should receive a code and their mess
 
 **Check 1:** Is a pending request already waiting?
 ```bash
-grawke pairing list <channel>
+moltx pairing list <channel>
 ```
 
 Pending DM pairing requests are capped at **3 per channel** by default. If the list is full, new requests won’t generate a code until one is approved or expires.
 
 **Check 2:** Did the request get created but no reply was sent?
 ```bash
-grawke logs --follow | grep "pairing request"
+moltx logs --follow | grep "pairing request"
 ```
 
 **Check 3:** Confirm `dmPolicy` isn’t `open`/`allowlist` for that channel.
@@ -337,7 +337,7 @@ Known issue: When you send an image with ONLY a mention (no other text), WhatsAp
 
 **Check 1:** Is the session file there?
 ```bash
-ls -la ~/.grawke/agents/<agentId>/sessions/
+ls -la ~/.moltx/agents/<agentId>/sessions/
 ```
 
 **Check 2:** Is the reset window too short?
@@ -373,26 +373,26 @@ Or use the `process` tool to background long commands.
 
 ```bash
 # Check local status (creds, sessions, queued events)
-grawke status
+moltx status
 # Probe the running gateway + channels (WA connect + Telegram + Discord APIs)
-grawke status --deep
+moltx status --deep
 
 # View recent connection events
-grawke logs --limit 200 | grep "connection\\|disconnect\\|logout"
+moltx logs --limit 200 | grep "connection\\|disconnect\\|logout"
 ```
 
 **Fix:** Usually reconnects automatically once the Gateway is running. If you’re stuck, restart the Gateway process (however you supervise it), or run it manually with verbose output:
 
 ```bash
-grawke gateway --verbose
+moltx gateway --verbose
 ```
 
 If you’re logged out / unlinked:
 
 ```bash
-grawke channels logout
-trash "${GRAWKE_STATE_DIR:-$HOME/.grawke}/credentials" # if logout can't cleanly remove everything
-grawke channels login --verbose       # re-scan QR
+moltx channels logout
+trash "${MOLTX_STATE_DIR:-$HOME/.moltx}/credentials" # if logout can't cleanly remove everything
+moltx channels login --verbose       # re-scan QR
 ```
 
 ### Media Send Failing
@@ -409,12 +409,12 @@ ls -la /path/to/your/image.jpg
 
 **Check 3:** Check media logs
 ```bash
-grep "media\\|fetch\\|download" "$(ls -t /tmp/grawke/grawke-*.log | head -1)" | tail -20
+grep "media\\|fetch\\|download" "$(ls -t /tmp/moltx/moltx-*.log | head -1)" | tail -20
 ```
 
 ### High Memory Usage
 
-Grawke keeps conversation history in memory.
+MoltX keeps conversation history in memory.
 
 **Fix:** Restart periodically or set session limits:
 ```json
@@ -429,26 +429,26 @@ Grawke keeps conversation history in memory.
 
 ### “Gateway won’t start — configuration invalid”
 
-Grawke now refuses to start when the config contains unknown keys, malformed values, or invalid types.
+MoltX now refuses to start when the config contains unknown keys, malformed values, or invalid types.
 This is intentional for safety.
 
 Fix it with Doctor:
 ```bash
-grawke doctor
-grawke doctor --fix
+moltx doctor
+moltx doctor --fix
 ```
 
 Notes:
-- `grawke doctor` reports every invalid entry.
-- `grawke doctor --fix` applies migrations/repairs and rewrites the config.
-- Diagnostic commands like `grawke logs`, `grawke health`, `grawke status`, `grawke gateway status`, and `grawke gateway probe` still run even if the config is invalid.
+- `moltx doctor` reports every invalid entry.
+- `moltx doctor --fix` applies migrations/repairs and rewrites the config.
+- Diagnostic commands like `moltx logs`, `moltx health`, `moltx status`, `moltx gateway status`, and `moltx gateway probe` still run even if the config is invalid.
 
 ### “All models failed” — what should I check first?
 
 - **Credentials** present for the provider(s) being tried (auth profiles + env vars).
 - **Model routing**: confirm `agents.defaults.model.primary` and fallbacks are models you can access.
-- **Gateway logs** in `/tmp/grawke/…` for the exact provider error.
-- **Model status**: use `/model status` (chat) or `grawke models status` (CLI).
+- **Gateway logs** in `/tmp/moltx/…` for the exact provider error.
+- **Model status**: use `/model status` (chat) or `moltx models status` (CLI).
 
 ### I’m running on my personal WhatsApp number — why is self-chat weird?
 
@@ -473,13 +473,13 @@ See [WhatsApp setup](/channels/whatsapp).
 Run the login command again and scan the QR code:
 
 ```bash
-grawke channels login
+moltx channels login
 ```
 
 ### Build errors on `main` — what’s the standard fix path?
 
 1) `git pull origin main && pnpm install`
-2) `grawke doctor`
+2) `moltx doctor`
 3) Check GitHub issues or Discord
 4) Temporary workaround: check out an older commit
 
@@ -493,8 +493,8 @@ Typical recovery:
 git status   # ensure you’re in the repo root
 pnpm install
 pnpm build
-grawke doctor
-grawke gateway restart
+moltx doctor
+moltx gateway restart
 ```
 
 Why: pnpm is the configured package manager for this repo.
@@ -518,8 +518,8 @@ Notes:
 - The git flow only rebases if the repo is clean. Commit or stash changes first.
 - After switching, run:
   ```bash
-  grawke doctor
-  grawke gateway restart
+  moltx doctor
+  moltx gateway restart
   ```
 
 ### Telegram block streaming isn’t splitting text between tool calls. Why?
@@ -551,19 +551,19 @@ Fix checklist:
 3) Put `requireMention: false` **under** `channels.discord.guilds` (global or per‑channel).
    Top‑level `channels.discord.requireMention` is not a supported key.
 4) Ensure the bot has **Message Content Intent** and channel permissions.
-5) Run `grawke channels status --probe` for audit hints.
+5) Run `moltx channels status --probe` for audit hints.
 
 Docs: [Discord](/channels/discord), [Channels troubleshooting](/channels/troubleshooting).
 
 ### Cloud Code Assist API error: invalid tool schema (400). What now?
 
 This is almost always a **tool schema compatibility** issue. The Cloud Code Assist
-endpoint accepts a strict subset of JSON Schema. Grawke scrubs/normalizes tool
+endpoint accepts a strict subset of JSON Schema. MoltX scrubs/normalizes tool
 schemas in current `main`, but the fix is not in the last release yet (as of
 January 13, 2026).
 
 Fix checklist:
-1) **Update Grawke**:
+1) **Update MoltX**:
    - If you can run from source, pull `main` and restart the gateway.
    - Otherwise, wait for the next release that includes the schema scrubber.
 2) Avoid unsupported keywords like `anyOf/oneOf/allOf`, `patternProperties`,
@@ -581,7 +581,7 @@ If the app disappears or shows "Abort trap 6" when you click "Allow" on a privac
 
 **Fix 1: Reset TCC Cache**
 ```bash
-tccutil reset All com.grawke.mac.debug
+tccutil reset All com.moltx.mac.debug
 ```
 
 **Fix 2: Force New Bundle ID**
@@ -594,9 +594,9 @@ The app connects to a local gateway on port `18789`. If it stays stuck:
 **Fix 1: Stop the supervisor (preferred)**
 If the gateway is supervised by launchd, killing the PID will just respawn it. Stop the supervisor first:
 ```bash
-grawke gateway status
-grawke gateway stop
-# Or: launchctl bootout gui/$UID/com.grawke.gateway (replace with com.grawke.<profile> if needed)
+moltx gateway status
+moltx gateway stop
+# Or: launchctl bootout gui/$UID/com.moltx.gateway (replace with com.moltx.<profile> if needed)
 ```
 
 **Fix 2: Port is busy (find the listener)**
@@ -612,10 +612,10 @@ kill -9 <PID> # last resort
 ```
 
 **Fix 3: Check the CLI install**
-Ensure the global `grawke` CLI is installed and matches the app version:
+Ensure the global `moltx` CLI is installed and matches the app version:
 ```bash
-grawke --version
-npm install -g grawke@<version>
+moltx --version
+npm install -g moltx@<version>
 ```
 
 ## Debug Mode
@@ -624,43 +624,43 @@ Get verbose logging:
 
 ```bash
 # Turn on trace logging in config:
-#   ${GRAWKE_CONFIG_PATH:-$HOME/.grawke/grawke.json} -> { logging: { level: "trace" } }
+#   ${MOLTX_CONFIG_PATH:-$HOME/.moltx/moltx.json} -> { logging: { level: "trace" } }
 #
 # Then run verbose commands to mirror debug output to stdout:
-grawke gateway --verbose
-grawke channels login --verbose
+moltx gateway --verbose
+moltx channels login --verbose
 ```
 
 ## Log Locations
 
 | Log | Location |
 |-----|----------|
-| Gateway file logs (structured) | `/tmp/grawke/grawke-YYYY-MM-DD.log` (or `logging.file`) |
-| Gateway service logs (supervisor) | macOS: `$GRAWKE_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.grawke/logs/...`; profiles use `~/.grawke-<profile>/logs/...`)<br />Linux: `journalctl --user -u grawke-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "Grawke Gateway (<profile>)" /V /FO LIST` |
-| Session files | `$GRAWKE_STATE_DIR/agents/<agentId>/sessions/` |
-| Media cache | `$GRAWKE_STATE_DIR/media/` |
-| Credentials | `$GRAWKE_STATE_DIR/credentials/` |
+| Gateway file logs (structured) | `/tmp/moltx/moltx-YYYY-MM-DD.log` (or `logging.file`) |
+| Gateway service logs (supervisor) | macOS: `$MOLTX_STATE_DIR/logs/gateway.log` + `gateway.err.log` (default: `~/.moltx/logs/...`; profiles use `~/.moltx-<profile>/logs/...`)<br />Linux: `journalctl --user -u moltx-gateway[-<profile>].service -n 200 --no-pager`<br />Windows: `schtasks /Query /TN "MoltX Gateway (<profile>)" /V /FO LIST` |
+| Session files | `$MOLTX_STATE_DIR/agents/<agentId>/sessions/` |
+| Media cache | `$MOLTX_STATE_DIR/media/` |
+| Credentials | `$MOLTX_STATE_DIR/credentials/` |
 
 ## Health Check
 
 ```bash
 # Supervisor + probe target + config paths
-grawke gateway status
+moltx gateway status
 # Include system-level scans (legacy/extra services, port listeners)
-grawke gateway status --deep
+moltx gateway status --deep
 
 # Is the gateway reachable?
-grawke health --json
+moltx health --json
 # If it fails, rerun with connection details:
-grawke health --verbose
+moltx health --verbose
 
 # Is something listening on the default port?
 lsof -nP -iTCP:18789 -sTCP:LISTEN
 
 # Recent activity (RPC log tail)
-grawke logs --follow
+moltx logs --follow
 # Fallback if RPC is down
-tail -20 /tmp/grawke/grawke-*.log
+tail -20 /tmp/moltx/moltx-*.log
 ```
 
 ## Reset Everything
@@ -668,23 +668,23 @@ tail -20 /tmp/grawke/grawke-*.log
 Nuclear option:
 
 ```bash
-grawke gateway stop
+moltx gateway stop
 # If you installed a service and want a clean install:
-# grawke gateway uninstall
+# moltx gateway uninstall
 
-trash "${GRAWKE_STATE_DIR:-$HOME/.grawke}"
-grawke channels login         # re-pair WhatsApp
-grawke gateway restart           # or: grawke gateway
+trash "${MOLTX_STATE_DIR:-$HOME/.moltx}"
+moltx channels login         # re-pair WhatsApp
+moltx gateway restart           # or: moltx gateway
 ```
 
 ⚠️ This loses all sessions and requires re-pairing WhatsApp.
 
 ## Getting Help
 
-1. Check logs first: `/tmp/grawke/` (default: `grawke-YYYY-MM-DD.log`, or your configured `logging.file`)
+1. Check logs first: `/tmp/moltx/` (default: `moltx-YYYY-MM-DD.log`, or your configured `logging.file`)
 2. Search existing issues on GitHub
 3. Open a new issue with:
-   - Grawke version
+   - MoltX version
    - Relevant log snippets
    - Steps to reproduce
    - Your config (redact secrets!)

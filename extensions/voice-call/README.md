@@ -1,6 +1,6 @@
-# @grawke/voice-call
+# @moltx/voice-call
 
-Official Voice Call plugin for **Grawke**.
+Official Voice Call plugin for **MoltX**.
 
 Providers:
 - **Twilio** (Programmable Voice + Media Streams)
@@ -13,10 +13,10 @@ Plugin system: `https://docs.clawd.bot/plugin`
 
 ## Install (local dev)
 
-### Option A: install via Grawke (recommended)
+### Option A: install via MoltX (recommended)
 
 ```bash
-grawke plugins install @grawke/voice-call
+moltx plugins install @moltx/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -24,9 +24,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.grawke/extensions
-cp -R extensions/voice-call ~/.grawke/extensions/voice-call
-cd ~/.grawke/extensions/voice-call && pnpm install
+mkdir -p ~/.moltx/extensions
+cp -R extensions/voice-call ~/.moltx/extensions/voice-call
+cd ~/.moltx/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -99,13 +99,13 @@ Notes:
 ## CLI
 
 ```bash
-grawke voicecall call --to "+15555550123" --message "Hello from Grawke"
-grawke voicecall continue --call-id <id> --message "Any questions?"
-grawke voicecall speak --call-id <id> --message "One moment"
-grawke voicecall end --call-id <id>
-grawke voicecall status --call-id <id>
-grawke voicecall tail
-grawke voicecall expose --mode funnel
+moltx voicecall call --to "+15555550123" --message "Hello from MoltX"
+moltx voicecall continue --call-id <id> --message "Any questions?"
+moltx voicecall speak --call-id <id> --message "One moment"
+moltx voicecall end --call-id <id>
+moltx voicecall status --call-id <id>
+moltx voicecall tail
+moltx voicecall expose --mode funnel
 ```
 
 ## Tool

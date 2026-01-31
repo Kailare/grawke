@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import type { PluginRuntime } from "grawke/plugin-sdk";
+import type { PluginRuntime } from "moltx/plugin-sdk";
 import type { CoreConfig } from "./types.js";
 
 import { matrixPlugin } from "./channel.js";

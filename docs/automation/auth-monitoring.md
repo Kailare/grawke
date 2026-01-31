@@ -6,13 +6,13 @@ read_when:
 ---
 # Auth monitoring
 
-Grawke exposes OAuth expiry health via `grawke models status`. Use that for
+MoltX exposes OAuth expiry health via `moltx models status`. Use that for
 automation and alerting; scripts are optional extras for phone workflows.
 
 ## Preferred: CLI check (portable)
 
 ```bash
-grawke models status --check
+moltx models status --check
 ```
 
 Exit codes:
@@ -27,15 +27,15 @@ This works in cron/systemd and requires no extra scripts.
 These live under `scripts/` and are **optional**. They assume SSH access to the
 gateway host and are tuned for systemd + Termux.
 
-- `scripts/claude-auth-status.sh` now uses `grawke models status --json` as the
+- `scripts/claude-auth-status.sh` now uses `moltx models status --json` as the
   source of truth (falling back to direct file reads if the CLI is unavailable),
-  so keep `grawke` on `PATH` for timers.
+  so keep `moltx` on `PATH` for timers.
 - `scripts/auth-monitor.sh`: cron/systemd timer target; sends alerts (ntfy or phone).
-- `scripts/systemd/grawke-auth-monitor.{service,timer}`: systemd user timer.
-- `scripts/claude-auth-status.sh`: Claude Code + Grawke auth checker (full/json/simple).
+- `scripts/systemd/moltx-auth-monitor.{service,timer}`: systemd user timer.
+- `scripts/claude-auth-status.sh`: Claude Code + MoltX auth checker (full/json/simple).
 - `scripts/mobile-reauth.sh`: guided re‑auth flow over SSH.
 - `scripts/termux-quick-auth.sh`: one‑tap widget status + open auth URL.
 - `scripts/termux-auth-widget.sh`: full guided widget flow.
-- `scripts/termux-sync-widget.sh`: sync Claude Code creds → Grawke.
+- `scripts/termux-sync-widget.sh`: sync Claude Code creds → MoltX.
 
 If you don’t need phone automation or systemd timers, skip these scripts.

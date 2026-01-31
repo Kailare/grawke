@@ -1,5 +1,5 @@
 ---
-summary: "Automated, hardened Grawke installation with Ansible, Tailscale VPN, and firewall isolation"
+summary: "Automated, hardened MoltX installation with Ansible, Tailscale VPN, and firewall isolation"
 read_when:
   - You want automated server deployment with security hardening
   - You need firewall-isolated setup with VPN access
@@ -8,19 +8,19 @@ read_when:
 
 # Ansible Installation
 
-The recommended way to deploy Grawke to production servers is via **[grawke-ansible](https://github.com/clawdbot/clawdbot-ansible)** — an automated installer with security-first architecture.
+The recommended way to deploy MoltX to production servers is via **[moltx-ansible](https://github.com/clawdbot/clawdbot-ansible)** — an automated installer with security-first architecture.
 
 ## Quick Start
 
 One-command install:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/grawke/grawke-ansible/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/moltx/moltx-ansible/main/install.sh | bash
 ```
 
 > **📦 Full guide: [github.com/clawdbot/clawdbot-ansible](https://github.com/clawdbot/clawdbot-ansible)**
 >
-> The grawke-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
+> The moltx-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
 
 ## What You Get
 
@@ -46,22 +46,22 @@ The Ansible playbook installs and configures:
 2. **UFW firewall** (SSH + Tailscale ports only)
 3. **Docker CE + Compose V2** (for agent sandboxes)
 4. **Node.js 22.x + pnpm** (runtime dependencies)
-5. **Grawke** (host-based, not containerized)
+5. **MoltX** (host-based, not containerized)
 6. **Systemd service** (auto-start with security hardening)
 
 Note: The gateway runs **directly on the host** (not in Docker), but agent sandboxes use Docker for isolation. See [Sandboxing](/gateway/sandboxing) for details.
 
 ## Post-Install Setup
 
-After installation completes, switch to the grawke user:
+After installation completes, switch to the moltx user:
 
 ```bash
-sudo -i -u grawke
+sudo -i -u moltx
 ```
 
 The post-install script will guide you through:
 
-1. **Onboarding wizard**: Configure Grawke settings
+1. **Onboarding wizard**: Configure MoltX settings
 2. **Provider login**: Connect WhatsApp/Telegram/Discord/Signal
 3. **Gateway testing**: Verify the installation
 4. **Tailscale setup**: Connect to your VPN mesh
@@ -70,17 +70,17 @@ The post-install script will guide you through:
 
 ```bash
 # Check service status
-sudo systemctl status grawke
+sudo systemctl status moltx
 
 # View live logs
-sudo journalctl -u grawke -f
+sudo journalctl -u moltx -f
 
 # Restart gateway
-sudo systemctl restart grawke
+sudo systemctl restart moltx
 
-# Provider login (run as grawke user)
-sudo -i -u grawke
-grawke channels login
+# Provider login (run as moltx user)
+sudo -i -u moltx
+moltx channels login
 ```
 
 ## Security Architecture
@@ -118,7 +118,7 @@ sudo apt update && sudo apt install -y ansible git
 
 # 2. Clone repository
 git clone https://github.com/clawdbot/clawdbot-ansible.git
-cd grawke-ansible
+cd moltx-ansible
 
 # 3. Install Ansible collections
 ansible-galaxy collection install -r requirements.yml
@@ -126,18 +126,18 @@ ansible-galaxy collection install -r requirements.yml
 # 4. Run playbook
 ./run-playbook.sh
 
-# Or run directly (then manually execute /tmp/grawke-setup.sh after)
+# Or run directly (then manually execute /tmp/moltx-setup.sh after)
 # ansible-playbook playbook.yml --ask-become-pass
 ```
 
-## Updating Grawke
+## Updating MoltX
 
-The Ansible installer sets up Grawke for manual updates. See [Updating](/install/updating) for the standard update flow.
+The Ansible installer sets up MoltX for manual updates. See [Updating](/install/updating) for the standard update flow.
 
 To re-run the Ansible playbook (e.g., for configuration changes):
 
 ```bash
-cd grawke-ansible
+cd moltx-ansible
 ./run-playbook.sh
 ```
 
@@ -156,14 +156,14 @@ If you're locked out:
 
 ```bash
 # Check logs
-sudo journalctl -u grawke -n 100
+sudo journalctl -u moltx -n 100
 
 # Verify permissions
-sudo ls -la /opt/grawke
+sudo ls -la /opt/moltx
 
 # Test manual start
-sudo -i -u grawke
-cd ~/grawke
+sudo -i -u moltx
+cd ~/moltx
 pnpm start
 ```
 
@@ -174,20 +174,20 @@ pnpm start
 sudo systemctl status docker
 
 # Check sandbox image
-sudo docker images | grep grawke-sandbox
+sudo docker images | grep moltx-sandbox
 
 # Build sandbox image if missing
-cd /opt/grawke/grawke
-sudo -u grawke ./scripts/sandbox-setup.sh
+cd /opt/moltx/moltx
+sudo -u moltx ./scripts/sandbox-setup.sh
 ```
 
 ### Provider login fails
 
-Make sure you're running as the `grawke` user:
+Make sure you're running as the `moltx` user:
 
 ```bash
-sudo -i -u grawke
-grawke channels login
+sudo -i -u moltx
+moltx channels login
 ```
 
 ## Advanced Configuration
@@ -199,7 +199,7 @@ For detailed security architecture and troubleshooting:
 
 ## Related
 
-- [grawke-ansible](https://github.com/clawdbot/clawdbot-ansible) — full deployment guide
+- [moltx-ansible](https://github.com/clawdbot/clawdbot-ansible) — full deployment guide
 - [Docker](/install/docker) — containerized gateway setup
 - [Sandboxing](/gateway/sandboxing) — agent sandbox configuration
 - [Multi-Agent Sandbox & Tools](/multi-agent-sandbox-tools) — per-agent isolation

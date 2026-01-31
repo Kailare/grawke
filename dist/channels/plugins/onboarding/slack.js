@@ -25,11 +25,11 @@ function setSlackDmPolicy(cfg, dmPolicy) {
     };
 }
 function buildSlackManifest(botName) {
-    const safeName = botName.trim() || "Grawke";
+    const safeName = botName.trim() || "MoltX";
     const manifest = {
         display_information: {
             name: safeName,
-            description: `${safeName} connector for Grawke`,
+            description: `${safeName} connector for MoltX`,
         },
         features: {
             bot_user: {
@@ -43,7 +43,7 @@ function buildSlackManifest(botName) {
             slash_commands: [
                 {
                     command: "/clawd",
-                    description: "Send a message to Grawke",
+                    description: "Send a message to MoltX",
                     should_escape: false,
                 },
             ],
@@ -312,7 +312,7 @@ export const slackOnboardingAdapter = {
         let appToken = null;
         const slackBotName = String(await prompter.text({
             message: "Slack bot display name (used for manifest)",
-            initialValue: "Grawke",
+            initialValue: "MoltX",
         })).trim();
         if (!accountConfigured) {
             await noteSlackTokenHelp(prompter, slackBotName);

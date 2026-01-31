@@ -1,17 +1,17 @@
 ---
-summary: "CLI reference for `grawke health` (gateway health endpoint via RPC)"
+summary: "CLI reference for `moltx health` (gateway health endpoint via RPC)"
 read_when:
   - You want to quickly check the running Gateway’s health
 ---
 
-# `grawke health`
+# `moltx health`
 
 Fetch health from the running Gateway.
 
 ```bash
-grawke health
-grawke health --json
-grawke health --verbose
+moltx health
+moltx health --json
+moltx health --verbose
 ```
 
 Notes:

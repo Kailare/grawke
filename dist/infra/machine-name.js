@@ -20,7 +20,7 @@ function fallbackHostName() {
     return (os
         .hostname()
         .replace(/\.local$/i, "")
-        .trim() || "grawke");
+        .trim() || "moltx");
 }
 export async function getMachineDisplayName() {
     if (cachedPromise)

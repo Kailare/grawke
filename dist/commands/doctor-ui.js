@@ -1,10 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { resolveGrawkePackageRoot } from "../infra/grawke-root.js";
+import { resolveMoltXPackageRoot } from "../infra/moltx-root.js";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { note } from "../terminal/note.js";
 export async function maybeRepairUiProtocolFreshness(_runtime, prompter) {
-    const root = await resolveGrawkePackageRoot({
+    const root = await resolveMoltXPackageRoot({
         moduleUrl: import.meta.url,
         argv1: process.argv[1],
         cwd: process.cwd(),

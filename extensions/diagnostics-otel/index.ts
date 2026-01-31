@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { createDiagnosticsOtelService } from "./src/service.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Diagnostics OpenTelemetry",
   description: "Export diagnostics events to OpenTelemetry",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     api.registerService(createDiagnosticsOtelService());
   },
 };

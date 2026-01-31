@@ -7,5 +7,5 @@ export function resolveProviderDefaultAccountId(params) {
         DEFAULT_ACCOUNT_ID);
 }
 export function formatPairingApproveHint(providerId) {
-    return `Approve via: grawke pairing list ${providerId} / grawke pairing approve ${providerId} <code>`;
+    return `Approve via: moltx pairing list ${providerId} / moltx pairing approve ${providerId} <code>`;
 }

@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { loginQwenPortalOAuth } from "./oauth.js";
 

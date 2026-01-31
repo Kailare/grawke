@@ -6,7 +6,7 @@ import {
   MarkdownConfigSchema,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import { z } from "zod";
 
 export const NextcloudTalkRoomSchema = z

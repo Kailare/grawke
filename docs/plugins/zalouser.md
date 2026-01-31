@@ -1,13 +1,13 @@
 ---
 summary: "Zalo Personal plugin: QR login + messaging via zca-cli (plugin install + channel config + CLI + tool)"
 read_when:
-  - You want Zalo Personal (unofficial) support in Grawke
+  - You want Zalo Personal (unofficial) support in MoltX
   - You are configuring or developing the zalouser plugin
 ---
 
 # Zalo Personal (plugin)
 
-Zalo Personal support for Grawke via a plugin, using `zca-cli` to automate a normal Zalo user account.
+Zalo Personal support for MoltX via a plugin, using `zca-cli` to automate a normal Zalo user account.
 
 > **Warning:** Unofficial automation may lead to account suspension/ban. Use at your own risk.
 
@@ -24,7 +24,7 @@ If you use a remote Gateway, install/configure it on the **machine running the G
 ### Option A: install from npm
 
 ```bash
-grawke plugins install @grawke/zalouser
+moltx plugins install @moltx/zalouser
 ```
 
 Restart the Gateway afterwards.
@@ -32,7 +32,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev)
 
 ```bash
-grawke plugins install ./extensions/zalouser
+moltx plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -62,11 +62,11 @@ Channel config lives under `channels.zalouser` (not `plugins.entries.*`):
 ## CLI
 
 ```bash
-grawke channels login --channel zalouser
-grawke channels logout --channel zalouser
-grawke channels status --probe
-grawke message send --channel zalouser --target <threadId> --message "Hello from Grawke"
-grawke directory peers list --channel zalouser --query "name"
+moltx channels login --channel zalouser
+moltx channels logout --channel zalouser
+moltx channels status --probe
+moltx message send --channel zalouser --target <threadId> --message "Hello from MoltX"
+moltx directory peers list --channel zalouser --query "name"
 ```
 
 ## Agent tool

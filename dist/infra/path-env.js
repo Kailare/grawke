@@ -42,20 +42,20 @@ function candidateBinDirs(opts) {
     const homeDir = opts.homeDir ?? os.homedir();
     const platform = opts.platform ?? process.platform;
     const candidates = [];
-    // Bundled macOS app: `grawke` lives next to the executable (process.execPath).
+    // Bundled macOS app: `moltx` lives next to the executable (process.execPath).
     try {
         const execDir = path.dirname(execPath);
-        const siblingGrawke = path.join(execDir, "grawke");
-        if (isExecutable(siblingGrawke))
+        const siblingMoltX = path.join(execDir, "moltx");
+        if (isExecutable(siblingMoltX))
             candidates.push(execDir);
     }
     catch {
         // ignore
     }
-    // Project-local installs (best effort): if a `node_modules/.bin/grawke` exists near cwd,
+    // Project-local installs (best effort): if a `node_modules/.bin/moltx` exists near cwd,
     // include it. This helps when running under launchd or other minimal PATH environments.
     const localBinDir = path.join(cwd, "node_modules", ".bin");
-    if (isExecutable(path.join(localBinDir, "grawke")))
+    if (isExecutable(path.join(localBinDir, "moltx")))
         candidates.push(localBinDir);
     const miseDataDir = process.env.MISE_DATA_DIR ?? path.join(homeDir, ".local", "share", "mise");
     const miseShims = path.join(miseDataDir, "shims");
@@ -76,13 +76,13 @@ function candidateBinDirs(opts) {
     return candidates.filter(isDirectory);
 }
 /**
- * Best-effort PATH bootstrap so skills that require the `grawke` CLI can run
+ * Best-effort PATH bootstrap so skills that require the `moltx` CLI can run
  * under launchd/minimal environments (and inside the macOS app bundle).
  */
-export function ensureGrawkeCliOnPath(opts = {}) {
-    if (isTruthyEnvValue(process.env.GRAWKE_PATH_BOOTSTRAPPED))
+export function ensureMoltXCliOnPath(opts = {}) {
+    if (isTruthyEnvValue(process.env.MOLTX_PATH_BOOTSTRAPPED))
         return;
-    process.env.GRAWKE_PATH_BOOTSTRAPPED = "1";
+    process.env.MOLTX_PATH_BOOTSTRAPPED = "1";
     const existing = opts.pathEnv ?? process.env.PATH ?? "";
     const prepend = candidateBinDirs(opts);
     if (prepend.length === 0)

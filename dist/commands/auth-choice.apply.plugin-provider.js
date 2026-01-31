@@ -1,4 +1,4 @@
-import { resolveGrawkeAgentDir } from "../agents/agent-paths.js";
+import { resolveMoltXAgentDir } from "../agents/agent-paths.js";
 import { resolveDefaultAgentId, resolveAgentDir, resolveAgentWorkspaceDir, } from "../agents/agent-scope.js";
 import { upsertAuthProfile } from "../agents/auth-profiles.js";
 import { normalizeProviderId } from "../agents/model-selection.js";
@@ -76,7 +76,7 @@ export async function applyAuthChoicePluginProvider(params, options) {
     const agentId = params.agentId ?? resolveDefaultAgentId(nextConfig);
     const defaultAgentId = resolveDefaultAgentId(nextConfig);
     const agentDir = params.agentDir ??
-        (agentId === defaultAgentId ? resolveGrawkeAgentDir() : resolveAgentDir(nextConfig, agentId));
+        (agentId === defaultAgentId ? resolveMoltXAgentDir() : resolveAgentDir(nextConfig, agentId));
     const workspaceDir = resolveAgentWorkspaceDir(nextConfig, agentId) ?? resolveDefaultAgentWorkspaceDir();
     const providers = resolvePluginProviders({ config: nextConfig, workspaceDir });
     const provider = resolveProviderMatch(providers, options.providerId);

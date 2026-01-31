@@ -244,9 +244,9 @@ export const signalOnboardingAdapter = {
             }
         }
         await prompter.note([
-            'Link device with: signal-cli link -n "Grawke"',
+            'Link device with: signal-cli link -n "MoltX"',
             "Scan QR in Signal → Linked Devices",
-            `Then run: ${formatCliCommand("grawke gateway call channels.status --params '{\"probe\":true}'")}`,
+            `Then run: ${formatCliCommand("moltx gateway call channels.status --params '{\"probe\":true}'")}`,
             `Docs: ${formatDocsLink("/signal", "signal")}`,
         ].join("\n"), "Signal next steps");
         return { cfg: next, accountId: signalAccountId };

@@ -31,12 +31,12 @@ Android connects directly to the Gateway WebSocket (default `ws://<host>:18789`)
   - Same LAN with mDNS/NSD, **or**
   - Same Tailscale tailnet using Wide-Area Bonjour / unicast DNS-SD (see below), **or**
   - Manual gateway host/port (fallback)
-- You can run the CLI (`grawke`) on the gateway machine (or via SSH).
+- You can run the CLI (`moltx`) on the gateway machine (or via SSH).
 
 ### 1) Start the Gateway
 
 ```bash
-grawke gateway --port 18789 --verbose
+moltx gateway --port 18789 --verbose
 ```
 
 Confirm in logs you see something like:
@@ -44,7 +44,7 @@ Confirm in logs you see something like:
 
 For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to the tailnet IP:
 
-- Set `gateway.bind: "tailnet"` in `~/.grawke/grawke.json` on the gateway host.
+- Set `gateway.bind: "tailnet"` in `~/.moltx/moltx.json` on the gateway host.
 - Restart the Gateway / macOS menubar app.
 
 ### 2) Verify discovery (optional)
@@ -52,7 +52,7 @@ For tailnet-only setups (recommended for Vienna ⇄ London), bind the gateway to
 From the gateway machine:
 
 ```bash
-dns-sd -B _grawke-gw._tcp local.
+dns-sd -B _moltx-gw._tcp local.
 ```
 
 More debugging notes: [Bonjour](/gateway/bonjour).
@@ -61,8 +61,8 @@ More debugging notes: [Bonjour](/gateway/bonjour).
 
 Android NSD/mDNS discovery won’t cross networks. If your Android node and the gateway are on different networks but connected via Tailscale, use Wide-Area Bonjour / unicast DNS-SD instead:
 
-1) Set up a DNS-SD zone (example `grawke.internal.`) on the gateway host and publish `_grawke-gw._tcp` records.
-2) Configure Tailscale split DNS for `grawke.internal` pointing at that DNS server.
+1) Set up a DNS-SD zone (example `moltx.internal.`) on the gateway host and publish `_moltx-gw._tcp` records.
+2) Configure Tailscale split DNS for `moltx.internal` pointing at that DNS server.
 
 Details and example CoreDNS config: [Bonjour](/gateway/bonjour).
 
@@ -84,8 +84,8 @@ After the first successful pairing, Android auto-reconnects on launch:
 On the gateway machine:
 
 ```bash
-grawke nodes pending
-grawke nodes approve <requestId>
+moltx nodes pending
+moltx nodes approve <requestId>
 ```
 
 Pairing details: [Gateway pairing](/gateway/pairing).
@@ -94,11 +94,11 @@ Pairing details: [Gateway pairing](/gateway/pairing).
 
 - Via nodes status:
   ```bash
-  grawke nodes status
+  moltx nodes status
   ```
 - Via Gateway:
   ```bash
-  grawke gateway call node.list --params "{}"
+  moltx gateway call node.list --params "{}"
   ```
 
 ### 6) Chat + history
@@ -122,13 +122,13 @@ Note: nodes use the standalone canvas host on `canvasHost.port` (default `18793`
 2) Navigate the node to it (LAN):
 
 ```bash
-grawke nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18793/__grawke__/canvas/"}'
+moltx nodes invoke --node "<Android Node>" --command canvas.navigate --params '{"url":"http://<gateway-hostname>.local:18793/__moltx__/canvas/"}'
 ```
 
-Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18793/__grawke__/canvas/`.
+Tailnet (optional): if both devices are on Tailscale, use a MagicDNS name or tailnet IP instead of `.local`, e.g. `http://<gateway-magicdns>:18793/__moltx__/canvas/`.
 
 This server injects a live-reload client into HTML and reloads on file changes.
-The A2UI host lives at `http://<gateway-host>:18793/__grawke__/a2ui/`.
+The A2UI host lives at `http://<gateway-host>:18793/__moltx__/a2ui/`.
 
 Canvas commands (foreground only):
 - `canvas.eval`, `canvas.snapshot`, `canvas.navigate` (use `{"url":""}` or `{"url":"/"}` to return to the default scaffold). `canvas.snapshot` returns `{ format, base64 }` (default `format="jpeg"`).

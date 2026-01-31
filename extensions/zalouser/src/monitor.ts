@@ -1,7 +1,7 @@
 import type { ChildProcess } from "node:child_process";
 
-import type { GrawkeConfig, MarkdownTableMode, RuntimeEnv } from "grawke/plugin-sdk";
-import { mergeAllowlist, summarizeMapping } from "grawke/plugin-sdk";
+import type { MoltXConfig, MarkdownTableMode, RuntimeEnv } from "moltx/plugin-sdk";
+import { mergeAllowlist, summarizeMapping } from "moltx/plugin-sdk";
 import { sendMessageZalouser } from "./send.js";
 import type {
   ResolvedZalouserAccount,
@@ -14,7 +14,7 @@ import { parseJsonOutput, runZca, runZcaStreaming } from "./zca.js";
 
 export type ZalouserMonitorOptions = {
   account: ResolvedZalouserAccount;
-  config: GrawkeConfig;
+  config: MoltXConfig;
   runtime: RuntimeEnv;
   abortSignal: AbortSignal;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
@@ -149,7 +149,7 @@ function startZcaListener(
 async function processMessage(
   message: ZcaMessage,
   account: ResolvedZalouserAccount,
-  config: GrawkeConfig,
+  config: MoltXConfig,
   core: ZalouserCoreRuntime,
   runtime: RuntimeEnv,
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void,
@@ -358,7 +358,7 @@ async function deliverZalouserReply(params: {
   isGroup: boolean;
   runtime: RuntimeEnv;
   core: ZalouserCoreRuntime;
-  config: GrawkeConfig;
+  config: MoltXConfig;
   accountId?: string;
   statusSink?: (patch: { lastInboundAt?: number; lastOutboundAt?: number }) => void;
   tableMode?: MarkdownTableMode;

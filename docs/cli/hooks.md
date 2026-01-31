@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke hooks` (agent hooks)"
+summary: "CLI reference for `moltx hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 ---
 
-# `grawke hooks`
+# `moltx hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -16,7 +16,7 @@ Related:
 ## List All Hooks
 
 ```bash
-grawke hooks list
+moltx hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -41,7 +41,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-grawke hooks list --verbose
+moltx hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -49,7 +49,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-grawke hooks list --json
+moltx hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -57,7 +57,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-grawke hooks info <name>
+moltx hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -71,7 +71,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-grawke hooks info session-memory
+moltx hooks info session-memory
 ```
 
 **Output:**
@@ -82,9 +82,9 @@ grawke hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: grawke-bundled
-  Path: /path/to/grawke/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/grawke/hooks/bundled/session-memory/handler.ts
+  Source: moltx-bundled
+  Path: /path/to/moltx/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/moltx/hooks/bundled/session-memory/handler.ts
   Homepage: https://docs.clawd.bot/hooks#session-memory
   Events: command:new
 
@@ -95,7 +95,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-grawke hooks check
+moltx hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -116,12 +116,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-grawke hooks enable <name>
+moltx hooks enable <name>
 ```
 
-Enable a specific hook by adding it to your config (`~/.grawke/config.json`).
+Enable a specific hook by adding it to your config (`~/.moltx/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `grawke hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `moltx hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -130,7 +130,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-grawke hooks enable session-memory
+moltx hooks enable session-memory
 ```
 
 **Output:**
@@ -150,7 +150,7 @@ grawke hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-grawke hooks disable <name>
+moltx hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -161,7 +161,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-grawke hooks disable command-logger
+moltx hooks disable command-logger
 ```
 
 **Output:**
@@ -176,13 +176,13 @@ grawke hooks disable command-logger
 ## Install Hooks
 
 ```bash
-grawke hooks install <path-or-spec>
+moltx hooks install <path-or-spec>
 ```
 
 Install a hook pack from a local folder/archive or npm.
 
 **What it does:**
-- Copies the hook pack into `~/.grawke/hooks/<id>`
+- Copies the hook pack into `~/.moltx/hooks/<id>`
 - Enables the installed hooks in `hooks.internal.entries.*`
 - Records the install under `hooks.internal.installs`
 
@@ -195,23 +195,23 @@ Install a hook pack from a local folder/archive or npm.
 
 ```bash
 # Local directory
-grawke hooks install ./my-hook-pack
+moltx hooks install ./my-hook-pack
 
 # Local archive
-grawke hooks install ./my-hook-pack.zip
+moltx hooks install ./my-hook-pack.zip
 
 # NPM package
-grawke hooks install @grawke/my-hook-pack
+moltx hooks install @moltx/my-hook-pack
 
 # Link a local directory without copying
-grawke hooks install -l ./my-hook-pack
+moltx hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-grawke hooks update <id>
-grawke hooks update --all
+moltx hooks update <id>
+moltx hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -229,7 +229,7 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-grawke hooks enable session-memory
+moltx hooks enable session-memory
 ```
 
 **Output:** `~/clawd/memory/YYYY-MM-DD-slug.md`
@@ -243,22 +243,22 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-grawke hooks enable command-logger
+moltx hooks enable command-logger
 ```
 
-**Output:** `~/.grawke/logs/commands.log`
+**Output:** `~/.moltx/logs/commands.log`
 
 **View logs:**
 
 ```bash
 # Recent commands
-tail -n 20 ~/.grawke/logs/commands.log
+tail -n 20 ~/.moltx/logs/commands.log
 
 # Pretty-print
-cat ~/.grawke/logs/commands.log | jq .
+cat ~/.moltx/logs/commands.log | jq .
 
 # Filter by action
-grep '"action":"new"' ~/.grawke/logs/commands.log | jq .
+grep '"action":"new"' ~/.moltx/logs/commands.log | jq .
 ```
 
 **See:** [command-logger documentation](/hooks#command-logger)
@@ -270,7 +270,7 @@ Swaps injected `SOUL.md` content with `SOUL_EVIL.md` during a purge window or by
 **Enable:**
 
 ```bash
-grawke hooks enable soul-evil
+moltx hooks enable soul-evil
 ```
 
 **See:** [SOUL Evil Hook](/hooks/soul-evil)
@@ -284,7 +284,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-grawke hooks enable boot-md
+moltx hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/hooks#boot-md)

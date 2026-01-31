@@ -8,7 +8,7 @@ import {
   resolveMentionGating,
   formatAllowlistMatchMeta,
   type HistoryEntry,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import {
   buildMSTeamsAttachmentPlaceholder,

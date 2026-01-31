@@ -1,5 +1,5 @@
 ---
-summary: "Grawke CLI reference for `grawke` commands, subcommands, and options"
+summary: "MoltX CLI reference for `moltx` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -53,10 +53,10 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Global flags
 
-- `--dev`: isolate state under `~/.grawke-dev` and shift default ports.
-- `--profile <name>`: isolate state under `~/.grawke-<name>`.
+- `--dev`: isolate state under `~/.moltx-dev` and shift default ports.
+- `--profile <name>`: isolate state under `~/.moltx-<name>`.
 - `--no-color`: disable ANSI colors.
-- `--update`: shorthand for `grawke update` (source installs only).
+- `--update`: shorthand for `moltx update` (source installs only).
 - `-V`, `--version`, `-v`: print version and exit.
 
 ## Output styling
@@ -69,7 +69,7 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Color palette
 
-Grawke uses a lobster palette for CLI output.
+MoltX uses a lobster palette for CLI output.
 
 - `accent` (#FF5A2D): headings, labels, primary highlights.
 - `accentBright` (#FF7A3D): command names, emphasis.
@@ -85,7 +85,7 @@ Palette source of truth: `src/terminal/palette.ts` (aka “lobster seam”).
 ## Command tree
 
 ```
-grawke [--dev] [--profile <name>] <command>
+moltx [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -236,23 +236,23 @@ grawke [--dev] [--profile <name>] <command>
   tui
 ```
 
-Note: plugins can add additional top-level commands (for example `grawke voicecall`).
+Note: plugins can add additional top-level commands (for example `moltx voicecall`).
 
 ## Security
 
-- `grawke security audit` — audit config + local state for common security foot-guns.
-- `grawke security audit --deep` — best-effort live Gateway probe.
-- `grawke security audit --fix` — tighten safe defaults and chmod state/config.
+- `moltx security audit` — audit config + local state for common security foot-guns.
+- `moltx security audit --deep` — best-effort live Gateway probe.
+- `moltx security audit --fix` — tighten safe defaults and chmod state/config.
 
 ## Plugins
 
 Manage extensions and their config:
 
-- `grawke plugins list` — discover plugins (use `--json` for machine output).
-- `grawke plugins info <id>` — show details for a plugin.
-- `grawke plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
-- `grawke plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
-- `grawke plugins doctor` — report plugin load errors.
+- `moltx plugins list` — discover plugins (use `--json` for machine output).
+- `moltx plugins info <id>` — show details for a plugin.
+- `moltx plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
+- `moltx plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
+- `moltx plugins doctor` — report plugin load errors.
 
 Most plugin changes require a gateway restart. See [/plugin](/plugin).
 
@@ -260,9 +260,9 @@ Most plugin changes require a gateway restart. See [/plugin](/plugin).
 
 Vector search over `MEMORY.md` + `memory/*.md`:
 
-- `grawke memory status` — show index stats.
-- `grawke memory index` — reindex memory files.
-- `grawke memory search "<query>"` — semantic search over memory.
+- `moltx memory status` — show index stats.
+- `moltx memory index` — reindex memory files.
+- `moltx memory search "<query>"` — semantic search over memory.
 
 ## Chat slash commands
 
@@ -335,7 +335,7 @@ Options:
 Interactive configuration wizard (models, channels, skills, gateway).
 
 ### `config`
-Non-interactive config helpers (get/set/unset). Running `grawke config` with no
+Non-interactive config helpers (get/set/unset). Running `moltx config` with no
 subcommand launches the wizard.
 
 Subcommands:
@@ -359,8 +359,8 @@ Manage chat channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Matter
 
 Subcommands:
 - `channels list`: show configured channels and auth profiles (Claude Code + Codex CLI OAuth sync included).
-- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `grawke health` or `grawke status --deep` for gateway health probes).
-- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `grawke doctor`).
+- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `moltx health` or `moltx status --deep` for gateway health probes).
+- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `moltx doctor`).
 - `channels logs`: show recent channel logs from the gateway log file.
 - `channels add`: wizard-style setup when no flags are passed; flags switch to non-interactive mode.
 - `channels remove`: disable by default; pass `--delete` to remove config entries without prompts.
@@ -400,11 +400,11 @@ More detail: [/concepts/oauth](/concepts/oauth)
 
 Examples:
 ```bash
-grawke channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-grawke channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-grawke channels remove --channel discord --account work --delete
-grawke channels status --probe
-grawke status --deep
+moltx channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+moltx channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+moltx channels remove --channel discord --account work --delete
+moltx channels status --probe
+moltx status --deep
 ```
 
 ### `skills`
@@ -461,8 +461,8 @@ Subcommands:
 - `message event <list|create>`
 
 Examples:
-- `grawke message send --target +15555550123 --message "Hi"`
-- `grawke message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `moltx message send --target +15555550123 --message "Hi"`
+- `moltx message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 Run one agent turn via the Gateway (or `--local` embedded).
@@ -532,11 +532,11 @@ Notes:
 - Overview includes Gateway + node host service status when available.
 
 ### Usage tracking
-Grawke can surface provider usage/quota when OAuth/API creds are available.
+MoltX can surface provider usage/quota when OAuth/API creds are available.
 
 Surfaces:
 - `/status` (adds a short provider usage line when available)
-- `grawke status --usage` (prints full provider breakdown)
+- `moltx status --usage` (prints full provider breakdown)
 - macOS menu bar (Usage section under Context)
 
 Notes:
@@ -630,7 +630,7 @@ Subcommands:
 Notes:
 - `gateway status` probes the Gateway RPC by default using the service’s resolved port/config (override with `--url/--token/--password`).
 - `gateway status` supports `--no-probe`, `--deep`, and `--json` for scripting.
-- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Grawke services are treated as first-class and aren't flagged as "extra".
+- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named MoltX services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
 - `gateway install|uninstall|start|stop|restart` support `--json` for scripting (default output stays human-friendly).
 - `gateway install` defaults to Node runtime; bun is **not recommended** (WhatsApp/Telegram bugs).
@@ -645,11 +645,11 @@ Notes:
 
 Examples:
 ```bash
-grawke logs --follow
-grawke logs --limit 200
-grawke logs --plain
-grawke logs --json
-grawke logs --no-color
+moltx logs --follow
+moltx logs --limit 200
+moltx logs --plain
+moltx logs --json
+moltx logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -680,11 +680,11 @@ Preferred Anthropic auth (CLI token, not API key):
 
 ```bash
 claude setup-token
-grawke models status
+moltx models status
 ```
 
 ### `models` (root)
-`grawke models` is an alias for `models status`.
+`moltx models` is an alias for `models status`.
 
 Root options:
 - `--status-json` (alias for `models status --json`)
@@ -812,7 +812,7 @@ All `cron` commands accept `--url`, `--token`, `--timeout`, `--expect-final`.
 ## Node host
 
 `node` runs a **headless node host** or manages it as a background service. See
-[`grawke node`](/cli/node).
+[`moltx node`](/cli/node).
 
 Subcommands:
 - `node run --host <gateway-host> --port 18789`
@@ -861,7 +861,7 @@ Location:
 
 ## Browser
 
-Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`grawke browser`](/cli/browser) and the [Browser tool](/tools/browser).
+Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`moltx browser`](/cli/browser) and the [Browser tool](/tools/browser).
 
 Common options:
 - `--url <controlUrl>`

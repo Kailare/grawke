@@ -97,13 +97,13 @@ export function extractMSTeamsPollVote(
   const value = activity?.value;
   if (!value || !isRecord(value)) return null;
   const pollId =
-    readNestedString(value, ["grawkePollId"]) ??
+    readNestedString(value, ["moltxPollId"]) ??
     readNestedString(value, ["pollId"]) ??
-    readNestedString(value, ["grawke", "pollId"]) ??
-    readNestedString(value, ["grawke", "poll", "id"]) ??
-    readNestedString(value, ["data", "grawkePollId"]) ??
+    readNestedString(value, ["moltx", "pollId"]) ??
+    readNestedString(value, ["moltx", "poll", "id"]) ??
+    readNestedString(value, ["data", "moltxPollId"]) ??
     readNestedString(value, ["data", "pollId"]) ??
-    readNestedString(value, ["data", "grawke", "pollId"]);
+    readNestedString(value, ["data", "moltx", "pollId"]);
   if (!pollId) return null;
 
   const directSelections = extractSelections(value.choices);
@@ -176,13 +176,13 @@ export function buildMSTeamsPollCard(params: {
         type: "Action.Submit",
         title: "Vote",
         data: {
-          grawkePollId: pollId,
+          moltxPollId: pollId,
         },
         msteams: {
           type: "messageBack",
-          text: "grawke poll vote",
+          text: "moltx poll vote",
           displayText: "Vote recorded",
-          value: { grawkePollId: pollId },
+          value: { moltxPollId: pollId },
         },
       },
     ],

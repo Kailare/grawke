@@ -1,14 +1,14 @@
 {
-  "name": "@grawke/memory-core",
+  "name": "@moltx/memory-core",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke core memory search plugin",
-  "grawke": {
+  "description": "MoltX core memory search plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]
   },
   "peerDependencies": {
-    "grawke": ">=2026.1.24"
+    "moltx": ">=2026.1.24"
   }
 }

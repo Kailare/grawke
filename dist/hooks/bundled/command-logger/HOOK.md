@@ -4,11 +4,11 @@ description: "Log all command events to a centralized audit file"
 homepage: https://docs.clawd.bot/hooks#command-logger
 metadata:
   {
-    "grawke":
+    "moltx":
       {
         "emoji": "📝",
         "events": ["command"],
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Grawke" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltX" }],
       },
   }
 ---
@@ -22,7 +22,7 @@ Logs all command events (`/new`, `/reset`, `/stop`, etc.) to a centralized audit
 Every time you issue a command to the agent:
 
 1. **Captures event details** - Command action, timestamp, session key, sender ID, source
-2. **Appends to log file** - Writes a JSON line to `~/.grawke/logs/commands.log`
+2. **Appends to log file** - Writes a JSON line to `~/.moltx/logs/commands.log`
 3. **Silent operation** - Runs in the background without user notifications
 
 ## Output Format
@@ -43,7 +43,7 @@ Log entries are written in JSONL (JSON Lines) format:
 
 ## Log File Location
 
-`~/.grawke/logs/commands.log`
+`~/.moltx/logs/commands.log`
 
 ## Requirements
 
@@ -62,7 +62,7 @@ No configuration needed. The hook automatically:
 To disable this hook:
 
 ```bash
-grawke hooks disable command-logger
+moltx hooks disable command-logger
 ```
 
 Or via config:
@@ -86,13 +86,13 @@ The hook does not automatically rotate logs. To manage log size, you can:
 1. **Manual rotation**:
 
    ```bash
-   mv ~/.grawke/logs/commands.log ~/.grawke/logs/commands.log.old
+   mv ~/.moltx/logs/commands.log ~/.moltx/logs/commands.log.old
    ```
 
 2. **Use logrotate** (Linux):
-   Create `/etc/logrotate.d/grawke`:
+   Create `/etc/logrotate.d/moltx`:
    ```
-   /home/username/.grawke/logs/commands.log {
+   /home/username/.moltx/logs/commands.log {
        weekly
        rotate 4
        compress
@@ -106,17 +106,17 @@ The hook does not automatically rotate logs. To manage log size, you can:
 View recent commands:
 
 ```bash
-tail -n 20 ~/.grawke/logs/commands.log
+tail -n 20 ~/.moltx/logs/commands.log
 ```
 
 Pretty-print with jq:
 
 ```bash
-cat ~/.grawke/logs/commands.log | jq .
+cat ~/.moltx/logs/commands.log | jq .
 ```
 
 Filter by action:
 
 ```bash
-grep '"action":"new"' ~/.grawke/logs/commands.log | jq .
+grep '"action":"new"' ~/.moltx/logs/commands.log | jq .
 ```

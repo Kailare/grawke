@@ -1,10 +1,10 @@
 ---
-summary: "CLI reference for `grawke onboard` (interactive onboarding wizard)"
+summary: "CLI reference for `moltx onboard` (interactive onboarding wizard)"
 read_when:
   - You want guided setup for gateway, workspace, auth, channels, and skills
 ---
 
-# `grawke onboard`
+# `moltx onboard`
 
 Interactive onboarding wizard (local or remote Gateway setup).
 
@@ -14,10 +14,10 @@ Related:
 ## Examples
 
 ```bash
-grawke onboard
-grawke onboard --flow quickstart
-grawke onboard --flow manual
-grawke onboard --mode remote --remote-url ws://gateway-host:18789
+moltx onboard
+moltx onboard --flow quickstart
+moltx onboard --flow manual
+moltx onboard --mode remote --remote-url ws://gateway-host:18789
 ```
 
 Flow notes:

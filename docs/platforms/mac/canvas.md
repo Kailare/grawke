@@ -15,16 +15,16 @@ UI surfaces.
 
 Canvas state is stored under Application Support:
 
-- `~/Library/Application Support/Grawke/canvas/<session>/...`
+- `~/Library/Application Support/MoltX/canvas/<session>/...`
 
 The Canvas panel serves those files via a **custom URL scheme**:
 
-- `grawke-canvas://<session>/<path>`
+- `moltx-canvas://<session>/<path>`
 
 Examples:
-- `grawke-canvas://main/` → `<canvasRoot>/main/index.html`
-- `grawke-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
-- `grawke-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
+- `moltx-canvas://main/` → `<canvasRoot>/main/index.html`
+- `moltx-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
+- `moltx-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
 
 If no `index.html` exists at the root, the app shows a **built‑in scaffold page**.
 
@@ -50,10 +50,10 @@ Canvas is exposed via the **Gateway WebSocket**, so the agent can:
 CLI examples:
 
 ```bash
-grawke nodes canvas present --node <id>
-grawke nodes canvas navigate --node <id> --url "/"
-grawke nodes canvas eval --node <id> --js "document.title"
-grawke nodes canvas snapshot --node <id>
+moltx nodes canvas present --node <id>
+moltx nodes canvas navigate --node <id> --url "/"
+moltx nodes canvas eval --node <id> --js "document.title"
+moltx nodes canvas snapshot --node <id>
 ```
 
 Notes:
@@ -69,7 +69,7 @@ A2UI host page on first open.
 Default A2UI host URL:
 
 ```
-http://<gateway-host>:18793/__grawke__/a2ui/
+http://<gateway-host>:18793/__moltx__/a2ui/
 ```
 
 ### A2UI commands (v0.8)
@@ -91,25 +91,25 @@ cat > /tmp/a2ui-v0.8.jsonl <<'EOFA2'
 {"beginRendering":{"surfaceId":"main","root":"root"}}
 EOFA2
 
-grawke nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
+moltx nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
 ```
 
 Quick smoke:
 
 ```bash
-grawke nodes canvas a2ui push --node <id> --text "Hello from A2UI"
+moltx nodes canvas a2ui push --node <id> --text "Hello from A2UI"
 ```
 
 ## Triggering agent runs from Canvas
 
 Canvas can trigger new agent runs via deep links:
 
-- `grawke://agent?...`
+- `moltx://agent?...`
 
 Example (in JS):
 
 ```js
-window.location.href = "grawke://agent?message=Review%20this%20design";
+window.location.href = "moltx://agent?message=Review%20this%20design";
 ```
 
 The app prompts for confirmation unless a valid key is provided.

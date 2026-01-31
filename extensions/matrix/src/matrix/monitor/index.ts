@@ -4,7 +4,7 @@ import {
   mergeAllowlist,
   summarizeMapping,
   type RuntimeEnv,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import type { CoreConfig, ReplyToMode } from "../../types.js";
 import { setActiveMatrixClient } from "../active-client.js";
 import {

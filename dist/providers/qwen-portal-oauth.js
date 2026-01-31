@@ -21,7 +21,7 @@ export async function refreshQwenPortalCredentials(credentials) {
     if (!response.ok) {
         const text = await response.text();
         if (response.status === 400) {
-            throw new Error(`Qwen OAuth refresh token expired or invalid. Re-authenticate with \`${formatCliCommand("grawke models auth login --provider qwen-portal")}\`.`);
+            throw new Error(`Qwen OAuth refresh token expired or invalid. Re-authenticate with \`${formatCliCommand("moltx models auth login --provider qwen-portal")}\`.`);
         }
         throw new Error(`Qwen OAuth refresh failed: ${text || response.statusText}`);
     }

@@ -1,4 +1,4 @@
-import type { MSTeamsConfig } from "grawke/plugin-sdk";
+import type { MSTeamsConfig } from "moltx/plugin-sdk";
 
 export type MSTeamsCredentials = {
   appId: string;

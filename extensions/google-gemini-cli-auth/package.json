@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/google-gemini-cli-auth",
+  "name": "@moltx/google-gemini-cli-auth",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Gemini CLI OAuth provider plugin",
-  "grawke": {
+  "description": "MoltX Gemini CLI OAuth provider plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

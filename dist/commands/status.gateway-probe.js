@@ -7,9 +7,9 @@ export function resolveGatewayProbeAuth(cfg) {
         ? typeof remote?.token === "string" && remote.token.trim().length > 0
             ? remote.token.trim()
             : undefined
-        : process.env.GRAWKE_GATEWAY_TOKEN?.trim() ||
+        : process.env.MOLTX_GATEWAY_TOKEN?.trim() ||
             (typeof authToken === "string" && authToken.trim().length > 0 ? authToken.trim() : undefined);
-    const password = process.env.GRAWKE_GATEWAY_PASSWORD?.trim() ||
+    const password = process.env.MOLTX_GATEWAY_PASSWORD?.trim() ||
         (isRemoteMode
             ? typeof remote?.password === "string" && remote.password.trim().length > 0
                 ? remote.password.trim()

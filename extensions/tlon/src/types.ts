@@ -1,4 +1,4 @@
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 
 export type TlonResolvedAccount = {
   accountId: string;
@@ -14,7 +14,7 @@ export type TlonResolvedAccount = {
   showModelSignature: boolean | null;
 };
 
-export function resolveTlonAccount(cfg: GrawkeConfig, accountId?: string | null): TlonResolvedAccount {
+export function resolveTlonAccount(cfg: MoltXConfig, accountId?: string | null): TlonResolvedAccount {
   const base = cfg.channels?.tlon as
     | {
         name?: string;
@@ -75,7 +75,7 @@ export function resolveTlonAccount(cfg: GrawkeConfig, accountId?: string | null)
   };
 }
 
-export function listTlonAccountIds(cfg: GrawkeConfig): string[] {
+export function listTlonAccountIds(cfg: MoltXConfig): string[] {
   const base = cfg.channels?.tlon as
     | { ship?: string; accounts?: Record<string, Record<string, unknown>> }
     | undefined;

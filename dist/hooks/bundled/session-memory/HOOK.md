@@ -4,12 +4,12 @@ description: "Save session context to memory when /new command is issued"
 homepage: https://docs.clawd.bot/hooks#session-memory
 metadata:
   {
-    "grawke":
+    "moltx":
       {
         "emoji": "💾",
         "events": ["command:new"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Grawke" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltX" }],
       },
   }
 ---
@@ -68,7 +68,7 @@ No additional configuration required. The hook automatically:
 To disable this hook:
 
 ```bash
-grawke hooks disable session-memory
+moltx hooks disable session-memory
 ```
 
 Or remove it from your config:

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { PluginRuntime } from "grawke/plugin-sdk";
+import type { PluginRuntime } from "moltx/plugin-sdk";
 import { setMSTeamsRuntime } from "./runtime.js";
 
 const detectMimeMock = vi.fn(async () => "image/png");

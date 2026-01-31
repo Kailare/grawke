@@ -9,10 +9,10 @@ function readVersionFromPackageJson() {
         return null;
     }
 }
-// Single source of truth for the current grawke version.
+// Single source of truth for the current moltx version.
 // - Embedded/bundled builds: injected define or env var.
 // - Dev/npm builds: package.json.
-export const VERSION = (typeof __GRAWKE_VERSION__ === "string" && __GRAWKE_VERSION__) ||
-    process.env.GRAWKE_BUNDLED_VERSION ||
+export const VERSION = (typeof __MOLTX_VERSION__ === "string" && __MOLTX_VERSION__) ||
+    process.env.MOLTX_BUNDLED_VERSION ||
     readVersionFromPackageJson() ||
     "0.0.0";

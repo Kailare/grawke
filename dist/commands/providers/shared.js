@@ -11,7 +11,7 @@ export async function requireValidConfig(runtime = defaultRuntime) {
                 .join("\n")
             : "Unknown validation issue.";
         runtime.error(`Config invalid:\n${issues}`);
-        runtime.error("Fix the config or run grawke doctor.");
+        runtime.error("Fix the config or run moltx doctor.");
         runtime.exit(1);
         return null;
     }

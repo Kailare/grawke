@@ -2,7 +2,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import { resolveDefaultAgentWorkspaceDir } from "../agents/workspace.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadGrawkePlugins } from "./loader.js";
+import { loadMoltXPlugins } from "./loader.js";
 const log = createSubsystemLogger("plugins");
 export function buildPluginStatusReport(params) {
     const config = params?.config ?? loadConfig();
@@ -10,7 +10,7 @@ export function buildPluginStatusReport(params) {
         ? params.workspaceDir
         : (resolveAgentWorkspaceDir(config, resolveDefaultAgentId(config)) ??
             resolveDefaultAgentWorkspaceDir());
-    const registry = loadGrawkePlugins({
+    const registry = loadMoltXPlugins({
         config,
         workspaceDir,
         logger: {

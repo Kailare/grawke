@@ -15,7 +15,7 @@
     },
     "dbPath": {
       "label": "Database Path",
-      "placeholder": "~/.grawke/memory/lancedb",
+      "placeholder": "~/.moltx/memory/lancedb",
       "advanced": true
     },
     "autoCapture": {

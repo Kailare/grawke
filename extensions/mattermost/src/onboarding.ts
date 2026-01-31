@@ -1,5 +1,5 @@
-import type { ChannelOnboardingAdapter, GrawkeConfig, WizardPrompter } from "grawke/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
+import type { ChannelOnboardingAdapter, MoltXConfig, WizardPrompter } from "moltx/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltx/plugin-sdk";
 
 import {
   listMattermostAccountIds,
@@ -177,7 +177,7 @@ export const mattermostOnboardingAdapter: ChannelOnboardingAdapter = {
 
     return { cfg: next, accountId };
   },
-  disable: (cfg: GrawkeConfig) => ({
+  disable: (cfg: MoltXConfig) => ({
     ...cfg,
     channels: {
       ...cfg.channels,

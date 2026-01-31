@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/copilot-proxy",
+  "name": "@moltx/copilot-proxy",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Copilot Proxy provider plugin",
-  "grawke": {
+  "description": "MoltX Copilot Proxy provider plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

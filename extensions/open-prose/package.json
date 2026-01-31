@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/open-prose",
+  "name": "@moltx/open-prose",
   "version": "2026.1.24",
   "type": "module",
   "description": "OpenProse VM skill pack plugin (slash command + telemetry).",
-  "grawke": {
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

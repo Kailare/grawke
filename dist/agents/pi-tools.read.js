@@ -199,7 +199,7 @@ function wrapSandboxPathGuard(tool, root) {
 }
 export function createSandboxedReadTool(root) {
     const base = createReadTool(root);
-    return wrapSandboxPathGuard(createGrawkeReadTool(base), root);
+    return wrapSandboxPathGuard(createMoltXReadTool(base), root);
 }
 export function createSandboxedWriteTool(root) {
     const base = createWriteTool(root);
@@ -209,7 +209,7 @@ export function createSandboxedEditTool(root) {
     const base = createEditTool(root);
     return wrapSandboxPathGuard(wrapToolParamNormalization(base, CLAUDE_PARAM_GROUPS.edit), root);
 }
-export function createGrawkeReadTool(base) {
+export function createMoltXReadTool(base) {
     const patched = patchToolSchemaForClaudeCompatibility(base);
     return {
         ...patched,

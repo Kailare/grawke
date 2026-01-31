@@ -3,7 +3,7 @@ import type { AddressInfo } from "node:net";
 
 import { describe, expect, it } from "vitest";
 
-import type { GrawkeConfig, PluginRuntime } from "grawke/plugin-sdk";
+import type { MoltXConfig, PluginRuntime } from "moltx/plugin-sdk";
 import type { ResolvedZaloAccount } from "./types.js";
 import { handleZaloWebhookRequest, registerZaloWebhookTarget } from "./monitor.js";
 
@@ -37,7 +37,7 @@ describe("handleZaloWebhookRequest", () => {
     const unregister = registerZaloWebhookTarget({
       token: "tok",
       account,
-      config: {} as GrawkeConfig,
+      config: {} as MoltXConfig,
       runtime: {},
       core,
       secret: "secret",

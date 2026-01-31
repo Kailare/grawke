@@ -1,13 +1,13 @@
 ---
-summary: "Run Grawke in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
+summary: "Run MoltX in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
 read_when:
-  - You want Grawke isolated from your main macOS environment
+  - You want MoltX isolated from your main macOS environment
   - You want iMessage integration (BlueBubbles) in a sandbox
   - You want a resettable macOS environment you can clone
   - You want to compare local vs hosted macOS VM options
 ---
 
-# Grawke on macOS VMs (Sandboxing)
+# MoltX on macOS VMs (Sandboxing)
 
 ## Recommended default (most users)
 
@@ -21,7 +21,7 @@ Use a macOS VM when you specifically need macOS-only capabilities (iMessage/Blue
 
 ### Local VM on your Apple Silicon Mac (Lume)
 
-Run Grawke in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
+Run MoltX in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
 
 This gives you:
 - Full macOS environment in isolation (your host stays clean)
@@ -42,10 +42,10 @@ Once you have SSH access to a macOS VM, continue at step 6 below.
 ## Quick path (Lume, experienced users)
 
 1. Install Lume
-2. `lume create grawke --os macos --ipsw latest`
+2. `lume create moltx --os macos --ipsw latest`
 3. Complete Setup Assistant, enable Remote Login (SSH)
-4. `lume run grawke --no-display`
-5. SSH in, install Grawke, configure channels
+4. `lume run moltx --no-display`
+5. SSH in, install MoltX, configure channels
 6. Done
 
 ---
@@ -84,7 +84,7 @@ Docs: [Lume Installation](https://cua.ai/docs/lume/guide/getting-started/install
 ## 2) Create the macOS VM
 
 ```bash
-lume create grawke --os macos --ipsw latest
+lume create moltx --os macos --ipsw latest
 ```
 
 This downloads macOS and creates the VM. A VNC window opens automatically.
@@ -110,7 +110,7 @@ After setup completes, enable SSH:
 ## 4) Get the VM's IP address
 
 ```bash
-lume get grawke
+lume get moltx
 ```
 
 Look for the IP address (usually `192.168.64.x`).
@@ -127,13 +127,13 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 
 ---
 
-## 6) Install Grawke
+## 6) Install MoltX
 
 Inside the VM:
 
 ```bash
-npm install -g grawke@latest
-grawke onboard --install-daemon
+npm install -g moltx@latest
+moltx onboard --install-daemon
 ```
 
 Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, etc.).
@@ -145,7 +145,7 @@ Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, 
 Edit the config file:
 
 ```bash
-nano ~/.grawke/grawke.json
+nano ~/.moltx/moltx.json
 ```
 
 Add your channels:
@@ -167,7 +167,7 @@ Add your channels:
 Then login to WhatsApp (scan QR):
 
 ```bash
-grawke channels login
+moltx channels login
 ```
 
 ---
@@ -177,23 +177,23 @@ grawke channels login
 Stop the VM and restart without display:
 
 ```bash
-lume stop grawke
-lume run grawke --no-display
+lume stop moltx
+lume run moltx --no-display
 ```
 
-The VM runs in the background. Grawke's daemon keeps the gateway running.
+The VM runs in the background. MoltX's daemon keeps the gateway running.
 
 To check status:
 
 ```bash
-ssh youruser@192.168.64.X "grawke status"
+ssh youruser@192.168.64.X "moltx status"
 ```
 
 ---
 
 ## Bonus: iMessage integration
 
-This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Grawke.
+This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to MoltX.
 
 Inside the VM:
 
@@ -202,7 +202,7 @@ Inside the VM:
 3. Enable the Web API and set a password
 4. Point BlueBubbles webhooks at your gateway (example: `https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`)
 
-Add to your Grawke config:
+Add to your MoltX config:
 
 ```json
 {
@@ -227,16 +227,16 @@ Full setup details: [BlueBubbles channel](/channels/bluebubbles)
 Before customizing further, snapshot your clean state:
 
 ```bash
-lume stop grawke
-lume clone grawke grawke-golden
+lume stop moltx
+lume clone moltx moltx-golden
 ```
 
 Reset anytime:
 
 ```bash
-lume stop grawke && lume delete grawke
-lume clone grawke-golden grawke
-lume run grawke --no-display
+lume stop moltx && lume delete moltx
+lume clone moltx-golden moltx
+lume run moltx --no-display
 ```
 
 ---
@@ -257,9 +257,9 @@ For true always-on, consider a dedicated Mac mini or a small VPS. See [VPS hosti
 | Problem | Solution |
 |---------|----------|
 | Can't SSH into VM | Check "Remote Login" is enabled in VM's System Settings |
-| VM IP not showing | Wait for VM to fully boot, run `lume get grawke` again |
+| VM IP not showing | Wait for VM to fully boot, run `lume get moltx` again |
 | Lume command not found | Add `~/.local/bin` to your PATH |
-| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `grawke channels login` |
+| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `moltx channels login` |
 
 ---
 

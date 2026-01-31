@@ -1,16 +1,16 @@
 // Default service labels (for backward compatibility and when no profile specified)
-export const GATEWAY_LAUNCH_AGENT_LABEL = "com.grawke.gateway";
-export const GATEWAY_SYSTEMD_SERVICE_NAME = "grawke-gateway";
-export const GATEWAY_WINDOWS_TASK_NAME = "Grawke Gateway";
-export const GATEWAY_SERVICE_MARKER = "grawke";
+export const GATEWAY_LAUNCH_AGENT_LABEL = "com.moltx.gateway";
+export const GATEWAY_SYSTEMD_SERVICE_NAME = "moltx-gateway";
+export const GATEWAY_WINDOWS_TASK_NAME = "MoltX Gateway";
+export const GATEWAY_SERVICE_MARKER = "moltx";
 export const GATEWAY_SERVICE_KIND = "gateway";
-export const NODE_LAUNCH_AGENT_LABEL = "com.grawke.node";
-export const NODE_SYSTEMD_SERVICE_NAME = "grawke-node";
-export const NODE_WINDOWS_TASK_NAME = "Grawke Node";
-export const NODE_SERVICE_MARKER = "grawke";
+export const NODE_LAUNCH_AGENT_LABEL = "com.moltx.node";
+export const NODE_SYSTEMD_SERVICE_NAME = "moltx-node";
+export const NODE_WINDOWS_TASK_NAME = "MoltX Node";
+export const NODE_SERVICE_MARKER = "moltx";
 export const NODE_SERVICE_KIND = "node";
 export const NODE_WINDOWS_TASK_SCRIPT_NAME = "node.cmd";
-export const LEGACY_GATEWAY_LAUNCH_AGENT_LABELS = ["com.steipete.grawke.gateway"];
+export const LEGACY_GATEWAY_LAUNCH_AGENT_LABELS = ["com.steipete.moltx.gateway"];
 export const LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES = [];
 export const LEGACY_GATEWAY_WINDOWS_TASK_NAMES = [];
 export function normalizeGatewayProfile(profile) {
@@ -28,19 +28,19 @@ export function resolveGatewayLaunchAgentLabel(profile) {
     if (!normalized) {
         return GATEWAY_LAUNCH_AGENT_LABEL;
     }
-    return `com.grawke.${normalized}`;
+    return `com.moltx.${normalized}`;
 }
 export function resolveGatewaySystemdServiceName(profile) {
     const suffix = resolveGatewayProfileSuffix(profile);
     if (!suffix)
         return GATEWAY_SYSTEMD_SERVICE_NAME;
-    return `grawke-gateway${suffix}`;
+    return `moltx-gateway${suffix}`;
 }
 export function resolveGatewayWindowsTaskName(profile) {
     const normalized = normalizeGatewayProfile(profile);
     if (!normalized)
         return GATEWAY_WINDOWS_TASK_NAME;
-    return `Grawke Gateway (${normalized})`;
+    return `MoltX Gateway (${normalized})`;
 }
 export function formatGatewayServiceDescription(params) {
     const profile = normalizeGatewayProfile(params?.profile);
@@ -51,8 +51,8 @@ export function formatGatewayServiceDescription(params) {
     if (version)
         parts.push(`v${version}`);
     if (parts.length === 0)
-        return "Grawke Gateway";
-    return `Grawke Gateway (${parts.join(", ")})`;
+        return "MoltX Gateway";
+    return `MoltX Gateway (${parts.join(", ")})`;
 }
 export function resolveNodeLaunchAgentLabel() {
     return NODE_LAUNCH_AGENT_LABEL;
@@ -66,6 +66,6 @@ export function resolveNodeWindowsTaskName() {
 export function formatNodeServiceDescription(params) {
     const version = params?.version?.trim();
     if (!version)
-        return "Grawke Node Host";
-    return `Grawke Node Host (v${version})`;
+        return "MoltX Node Host";
+    return `MoltX Node Host (v${version})`;
 }

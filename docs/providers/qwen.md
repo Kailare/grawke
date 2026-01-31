@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in Grawke"
+summary: "Use Qwen OAuth (free tier) in MoltX"
 read_when:
-  - You want to use Qwen with Grawke
+  - You want to use Qwen with MoltX
   - You want free-tier OAuth access to Qwen Coder
 ---
 # Qwen
@@ -12,7 +12,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-grawke plugins enable qwen-portal-auth
+moltx plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -20,7 +20,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-grawke models auth login --provider qwen-portal --set-default
+moltx models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -34,12 +34,12 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-grawke models set qwen-portal/coder-model
+moltx models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, Grawke will sync credentials
+If you already logged in with the Qwen Code CLI, MoltX will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 

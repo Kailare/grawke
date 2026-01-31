@@ -1,4 +1,4 @@
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 
 import type { ZaloFetch } from "./api.js";
 import { sendMessage, sendPhoto } from "./api.js";
@@ -9,7 +9,7 @@ import { resolveZaloToken } from "./token.js";
 export type ZaloSendOptions = {
   token?: string;
   accountId?: string;
-  cfg?: GrawkeConfig;
+  cfg?: MoltXConfig;
   mediaUrl?: string;
   caption?: string;
   verbose?: boolean;

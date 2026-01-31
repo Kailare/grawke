@@ -59,9 +59,9 @@ async function stopAndUninstallService(runtime) {
 async function removeMacApp(runtime, dryRun) {
     if (process.platform !== "darwin")
         return;
-    await removePath("/Applications/Grawke.app", runtime, {
+    await removePath("/Applications/MoltX.app", runtime, {
         dryRun,
-        label: "/Applications/Grawke.app",
+        label: "/Applications/MoltX.app",
     });
 }
 export async function uninstallCommand(runtime, opts) {
@@ -86,12 +86,12 @@ export async function uninstallCommand(runtime, opts) {
                     label: "Gateway service",
                     hint: "launchd / systemd / schtasks",
                 },
-                { value: "state", label: "State + config", hint: "~/.grawke" },
+                { value: "state", label: "State + config", hint: "~/.moltx" },
                 { value: "workspace", label: "Workspace", hint: "agent files" },
                 {
                     value: "app",
                     label: "macOS app",
-                    hint: "/Applications/Grawke.app",
+                    hint: "/Applications/MoltX.app",
                 },
             ],
             initialValues: ["service", "state", "workspace"],

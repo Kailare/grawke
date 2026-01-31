@@ -9,7 +9,7 @@ read_when:
 
 Goal: go from **zero** → **first working chat** (with sane defaults) as quickly as possible.
 
-Recommended path: use the **CLI onboarding wizard** (`grawke onboard`). It sets up:
+Recommended path: use the **CLI onboarding wizard** (`moltx onboard`). It sets up:
 - model/auth (OAuth recommended)
 - gateway settings
 - channels (WhatsApp/Telegram/Discord/Mattermost (plugin)/...)
@@ -41,7 +41,7 @@ run on host, set an explicit per-agent override:
 - Node `>=22`
 - `pnpm` (optional; recommended if you build from source)
 - **Recommended:** Brave Search API key for web search. Easiest path:
-  `grawke configure --section web` (stores `tools.web.search.apiKey`).
+  `moltx configure --section web` (stores `tools.web.search.apiKey`).
   See [Web tools](/tools/web).
 
 macOS: if you plan to build the apps, install Xcode / CLT. For the CLI + gateway only, Node is enough.
@@ -64,17 +64,17 @@ iwr -useb https://clawd.bot/install.ps1 | iex
 Alternative (global install):
 
 ```bash
-npm install -g grawke@latest
+npm install -g moltx@latest
 ```
 
 ```bash
-pnpm add -g grawke@latest
+pnpm add -g moltx@latest
 ```
 
 ## 2) Run the onboarding wizard (and install the service)
 
 ```bash
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
 What you’ll choose:
@@ -91,8 +91,8 @@ Wizard doc: [Wizard](/start/wizard)
 
 - **Recommended Anthropic path:** set an API key (wizard can store it for service use). `claude setup-token` is also supported if you want to reuse Claude Code credentials.
 
-- OAuth credentials (legacy import): `~/.grawke/credentials/oauth.json`
-- Auth profiles (OAuth + API keys): `~/.grawke/agents/<agentId>/agent/auth-profiles.json`
+- OAuth credentials (legacy import): `~/.moltx/credentials/oauth.json`
+- Auth profiles (OAuth + API keys): `~/.moltx/agents/<agentId>/agent/auth-profiles.json`
 
 Headless/server tip: do OAuth on a normal machine first, then copy `oauth.json` to the gateway host.
 
@@ -101,13 +101,13 @@ Headless/server tip: do OAuth on a normal machine first, then copy `oauth.json` 
 If you installed the service during onboarding, the Gateway should already be running:
 
 ```bash
-grawke gateway status
+moltx gateway status
 ```
 
 Manual run (foreground):
 
 ```bash
-grawke gateway --port 18789 --verbose
+moltx gateway --port 18789 --verbose
 ```
 
 Dashboard (local loopback): `http://127.0.0.1:18789/`
@@ -119,8 +119,8 @@ channels. If you use WhatsApp or Telegram, run the Gateway with **Node**.
 ## 3.5) Quick verify (2 min)
 
 ```bash
-grawke status
-grawke health
+moltx status
+moltx health
 ```
 
 ## 4) Pair + connect your first chat surface
@@ -128,7 +128,7 @@ grawke health
 ### WhatsApp (QR login)
 
 ```bash
-grawke channels login
+moltx channels login
 ```
 
 Scan via WhatsApp → Settings → Linked Devices.
@@ -150,26 +150,26 @@ Default posture: unknown DMs get a short code and messages are not processed unt
 If your first DM gets no reply, approve the pairing:
 
 ```bash
-grawke pairing list whatsapp
-grawke pairing approve whatsapp <code>
+moltx pairing list whatsapp
+moltx pairing approve whatsapp <code>
 ```
 
 Pairing doc: [Pairing](/start/pairing)
 
 ## From source (development)
 
-If you’re hacking on Grawke itself, run from source:
+If you’re hacking on MoltX itself, run from source:
 
 ```bash
 git clone https://github.com/clawdbot/clawdbot.git
-cd grawke
+cd moltx
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
-If you don’t have a global install yet, run the onboarding step via `pnpm grawke ...` from the repo.
+If you don’t have a global install yet, run the onboarding step via `pnpm moltx ...` from the repo.
 
 Gateway (from this repo):
 
@@ -182,13 +182,13 @@ node dist/entry.js gateway --port 18789 --verbose
 In a new terminal, send a test message:
 
 ```bash
-grawke message send --target +15555550123 --message "Hello from Grawke"
+moltx message send --target +15555550123 --message "Hello from MoltX"
 ```
 
-If `grawke health` shows “no auth configured”, go back to the wizard and set OAuth/key auth — the agent won’t be able to respond without it.
+If `moltx health` shows “no auth configured”, go back to the wizard and set OAuth/key auth — the agent won’t be able to respond without it.
 
-Tip: `grawke status --all` is the best pasteable, read-only debug report.
-Health probes: `grawke health` (or `grawke status --deep`) asks the running gateway for a health snapshot.
+Tip: `moltx status --all` is the best pasteable, read-only debug report.
+Health probes: `moltx health` (or `moltx status --deep`) asks the running gateway for a health snapshot.
 
 ## Next steps (optional, but great)
 

@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-Grawke has three related (but different) controls:
+MoltX has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ Grawke has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what Grawke is *actually* doing:
+Use the inspector to see what MoltX is *actually* doing:
 
 ```bash
-grawke sandbox explain
-grawke sandbox explain --session agent:main:main
-grawke sandbox explain --agent work
-grawke sandbox explain --json
+moltx sandbox explain
+moltx sandbox explain --session agent:main:main
+moltx sandbox explain --agent work
+moltx sandbox explain --json
 ```
 
 It prints:
@@ -86,7 +86,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:grawke`: all built-in Grawke tools (excludes provider plugins)
+- `group:moltx`: all built-in MoltX tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 

@@ -1,13 +1,13 @@
 ---
 summary: "Plugin manifest + JSON schema requirements (strict config validation)"
 read_when:
-  - You are building a Grawke plugin
+  - You are building a MoltX plugin
   - You need to ship a plugin config schema or debug plugin validation errors
 ---
-# Plugin manifest (grawke.plugin.json)
+# Plugin manifest (moltx.plugin.json)
 
-Every plugin **must** ship a `grawke.plugin.json` file in the **plugin root**.
-Grawke uses this manifest to validate configuration **without executing plugin
+Every plugin **must** ship a `moltx.plugin.json` file in the **plugin root**.
+MoltX uses this manifest to validate configuration **without executing plugin
 code**. Missing or invalid manifests are treated as plugin errors and block
 config validation.
 

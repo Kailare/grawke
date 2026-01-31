@@ -71,14 +71,14 @@ function normalizeSystemdUnit(raw, profile) {
     }
     return unit.endsWith(".service") ? unit : `${unit}.service`;
 }
-export function triggerGrawkeRestart() {
+export function triggerMoltXRestart() {
     if (process.env.VITEST || process.env.NODE_ENV === "test") {
         return { ok: true, method: "supervisor", detail: "test mode" };
     }
     const tried = [];
     if (process.platform !== "darwin") {
         if (process.platform === "linux") {
-            const unit = normalizeSystemdUnit(process.env.GRAWKE_SYSTEMD_UNIT, process.env.GRAWKE_PROFILE);
+            const unit = normalizeSystemdUnit(process.env.MOLTX_SYSTEMD_UNIT, process.env.MOLTX_PROFILE);
             const userArgs = ["--user", "restart", unit];
             tried.push(`systemctl ${userArgs.join(" ")}`);
             const userRestart = spawnSync("systemctl", userArgs, {
@@ -109,8 +109,8 @@ export function triggerGrawkeRestart() {
             detail: "unsupported platform restart",
         };
     }
-    const label = process.env.GRAWKE_LAUNCHD_LABEL ||
-        resolveGatewayLaunchAgentLabel(process.env.GRAWKE_PROFILE);
+    const label = process.env.MOLTX_LAUNCHD_LABEL ||
+        resolveGatewayLaunchAgentLabel(process.env.MOLTX_PROFILE);
     const uid = typeof process.getuid === "function" ? process.getuid() : undefined;
     const target = uid !== undefined ? `gui/${uid}/${label}` : label;
     const args = ["kickstart", "-k", target];

@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { mattermostPlugin } from "./src/channel.js";
 import { setMattermostRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "Mattermost",
   description: "Mattermost channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     setMattermostRuntime(api.runtime);
     api.registerChannel({ plugin: mattermostPlugin });
   },

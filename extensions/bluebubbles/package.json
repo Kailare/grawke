@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/bluebubbles",
+  "name": "@moltx/bluebubbles",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke BlueBubbles channel plugin",
-  "grawke": {
+  "description": "MoltX BlueBubbles channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "order": 75
     },
     "install": {
-      "npmSpec": "@grawke/bluebubbles",
+      "npmSpec": "@moltx/bluebubbles",
       "localPath": "extensions/bluebubbles",
       "defaultChoice": "npm"
     }

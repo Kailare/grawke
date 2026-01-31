@@ -17294,7 +17294,7 @@ const cardShadow = isAndroid ? "0 2px 10px rgba(0,0,0,.18)" : "0 10px 30px rgba(
 const buttonShadow = isAndroid ? "0 2px 10px rgba(6, 182, 212, 0.14)" : "0 10px 25px rgba(6, 182, 212, 0.18)";
 const statusShadow = isAndroid ? "0 2px 10px rgba(0, 0, 0, 0.18)" : "0 10px 24px rgba(0, 0, 0, 0.25)";
 const statusBlur = isAndroid ? "10px" : "14px";
-const grawkeTheme = {
+const moltxTheme = {
 	components: {
 		AudioPlayer: emptyClasses(),
 		Button: emptyClasses(),
@@ -17450,7 +17450,7 @@ const grawkeTheme = {
 		Image: { borderRadius: "12px" }
 	}
 };
-var GrawkeA2UIHost = class extends i$6 {
+var MoltXA2UIHost = class extends i$6 {
 	static properties = {
 		surfaces: { state: true },
 		pendingAction: { state: true },
@@ -17459,7 +17459,7 @@ var GrawkeA2UIHost = class extends i$6 {
 	#processor = Data.createSignalA2uiMessageProcessor();
 	#themeProvider = new i$3(this, {
 		context: themeContext,
-		initialValue: grawkeTheme
+		initialValue: moltxTheme
 	});
 	surfaces = [];
 	pendingAction = null;
@@ -17472,10 +17472,10 @@ var GrawkeA2UIHost = class extends i$6 {
       position: relative;
       box-sizing: border-box;
       padding:
-        var(--grawke-a2ui-inset-top, 0px)
-        var(--grawke-a2ui-inset-right, 0px)
-        var(--grawke-a2ui-inset-bottom, 0px)
-        var(--grawke-a2ui-inset-left, 0px);
+        var(--moltx-a2ui-inset-top, 0px)
+        var(--moltx-a2ui-inset-right, 0px)
+        var(--moltx-a2ui-inset-bottom, 0px)
+        var(--moltx-a2ui-inset-left, 0px);
     }
 
     #surfaces {
@@ -17484,14 +17484,14 @@ var GrawkeA2UIHost = class extends i$6 {
       gap: 12px;
       height: 100%;
       overflow: auto;
-      padding-bottom: var(--grawke-a2ui-scroll-pad-bottom, 0px);
+      padding-bottom: var(--moltx-a2ui-scroll-pad-bottom, 0px);
     }
 
     .status {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: var(--grawke-a2ui-status-top, 12px);
+      top: var(--moltx-a2ui-status-top, 12px);
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -17512,7 +17512,7 @@ var GrawkeA2UIHost = class extends i$6 {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      bottom: var(--grawke-a2ui-toast-bottom, 12px);
+      bottom: var(--moltx-a2ui-toast-bottom, 12px);
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -17538,7 +17538,7 @@ var GrawkeA2UIHost = class extends i$6 {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: var(--grawke-a2ui-empty-top, var(--grawke-a2ui-status-top, 12px));
+      top: var(--moltx-a2ui-empty-top, var(--moltx-a2ui-status-top, 12px));
       text-align: center;
       opacity: 0.8;
       padding: 10px 12px;
@@ -17570,20 +17570,20 @@ var GrawkeA2UIHost = class extends i$6 {
   `;
 	connectedCallback() {
 		super.connectedCallback();
-		globalThis.grawkeA2UI = {
+		globalThis.moltxA2UI = {
 			applyMessages: (messages) => this.applyMessages(messages),
 			reset: () => this.reset(),
 			getSurfaces: () => Array.from(this.#processor.getSurfaces().keys())
 		};
 		this.addEventListener("a2uiaction", (evt) => this.#handleA2UIAction(evt));
 		this.#statusListener = (evt) => this.#handleActionStatus(evt);
-		globalThis.addEventListener("grawke:a2ui-action-status", this.#statusListener);
+		globalThis.addEventListener("moltx:a2ui-action-status", this.#statusListener);
 		this.#syncSurfaces();
 	}
 	disconnectedCallback() {
 		super.disconnectedCallback();
 		if (this.#statusListener) {
-			globalThis.removeEventListener("grawke:a2ui-action-status", this.#statusListener);
+			globalThis.removeEventListener("moltx:a2ui-action-status", this.#statusListener);
 			this.#statusListener = null;
 		}
 	}
@@ -17688,11 +17688,11 @@ var GrawkeA2UIHost = class extends i$6 {
 			timestamp: new Date().toISOString(),
 			...Object.keys(context).length ? { context } : {}
 		};
-		globalThis.__grawkeLastA2UIAction = userAction;
-		const handler = globalThis.webkit?.messageHandlers?.grawkeCanvasA2UIAction ?? globalThis.grawkeCanvasA2UIAction;
+		globalThis.__moltxLastA2UIAction = userAction;
+		const handler = globalThis.webkit?.messageHandlers?.moltxCanvasA2UIAction ?? globalThis.moltxCanvasA2UIAction;
 		if (handler?.postMessage) {
 			try {
-				if (handler === globalThis.grawkeCanvasA2UIAction) {
+				if (handler === globalThis.moltxCanvasA2UIAction) {
 					handler.postMessage(JSON.stringify({ userAction }));
 				} else {
 					handler.postMessage({ userAction });
@@ -17765,4 +17765,4 @@ var GrawkeA2UIHost = class extends i$6 {
     </section>`;
 	}
 };
-customElements.define("grawke-a2ui-host", GrawkeA2UIHost);
+customElements.define("moltx-a2ui-host", MoltXA2UIHost);

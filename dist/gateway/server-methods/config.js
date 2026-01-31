@@ -1,12 +1,12 @@
 import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../../agents/agent-scope.js";
-import { CONFIG_PATH_GRAWKE, loadConfig, parseConfigJson5, readConfigFileSnapshot, resolveConfigSnapshotHash, validateConfigObjectWithPlugins, writeConfigFile, } from "../../config/config.js";
+import { CONFIG_PATH_MOLTX, loadConfig, parseConfigJson5, readConfigFileSnapshot, resolveConfigSnapshotHash, validateConfigObjectWithPlugins, writeConfigFile, } from "../../config/config.js";
 import { applyLegacyMigrations } from "../../config/legacy.js";
 import { applyMergePatch } from "../../config/merge-patch.js";
 import { buildConfigSchema } from "../../config/schema.js";
 import { scheduleGatewaySigusr1Restart } from "../../infra/restart.js";
 import { formatDoctorNonInteractiveHint, writeRestartSentinel, } from "../../infra/restart-sentinel.js";
 import { listChannelPlugins } from "../../channels/plugins/index.js";
-import { loadGrawkePlugins } from "../../plugins/loader.js";
+import { loadMoltXPlugins } from "../../plugins/loader.js";
 import { ErrorCodes, errorShape, formatValidationErrors, validateConfigApplyParams, validateConfigGetParams, validateConfigPatchParams, validateConfigSchemaParams, validateConfigSetParams, } from "../protocol/index.js";
 function resolveBaseHash(params) {
     const raw = params?.baseHash;
@@ -50,7 +50,7 @@ export const configHandlers = {
         }
         const cfg = loadConfig();
         const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
-        const pluginRegistry = loadGrawkePlugins({
+        const pluginRegistry = loadMoltXPlugins({
             config: cfg,
             workspaceDir,
             logger: {
@@ -107,7 +107,7 @@ export const configHandlers = {
         await writeConfigFile(validated.config);
         respond(true, {
             ok: true,
-            path: CONFIG_PATH_GRAWKE,
+            path: CONFIG_PATH_MOLTX,
             config: validated.config,
         }, undefined);
     },
@@ -170,7 +170,7 @@ export const configHandlers = {
             doctorHint: formatDoctorNonInteractiveHint(),
             stats: {
                 mode: "config.patch",
-                root: CONFIG_PATH_GRAWKE,
+                root: CONFIG_PATH_MOLTX,
             },
         };
         let sentinelPath = null;
@@ -186,7 +186,7 @@ export const configHandlers = {
         });
         respond(true, {
             ok: true,
-            path: CONFIG_PATH_GRAWKE,
+            path: CONFIG_PATH_MOLTX,
             config: validated.config,
             restart,
             sentinel: {
@@ -241,7 +241,7 @@ export const configHandlers = {
             doctorHint: formatDoctorNonInteractiveHint(),
             stats: {
                 mode: "config.apply",
-                root: CONFIG_PATH_GRAWKE,
+                root: CONFIG_PATH_MOLTX,
             },
         };
         let sentinelPath = null;
@@ -257,7 +257,7 @@ export const configHandlers = {
         });
         respond(true, {
             ok: true,
-            path: CONFIG_PATH_GRAWKE,
+            path: CONFIG_PATH_MOLTX,
             config: validated.config,
             restart,
             sentinel: {

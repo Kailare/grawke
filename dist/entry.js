@@ -6,7 +6,7 @@ import { applyCliProfileEnv, parseCliProfileArgs } from "./cli/profile.js";
 import { isTruthyEnvValue } from "./infra/env.js";
 import { installProcessWarningFilter } from "./infra/warnings.js";
 import { attachChildProcessBridge } from "./process/child-process-bridge.js";
-process.title = "grawke";
+process.title = "moltx";
 installProcessWarningFilter();
 if (process.argv.includes("--no-color")) {
     process.env.NO_COLOR = "1";
@@ -19,14 +19,14 @@ function hasExperimentalWarningSuppressed(nodeOptions) {
     return nodeOptions.includes(EXPERIMENTAL_WARNING_FLAG) || nodeOptions.includes("--no-warnings");
 }
 function ensureExperimentalWarningSuppressed() {
-    if (isTruthyEnvValue(process.env.GRAWKE_NO_RESPAWN))
+    if (isTruthyEnvValue(process.env.MOLTX_NO_RESPAWN))
         return false;
-    if (isTruthyEnvValue(process.env.GRAWKE_NODE_OPTIONS_READY))
+    if (isTruthyEnvValue(process.env.MOLTX_NODE_OPTIONS_READY))
         return false;
     const nodeOptions = process.env.NODE_OPTIONS ?? "";
     if (hasExperimentalWarningSuppressed(nodeOptions))
         return false;
-    process.env.GRAWKE_NODE_OPTIONS_READY = "1";
+    process.env.MOLTX_NODE_OPTIONS_READY = "1";
     process.env.NODE_OPTIONS = `${nodeOptions} ${EXPERIMENTAL_WARNING_FLAG}`.trim();
     const child = spawn(process.execPath, [...process.execArgv, ...process.argv.slice(1)], {
         stdio: "inherit",
@@ -41,7 +41,7 @@ function ensureExperimentalWarningSuppressed() {
         process.exit(code ?? 1);
     });
     child.once("error", (error) => {
-        console.error("[grawke] Failed to respawn CLI:", error instanceof Error ? (error.stack ?? error.message) : error);
+        console.error("[moltx] Failed to respawn CLI:", error instanceof Error ? (error.stack ?? error.message) : error);
         process.exit(1);
     });
     // Parent must not continue running the CLI.
@@ -110,7 +110,7 @@ if (!ensureExperimentalWarningSuppressed()) {
     const parsed = parseCliProfileArgs(process.argv);
     if (!parsed.ok) {
         // Keep it simple; Commander will handle rich help/errors after we strip flags.
-        console.error(`[grawke] ${parsed.error}`);
+        console.error(`[moltx] ${parsed.error}`);
         process.exit(2);
     }
     if (parsed.profile) {
@@ -121,7 +121,7 @@ if (!ensureExperimentalWarningSuppressed()) {
     import("./cli/run-main.js")
         .then(({ runCli }) => runCli(process.argv))
         .catch((error) => {
-        console.error("[grawke] Failed to start CLI:", error instanceof Error ? (error.stack ?? error.message) : error);
+        console.error("[moltx] Failed to start CLI:", error instanceof Error ? (error.stack ?? error.message) : error);
         process.exitCode = 1;
     });
 }

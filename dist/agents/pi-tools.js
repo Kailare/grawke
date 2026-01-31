@@ -4,10 +4,10 @@ import { resolveGatewayMessageChannel } from "../utils/message-channel.js";
 import { createApplyPatchTool } from "./apply-patch.js";
 import { createExecTool, createProcessTool, } from "./bash-tools.js";
 import { listChannelAgentTools } from "./channel-tools.js";
-import { createGrawkeTools } from "./grawke-tools.js";
+import { createMoltXTools } from "./moltx-tools.js";
 import { wrapToolWithAbortSignal } from "./pi-tools.abort.js";
 import { filterToolsByPolicy, isToolAllowedByPolicies, resolveEffectiveToolPolicy, resolveGroupToolPolicy, resolveSubagentToolPolicy, } from "./pi-tools.policy.js";
-import { assertRequiredParams, CLAUDE_PARAM_GROUPS, createGrawkeReadTool, createSandboxedEditTool, createSandboxedReadTool, createSandboxedWriteTool, normalizeToolParams, patchToolSchemaForClaudeCompatibility, wrapToolParamNormalization, } from "./pi-tools.read.js";
+import { assertRequiredParams, CLAUDE_PARAM_GROUPS, createMoltXReadTool, createSandboxedEditTool, createSandboxedReadTool, createSandboxedWriteTool, normalizeToolParams, patchToolSchemaForClaudeCompatibility, wrapToolParamNormalization, } from "./pi-tools.read.js";
 import { cleanToolSchemaForGemini, normalizeToolParameters } from "./pi-tools.schema.js";
 import { buildPluginToolGroups, collectExplicitAllowlist, expandPolicyWithPluginGroups, normalizeToolName, resolveToolProfilePolicy, stripPluginOnlyAllowlist, } from "./tool-policy.js";
 import { getPluginToolMeta } from "../plugins/tools.js";
@@ -58,7 +58,7 @@ export const __testing = {
     wrapToolParamNormalization,
     assertRequiredParams,
 };
-export function createGrawkeCodingTools(options) {
+export function createMoltXCodingTools(options) {
     const execToolName = "exec";
     const sandbox = options?.sandbox?.enabled ? options.sandbox : undefined;
     const { agentId, globalPolicy, globalProviderPolicy, agentPolicy, agentProviderPolicy, profile, providerProfile, } = resolveEffectiveToolPolicy({
@@ -112,7 +112,7 @@ export function createGrawkeCodingTools(options) {
                 return [createSandboxedReadTool(sandboxRoot)];
             }
             const freshReadTool = createReadTool(workspaceRoot);
-            return [createGrawkeReadTool(freshReadTool)];
+            return [createMoltXReadTool(freshReadTool)];
         }
         if (tool.name === "bash" || tool.name === execToolName)
             return [];
@@ -181,7 +181,7 @@ export function createGrawkeCodingTools(options) {
         processTool,
         // Channel docking: include channel-defined agent tools (login, etc.).
         ...listChannelAgentTools({ cfg: options?.config }),
-        ...createGrawkeTools({
+        ...createMoltXTools({
             browserControlUrl: sandbox?.browser?.controlUrl,
             allowHostBrowserControl: sandbox ? sandbox.browserAllowHostControl : true,
             allowedControlUrls: sandbox?.browserAllowedControlUrls,
@@ -274,14 +274,14 @@ export function createGrawkeCodingTools(options) {
     const subagentFiltered = subagentPolicyExpanded
         ? filterToolsByPolicy(sandboxed, subagentPolicyExpanded)
         : sandboxed;
-    // GRAWKE: Hard-filter dangerous tools that cause Grok to dump raw output to chat.
-    // browser, canvas, nodes are already removed from grawke-tools.js;
+    // MOLTX: Hard-filter dangerous tools that cause Grok to dump raw output to chat.
+    // browser, canvas, nodes are already removed from moltx-tools.js;
     // exec and process are filtered here since they're created in pi-tools.js directly.
-    const GRAWKE_DENIED_TOOLS = new Set(["exec", "process", "browser", "canvas", "nodes"]);
-    const grawkeFiltered = subagentFiltered.filter((tool) => !GRAWKE_DENIED_TOOLS.has(normalizeToolName(tool.name)));
+    const MOLTX_DENIED_TOOLS = new Set(["exec", "process", "browser", "canvas", "nodes"]);
+    const moltxFiltered = subagentFiltered.filter((tool) => !MOLTX_DENIED_TOOLS.has(normalizeToolName(tool.name)));
     // Always normalize tool JSON Schemas before handing them to pi-agent/pi-ai.
     // Without this, some providers (notably OpenAI) will reject root-level union schemas.
-    const normalized = grawkeFiltered.map(normalizeToolParameters);
+    const normalized = moltxFiltered.map(normalizeToolParameters);
     const withAbort = options?.abortSignal
         ? normalized.map((tool) => wrapToolWithAbortSignal(tool, options.abortSignal))
         : normalized;

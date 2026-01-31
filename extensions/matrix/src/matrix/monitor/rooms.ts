@@ -1,5 +1,5 @@
 import type { MatrixRoomConfig } from "../../types.js";
-import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "grawke/plugin-sdk";
+import { buildChannelKeyCandidates, resolveChannelEntryMatch } from "moltx/plugin-sdk";
 
 export type MatrixRoomConfigResolved = {
   allowed: boolean;

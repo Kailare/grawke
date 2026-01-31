@@ -1,26 +1,26 @@
 ---
-summary: "Run Grawke Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
+summary: "Run MoltX Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
 read_when:
-  - You want Grawke running 24/7 on a cloud VPS (not your laptop)
+  - You want MoltX running 24/7 on a cloud VPS (not your laptop)
   - You want a production-grade, always-on Gateway on your own VPS
   - You want full control over persistence, binaries, and restart behavior
-  - You are running Grawke in Docker on Hetzner or a similar provider
+  - You are running MoltX in Docker on Hetzner or a similar provider
 ---
 
-# Grawke on Hetzner (Docker, Production VPS Guide)
+# MoltX on Hetzner (Docker, Production VPS Guide)
 
 ## Goal
-Run a persistent Grawke Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent MoltX Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want “Grawke 24/7 for ~$5”, this is the simplest reliable setup.
+If you want “MoltX 24/7 for ~$5”, this is the simplest reliable setup.
 Hetzner pricing changes; pick the smallest Debian/Ubuntu VPS and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
 
 - Rent a small Linux server (Hetzner VPS)
 - Install Docker (isolated app runtime)
-- Start the Grawke Gateway in Docker
-- Persist `~/.grawke` + `~/clawd` on the host (survives restarts/rebuilds)
+- Start the MoltX Gateway in Docker
+- Persist `~/.moltx` + `~/clawd` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
 The Gateway can be accessed via:
@@ -37,7 +37,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 
 1) Provision Hetzner VPS  
 2) Install Docker  
-3) Clone Grawke repository  
+3) Clone MoltX repository  
 4) Create persistent host directories  
 5) Configure `.env` and `docker-compose.yml`  
 6) Bake required binaries into the image  
@@ -93,11 +93,11 @@ docker compose version
 
 ---
 
-## 3) Clone the Grawke repository
+## 3) Clone the MoltX repository
 
 ```bash
 git clone https://github.com/clawdbot/clawdbot.git
-cd grawke
+cd moltx
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -110,11 +110,11 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p /root/.grawke
+mkdir -p /root/.moltx
 mkdir -p /root/clawd
 
 # Set ownership to the container user (uid 1000):
-chown -R 1000:1000 /root/.grawke
+chown -R 1000:1000 /root/.moltx
 chown -R 1000:1000 /root/clawd
 ```
 
@@ -125,16 +125,16 @@ chown -R 1000:1000 /root/clawd
 Create `.env` in the repository root.
 
 ```bash
-GRAWKE_IMAGE=grawke:latest
-GRAWKE_GATEWAY_TOKEN=change-me-now
-GRAWKE_GATEWAY_BIND=lan
-GRAWKE_GATEWAY_PORT=18789
+MOLTX_IMAGE=moltx:latest
+MOLTX_GATEWAY_TOKEN=change-me-now
+MOLTX_GATEWAY_BIND=lan
+MOLTX_GATEWAY_PORT=18789
 
-GRAWKE_CONFIG_DIR=/root/.grawke
-GRAWKE_WORKSPACE_DIR=/root/clawd
+MOLTX_CONFIG_DIR=/root/.moltx
+MOLTX_WORKSPACE_DIR=/root/clawd
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.grawke
+XDG_CONFIG_HOME=/home/node/.moltx
 ```
 
 Generate strong secrets:
@@ -153,8 +153,8 @@ Create or update `docker-compose.yml`.
 
 ```yaml
 services:
-  grawke-gateway:
-    image: ${GRAWKE_IMAGE}
+  moltx-gateway:
+    image: ${MOLTX_IMAGE}
     build: .
     restart: unless-stopped
     env_file:
@@ -163,19 +163,19 @@ services:
       - HOME=/home/node
       - NODE_ENV=production
       - TERM=xterm-256color
-      - GRAWKE_GATEWAY_BIND=${GRAWKE_GATEWAY_BIND}
-      - GRAWKE_GATEWAY_PORT=${GRAWKE_GATEWAY_PORT}
-      - GRAWKE_GATEWAY_TOKEN=${GRAWKE_GATEWAY_TOKEN}
+      - MOLTX_GATEWAY_BIND=${MOLTX_GATEWAY_BIND}
+      - MOLTX_GATEWAY_PORT=${MOLTX_GATEWAY_PORT}
+      - MOLTX_GATEWAY_TOKEN=${MOLTX_GATEWAY_TOKEN}
       - GOG_KEYRING_PASSWORD=${GOG_KEYRING_PASSWORD}
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${GRAWKE_CONFIG_DIR}:/home/node/.grawke
-      - ${GRAWKE_WORKSPACE_DIR}:/home/node/clawd
+      - ${MOLTX_CONFIG_DIR}:/home/node/.moltx
+      - ${MOLTX_WORKSPACE_DIR}:/home/node/clawd
     ports:
       # Recommended: keep the Gateway loopback-only on the VPS; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
-      - "127.0.0.1:${GRAWKE_GATEWAY_PORT}:18789"
+      - "127.0.0.1:${MOLTX_GATEWAY_PORT}:18789"
 
       # Optional: only if you run iOS/Android nodes against this VPS and need Canvas host.
       # If you expose this publicly, read /gateway/security and firewall accordingly.
@@ -186,9 +186,9 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${GRAWKE_GATEWAY_BIND}",
+        "${MOLTX_GATEWAY_BIND}",
         "--port",
-        "${GRAWKE_GATEWAY_PORT}"
+        "${MOLTX_GATEWAY_PORT}"
       ]
 ```
 
@@ -259,15 +259,15 @@ CMD ["node","dist/index.js"]
 
 ```bash
 docker compose build
-docker compose up -d grawke-gateway
+docker compose up -d moltx-gateway
 ```
 
 Verify binaries:
 
 ```bash
-docker compose exec grawke-gateway which gog
-docker compose exec grawke-gateway which goplaces
-docker compose exec grawke-gateway which wacli
+docker compose exec moltx-gateway which gog
+docker compose exec moltx-gateway which goplaces
+docker compose exec moltx-gateway which wacli
 ```
 
 Expected output:
@@ -283,7 +283,7 @@ Expected output:
 ## 9) Verify Gateway
 
 ```bash
-docker compose logs -f grawke-gateway
+docker compose logs -f moltx-gateway
 ```
 
 Success:
@@ -308,17 +308,17 @@ Paste your gateway token.
 
 ## What persists where (source of truth)
 
-Grawke runs in Docker, but Docker is not the source of truth.
+MoltX runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component | Location | Persistence mechanism | Notes |
 |---|---|---|---|
-| Gateway config | `/home/node/.grawke/` | Host volume mount | Includes `grawke.json`, tokens |
-| Model auth profiles | `/home/node/.grawke/` | Host volume mount | OAuth tokens, API keys |
-| Skill configs | `/home/node/.grawke/skills/` | Host volume mount | Skill-level state |
+| Gateway config | `/home/node/.moltx/` | Host volume mount | Includes `moltx.json`, tokens |
+| Model auth profiles | `/home/node/.moltx/` | Host volume mount | OAuth tokens, API keys |
+| Skill configs | `/home/node/.moltx/skills/` | Host volume mount | Skill-level state |
 | Agent workspace | `/home/node/clawd/` | Host volume mount | Code and agent artifacts |
-| WhatsApp session | `/home/node/.grawke/` | Host volume mount | Preserves QR login |
-| Gmail keyring | `/home/node/.grawke/` | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
+| WhatsApp session | `/home/node/.moltx/` | Host volume mount | Preserves QR login |
+| Gmail keyring | `/home/node/.moltx/` | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
 | External binaries | `/usr/local/bin/` | Docker image | Must be baked at build time |
 | Node runtime | Container filesystem | Docker image | Rebuilt every image build |
 | OS packages | Container filesystem | Docker image | Do not install at runtime |

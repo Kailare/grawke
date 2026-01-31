@@ -2,7 +2,7 @@ import path from "node:path";
 import { CONFIG_DIR } from "../utils.js";
 import { hasBinary, isBundledSkillAllowed, isConfigPathTruthy, loadWorkspaceSkillEntries, resolveBundledAllowlist, resolveConfigPath, resolveSkillConfig, resolveSkillsInstallPreferences, } from "./skills.js";
 function resolveSkillKey(entry) {
-    return entry.grawke?.skillKey ?? entry.skill.name;
+    return entry.moltx?.skillKey ?? entry.skill.name;
 }
 function selectPreferredInstallSpec(install, prefs) {
     if (install.length === 0)
@@ -26,7 +26,7 @@ function selectPreferredInstallSpec(install, prefs) {
     return indexed[0];
 }
 function normalizeInstallOptions(entry, prefs) {
-    const install = entry.grawke?.install ?? [];
+    const install = entry.moltx?.install ?? [];
     if (install.length === 0)
         return [];
     const platform = process.platform;
@@ -82,18 +82,18 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
     const disabled = skillConfig?.enabled === false;
     const allowBundled = resolveBundledAllowlist(config);
     const blockedByAllowlist = !isBundledSkillAllowed(entry, allowBundled);
-    const always = entry.grawke?.always === true;
-    const emoji = entry.grawke?.emoji ?? entry.frontmatter.emoji;
-    const homepageRaw = entry.grawke?.homepage ??
+    const always = entry.moltx?.always === true;
+    const emoji = entry.moltx?.emoji ?? entry.frontmatter.emoji;
+    const homepageRaw = entry.moltx?.homepage ??
         entry.frontmatter.homepage ??
         entry.frontmatter.website ??
         entry.frontmatter.url;
     const homepage = homepageRaw?.trim() ? homepageRaw.trim() : undefined;
-    const requiredBins = entry.grawke?.requires?.bins ?? [];
-    const requiredAnyBins = entry.grawke?.requires?.anyBins ?? [];
-    const requiredEnv = entry.grawke?.requires?.env ?? [];
-    const requiredConfig = entry.grawke?.requires?.config ?? [];
-    const requiredOs = entry.grawke?.os ?? [];
+    const requiredBins = entry.moltx?.requires?.bins ?? [];
+    const requiredAnyBins = entry.moltx?.requires?.anyBins ?? [];
+    const requiredEnv = entry.moltx?.requires?.env ?? [];
+    const requiredConfig = entry.moltx?.requires?.config ?? [];
+    const requiredOs = entry.moltx?.os ?? [];
     const missingBins = requiredBins.filter((bin) => {
         if (hasBinary(bin))
             return false;
@@ -117,7 +117,7 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
             continue;
         if (skillConfig?.env?.[envName])
             continue;
-        if (skillConfig?.apiKey && entry.grawke?.primaryEnv === envName) {
+        if (skillConfig?.apiKey && entry.moltx?.primaryEnv === envName) {
             continue;
         }
         missingEnv.push(envName);
@@ -152,7 +152,7 @@ function buildSkillStatus(entry, config, prefs, eligibility) {
         filePath: entry.skill.filePath,
         baseDir: entry.skill.baseDir,
         skillKey,
-        primaryEnv: entry.grawke?.primaryEnv,
+        primaryEnv: entry.moltx?.primaryEnv,
         emoji,
         homepage,
         always,

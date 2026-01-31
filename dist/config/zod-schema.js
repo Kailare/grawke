@@ -24,7 +24,7 @@ const NodeHostSchema = z
 })
     .strict()
     .optional();
-export const GrawkeSchema = z
+export const MoltXSchema = z
     .object({
     meta: z
         .object({

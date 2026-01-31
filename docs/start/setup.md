@@ -1,5 +1,5 @@
 ---
-summary: "Setup guide: keep your Grawke setup tailored while staying up-to-date"
+summary: "Setup guide: keep your MoltX setup tailored while staying up-to-date"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -10,7 +10,7 @@ read_when:
 Last updated: 2026-01-01
 
 ## TL;DR
-- **Tailoring lives outside the repo:** `~/clawd` (workspace) + `~/.grawke/grawke.json` (config).
+- **Tailoring lives outside the repo:** `~/clawd` (workspace) + `~/.moltx/moltx.json` (config).
 - **Stable workflow:** install the macOS app; let it run the bundled Gateway.
 - **Bleeding edge workflow:** run the Gateway yourself via `pnpm gateway:watch`, then let the macOS app attach in Local mode.
 
@@ -23,42 +23,42 @@ Last updated: 2026-01-01
 
 If you want “100% tailored to me” *and* easy updates, keep your customization in:
 
-- **Config:** `~/.grawke/grawke.json` (JSON/JSON5-ish)
+- **Config:** `~/.moltx/moltx.json` (JSON/JSON5-ish)
 - **Workspace:** `~/clawd` (skills, prompts, memories; make it a private git repo)
 
 Bootstrap once:
 
 ```bash
-grawke setup
+moltx setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-grawke setup
+moltx setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm grawke setup`.
+If you don’t have a global install yet, run it via `pnpm moltx setup`.
 
 ## Stable workflow (macOS app first)
 
-1) Install + launch **Grawke.app** (menu bar).
+1) Install + launch **MoltX.app** (menu bar).
 2) Complete the onboarding/permissions checklist (TCC prompts).
 3) Ensure Gateway is **Local** and running (the app manages it).
 4) Link surfaces (example: WhatsApp):
 
 ```bash
-grawke channels login
+moltx channels login
 ```
 
 5) Sanity check:
 
 ```bash
-grawke health
+moltx health
 ```
 
 If onboarding is not available in your build:
-- Run `grawke setup`, then `grawke channels login`, then start the Gateway manually (`grawke gateway`).
+- Run `moltx setup`, then `moltx channels login`, then start the Gateway manually (`moltx gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -83,7 +83,7 @@ pnpm gateway:watch
 
 ### 2) Point the macOS app at your running Gateway
 
-In **Grawke.app**:
+In **MoltX.app**:
 
 - Connection Mode: **Local**
 The app will attach to the running gateway on the configured port.
@@ -94,19 +94,19 @@ The app will attach to the running gateway on the configured port.
 - Or via CLI:
 
 ```bash
-grawke health
+moltx health
 ```
 
 ### Common footguns
 - **Wrong port:** Gateway WS defaults to `ws://127.0.0.1:18789`; keep app + CLI on the same port.
 - **Where state lives:**
-  - Credentials: `~/.grawke/credentials/`
-  - Sessions: `~/.grawke/agents/<agentId>/sessions/`
-  - Logs: `/tmp/grawke/`
+  - Credentials: `~/.moltx/credentials/`
+  - Sessions: `~/.moltx/agents/<agentId>/sessions/`
+  - Logs: `/tmp/moltx/`
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/clawd` and `~/.grawke/` as “your stuff”; don’t put personal prompts/config into the `grawke` repo.
+- Keep `~/clawd` and `~/.moltx/` as “your stuff”; don’t put personal prompts/config into the `moltx` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -127,5 +127,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [Grawke assistant setup](/start/clawd)
+- [MoltX assistant setup](/start/clawd)
 - [macOS app](/platforms/macos) (gateway lifecycle)

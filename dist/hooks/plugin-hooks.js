@@ -12,13 +12,13 @@ function normalizePluginHookEntry(api, entry) {
         ...entry,
         hook: {
             ...entry.hook,
-            source: "grawke-plugin",
+            source: "moltx-plugin",
             pluginId: api.id,
         },
-        grawke: {
-            ...entry.grawke,
-            hookKey: entry.grawke?.hookKey ?? `${api.id}:${entry.hook.name}`,
-            events: entry.grawke?.events ?? [],
+        moltx: {
+            ...entry.moltx,
+            hookKey: entry.moltx?.hookKey ?? `${api.id}:${entry.hook.name}`,
+            events: entry.moltx?.events ?? [],
         },
     };
 }
@@ -27,7 +27,7 @@ async function loadHookHandler(entry, api) {
         const url = pathToFileURL(entry.hook.handlerPath).href;
         const cacheBustedUrl = `${url}?t=${Date.now()}`;
         const mod = (await import(cacheBustedUrl));
-        const exportName = entry.grawke?.export ?? "default";
+        const exportName = entry.moltx?.export ?? "default";
         const handler = mod[exportName];
         if (typeof handler === "function") {
             return handler;
@@ -44,7 +44,7 @@ export async function registerPluginHooksFromDir(api, dir) {
     const resolvedDir = resolveHookDir(api, dir);
     const hooks = loadHookEntriesFromDir({
         dir: resolvedDir,
-        source: "grawke-plugin",
+        source: "moltx-plugin",
         pluginId: api.id,
     });
     const result = {
@@ -55,7 +55,7 @@ export async function registerPluginHooksFromDir(api, dir) {
     };
     for (const entry of hooks) {
         const normalizedEntry = normalizePluginHookEntry(api, entry);
-        const events = normalizedEntry.grawke?.events ?? [];
+        const events = normalizedEntry.moltx?.events ?? [];
         if (events.length === 0) {
             api.logger.warn?.(`[hooks] ${entry.hook.name} has no events; skipping`);
             api.registerHook(events, async () => undefined, {

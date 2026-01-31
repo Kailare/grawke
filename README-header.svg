@@ -77,10 +77,10 @@
     <polygon points="10,-55 -5,-10 10,-15 -10,55 5,10 -10,15" fill="#3b82f6" opacity="0.6"/>
   </g>
   
-  <!-- GRAWKE text -->
+  <!-- MOLTX text -->
   <text x="600" y="215" text-anchor="middle" font-family="'Segoe UI', 'SF Pro Display', Helvetica, Arial, sans-serif" 
         font-size="110" font-weight="800" letter-spacing="12" fill="white" filter="url(#glow)">
-    GRAWKE
+    MOLTX
   </text>
   
   <!-- Subtitle -->

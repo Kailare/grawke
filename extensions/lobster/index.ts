@@ -1,8 +1,8 @@
-import type { GrawkePluginApi } from "../../src/plugins/types.js";
+import type { MoltXPluginApi } from "../../src/plugins/types.js";
 
 import { createLobsterTool } from "./src/lobster-tool.js";
 
-export default function register(api: GrawkePluginApi) {
+export default function register(api: MoltXPluginApi) {
   api.registerTool(
     (ctx) => {
       if (ctx.sandboxed) return null;

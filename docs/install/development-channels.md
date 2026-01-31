@@ -9,7 +9,7 @@ read_when:
 
 Last updated: 2026-01-21
 
-Grawke ships three update channels:
+MoltX ships three update channels:
 
 - **stable**: npm dist-tag `latest`.
 - **beta**: npm dist-tag `beta` (builds under test).
@@ -23,9 +23,9 @@ without changing the version number — dist-tags are the source of truth for np
 Git checkout:
 
 ```bash
-grawke update --channel stable
-grawke update --channel beta
-grawke update --channel dev
+moltx update --channel stable
+moltx update --channel beta
+moltx update --channel dev
 ```
 
 - `stable`/`beta` check out the latest matching tag (often the same tag).
@@ -34,17 +34,17 @@ grawke update --channel dev
 npm/pnpm global install:
 
 ```bash
-grawke update --channel stable
-grawke update --channel beta
-grawke update --channel dev
+moltx update --channel stable
+moltx update --channel beta
+moltx update --channel dev
 ```
 
 This updates via the corresponding npm dist-tag (`latest`, `beta`, `dev`).
 
-When you **explicitly** switch channels with `--channel`, Grawke also aligns
+When you **explicitly** switch channels with `--channel`, MoltX also aligns
 the install method:
 
-- `dev` ensures a git checkout (default `~/grawke`, override with `GRAWKE_GIT_DIR`),
+- `dev` ensures a git checkout (default `~/moltx`, override with `MOLTX_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` installs from npm using the matching dist-tag.
 
@@ -52,7 +52,7 @@ Tip: if you want stable + dev in parallel, keep two clones and point your gatewa
 
 ## Plugins and channels
 
-When you switch channels with `grawke update`, Grawke also syncs plugin sources:
+When you switch channels with `moltx update`, MoltX also syncs plugin sources:
 
 - `dev` prefers bundled plugins from the git checkout.
 - `stable` and `beta` restore npm-installed plugin packages.

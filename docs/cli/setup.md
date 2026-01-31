@@ -1,13 +1,13 @@
 ---
-summary: "CLI reference for `grawke setup` (initialize config + workspace)"
+summary: "CLI reference for `moltx setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full onboarding wizard
   - You want to set the default workspace path
 ---
 
-# `grawke setup`
+# `moltx setup`
 
-Initialize `~/.grawke/grawke.json` and the agent workspace.
+Initialize `~/.moltx/moltx.json` and the agent workspace.
 
 Related:
 - Getting started: [Getting started](/start/getting-started)
@@ -16,13 +16,13 @@ Related:
 ## Examples
 
 ```bash
-grawke setup
-grawke setup --workspace ~/clawd
+moltx setup
+moltx setup --workspace ~/clawd
 ```
 
 To run the wizard via setup:
 
 ```bash
-grawke setup --wizard
+moltx setup --wizard
 ```
 

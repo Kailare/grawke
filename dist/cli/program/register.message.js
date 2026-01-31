@@ -19,17 +19,17 @@ export function registerMessageCommands(program, ctx) {
         .addHelpText("after", () => `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-        ['grawke message send --target +15555550123 --message "Hi"', "Send a text message."],
+        ['moltx message send --target +15555550123 --message "Hi"', "Send a text message."],
         [
-            'grawke message send --target +15555550123 --message "Hi" --media photo.jpg',
+            'moltx message send --target +15555550123 --message "Hi" --media photo.jpg',
             "Send a message with media.",
         ],
         [
-            'grawke message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
+            'moltx message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi',
             "Create a Discord poll.",
         ],
         [
-            'grawke message react --channel discord --target 123 --message-id 456 --emoji "✅"',
+            'moltx message react --channel discord --target 123 --message-id 456 --emoji "✅"',
             "React to a message.",
         ],
     ])}

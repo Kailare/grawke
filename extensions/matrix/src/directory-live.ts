@@ -1,4 +1,4 @@
-import type { ChannelDirectoryEntry } from "grawke/plugin-sdk";
+import type { ChannelDirectoryEntry } from "moltx/plugin-sdk";
 
 import { resolveMatrixAuth } from "./matrix/client.js";
 

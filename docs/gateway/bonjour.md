@@ -6,7 +6,7 @@ read_when:
 ---
 # Bonjour / mDNS discovery
 
-Grawke uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
+MoltX uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
 an active Gateway (WebSocket endpoint). It is best‑effort and does **not** replace SSH or
 Tailnet-based connectivity.
 
@@ -19,38 +19,38 @@ boundary. You can keep the same discovery UX by switching to **unicast DNS‑SD*
 High‑level steps:
 
 1) Run a DNS server on the gateway host (reachable over Tailnet).
-2) Publish DNS‑SD records for `_grawke-gw._tcp` under a dedicated zone
-   (example: `grawke.internal.`).
-3) Configure Tailscale **split DNS** so `grawke.internal` resolves via that
+2) Publish DNS‑SD records for `_moltx-gw._tcp` under a dedicated zone
+   (example: `moltx.internal.`).
+3) Configure Tailscale **split DNS** so `moltx.internal` resolves via that
    DNS server for clients (including iOS).
 
-Grawke standardizes on `grawke.internal.` for this mode. iOS/Android nodes
-browse both `local.` and `grawke.internal.` automatically.
+MoltX standardizes on `moltx.internal.` for this mode. iOS/Android nodes
+browse both `local.` and `moltx.internal.` automatically.
 
 ### Gateway config (recommended)
 
 ```json5
 {
   gateway: { bind: "tailnet" }, // tailnet-only (recommended)
-  discovery: { wideArea: { enabled: true } } // enables grawke.internal DNS-SD publishing
+  discovery: { wideArea: { enabled: true } } // enables moltx.internal DNS-SD publishing
 }
 ```
 
 ### One‑time DNS server setup (gateway host)
 
 ```bash
-grawke dns setup --apply
+moltx dns setup --apply
 ```
 
 This installs CoreDNS and configures it to:
 - listen on port 53 only on the gateway’s Tailscale interfaces
-- serve `grawke.internal.` from `~/.grawke/dns/grawke.internal.db`
+- serve `moltx.internal.` from `~/.moltx/dns/moltx.internal.db`
 
 Validate from a tailnet‑connected machine:
 
 ```bash
-dns-sd -B _grawke-gw._tcp grawke.internal.
-dig @<TAILNET_IPV4> -p 53 _grawke-gw._tcp.grawke.internal PTR +short
+dns-sd -B _moltx-gw._tcp moltx.internal.
+dig @<TAILNET_IPV4> -p 53 _moltx-gw._tcp.moltx.internal PTR +short
 ```
 
 ### Tailscale DNS settings
@@ -58,10 +58,10 @@ dig @<TAILNET_IPV4> -p 53 _grawke-gw._tcp.grawke.internal PTR +short
 In the Tailscale admin console:
 
 - Add a nameserver pointing at the gateway’s tailnet IP (UDP/TCP 53).
-- Add split DNS so the domain `grawke.internal` uses that nameserver.
+- Add split DNS so the domain `moltx.internal` uses that nameserver.
 
 Once clients accept tailnet DNS, iOS nodes can browse
-`_grawke-gw._tcp` in `grawke.internal.` without multicast.
+`_moltx-gw._tcp` in `moltx.internal.` without multicast.
 
 ### Gateway listener security (recommended)
 
@@ -69,16 +69,16 @@ The Gateway WS port (default `18789`) binds to loopback by default. For LAN/tail
 access, bind explicitly and keep auth enabled.
 
 For tailnet‑only setups:
-- Set `gateway.bind: "tailnet"` in `~/.grawke/grawke.json`.
+- Set `gateway.bind: "tailnet"` in `~/.moltx/moltx.json`.
 - Restart the Gateway (or restart the macOS menubar app).
 
 ## What advertises
 
-Only the Gateway advertises `_grawke-gw._tcp`.
+Only the Gateway advertises `_moltx-gw._tcp`.
 
 ## Service types
 
-- `_grawke-gw._tcp` — gateway transport beacon (used by macOS/iOS/Android nodes).
+- `_moltx-gw._tcp` — gateway transport beacon (used by macOS/iOS/Android nodes).
 
 ## TXT keys (non‑secret hints)
 
@@ -93,7 +93,7 @@ The Gateway advertises small non‑secret hints to make UI flows convenient:
 - `canvasPort=<port>` (only when the canvas host is enabled; default `18793`)
 - `sshPort=<port>` (defaults to 22 when not overridden)
 - `transport=gateway`
-- `cliPath=<path>` (optional; absolute path to a runnable `grawke` entrypoint)
+- `cliPath=<path>` (optional; absolute path to a runnable `moltx` entrypoint)
 - `tailnetDns=<magicdns>` (optional hint when Tailnet is available)
 
 ## Debugging on macOS
@@ -102,11 +102,11 @@ Useful built‑in tools:
 
 - Browse instances:
   ```bash
-  dns-sd -B _grawke-gw._tcp local.
+  dns-sd -B _moltx-gw._tcp local.
   ```
 - Resolve one instance (replace `<instance>`):
   ```bash
-  dns-sd -L "<instance>" _grawke-gw._tcp local.
+  dns-sd -L "<instance>" _moltx-gw._tcp local.
   ```
 
 If browsing works but resolving fails, you’re usually hitting a LAN policy or
@@ -123,7 +123,7 @@ The Gateway writes a rolling log file (printed on startup as
 
 ## Debugging on iOS node
 
-The iOS node uses `NWBrowser` to discover `_grawke-gw._tcp`.
+The iOS node uses `NWBrowser` to discover `_moltx-gw._tcp`.
 
 To capture logs:
 - Settings → Gateway → Advanced → **Discovery Debug Logs**
@@ -150,11 +150,11 @@ sequences (e.g. spaces become `\032`).
 
 ## Disabling / configuration
 
-- `GRAWKE_DISABLE_BONJOUR=1` disables advertising.
-- `gateway.bind` in `~/.grawke/grawke.json` controls the Gateway bind mode.
-- `GRAWKE_SSH_PORT` overrides the SSH port advertised in TXT.
-- `GRAWKE_TAILNET_DNS` publishes a MagicDNS hint in TXT.
-- `GRAWKE_CLI_PATH` overrides the advertised CLI path.
+- `MOLTX_DISABLE_BONJOUR=1` disables advertising.
+- `gateway.bind` in `~/.moltx/moltx.json` controls the Gateway bind mode.
+- `MOLTX_SSH_PORT` overrides the SSH port advertised in TXT.
+- `MOLTX_TAILNET_DNS` publishes a MagicDNS hint in TXT.
+- `MOLTX_CLI_PATH` overrides the advertised CLI path.
 
 ## Related docs
 

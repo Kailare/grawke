@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 
 import { zaloPlugin } from "./channel.js";
 
@@ -12,7 +12,7 @@ describe("zalo directory", () => {
           allowFrom: ["zalo:123", "zl:234", "345"],
         },
       },
-    } as unknown as GrawkeConfig;
+    } as unknown as MoltXConfig;
 
     expect(zaloPlugin.directory).toBeTruthy();
     expect(zaloPlugin.directory?.listPeers).toBeTruthy();

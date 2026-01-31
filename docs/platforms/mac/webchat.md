@@ -18,9 +18,9 @@ agent (with a session switcher for other sessions).
 - Manual: Lobster menu → “Open Chat”.
 - Auto‑open for testing:
   ```bash
-  dist/Grawke.app/Contents/MacOS/Grawke --webchat
+  dist/MoltX.app/Contents/MacOS/MoltX --webchat
   ```
-- Logs: `./scripts/clawlog.sh` (subsystem `com.grawke`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `com.moltx`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

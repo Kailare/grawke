@@ -62,7 +62,7 @@ async function collectFilesystemFindings(params) {
                 checkId: "fs.state_dir.perms_world_writable",
                 severity: "critical",
                 title: "State dir is world-writable",
-                detail: `${params.stateDir} mode=${formatOctal(bits)}; other users can write into your Grawke state.`,
+                detail: `${params.stateDir} mode=${formatOctal(bits)}; other users can write into your MoltX state.`,
                 remediation: `chmod 700 ${params.stateDir}`,
             });
         }
@@ -71,7 +71,7 @@ async function collectFilesystemFindings(params) {
                 checkId: "fs.state_dir.perms_group_writable",
                 severity: "warn",
                 title: "State dir is group-writable",
-                detail: `${params.stateDir} mode=${formatOctal(bits)}; group users can write into your Grawke state.`,
+                detail: `${params.stateDir} mode=${formatOctal(bits)}; group users can write into your MoltX state.`,
                 remediation: `chmod 700 ${params.stateDir}`,
             });
         }
@@ -218,7 +218,7 @@ function collectBrowserControlFindings(cfg) {
             severity: "warn",
             title: "Browser control config looks invalid",
             detail: String(err),
-            remediation: `Fix browser.controlUrl/browser.cdpUrl in ${resolveConfigPath()} and re-run "${formatCliCommand("grawke security audit --deep")}".`,
+            remediation: `Fix browser.controlUrl/browser.cdpUrl in ${resolveConfigPath()} and re-run "${formatCliCommand("moltx security audit --deep")}".`,
         });
         return findings;
     }
@@ -226,7 +226,7 @@ function collectBrowserControlFindings(cfg) {
         return findings;
     const url = new URL(resolved.controlUrl);
     const isLoopback = isLoopbackClientHost(url.hostname);
-    const envToken = process.env.GRAWKE_BROWSER_CONTROL_TOKEN?.trim();
+    const envToken = process.env.MOLTX_BROWSER_CONTROL_TOKEN?.trim();
     const controlToken = (envToken || resolved.controlToken)?.trim() || null;
     if (!isLoopback) {
         if (!controlToken) {
@@ -234,8 +234,8 @@ function collectBrowserControlFindings(cfg) {
                 checkId: "browser.control_remote_no_token",
                 severity: "critical",
                 title: "Remote browser control is missing an auth token",
-                detail: `browser.controlUrl is non-loopback (${resolved.controlUrl}) but no browser.controlToken (or GRAWKE_BROWSER_CONTROL_TOKEN) is configured.`,
-                remediation: "Set browser.controlToken (or export GRAWKE_BROWSER_CONTROL_TOKEN) and prefer serving over Tailscale Serve or HTTPS reverse proxy.",
+                detail: `browser.controlUrl is non-loopback (${resolved.controlUrl}) but no browser.controlToken (or MOLTX_BROWSER_CONTROL_TOKEN) is configured.`,
+                remediation: "Set browser.controlToken (or export MOLTX_BROWSER_CONTROL_TOKEN) and prefer serving over Tailscale Serve or HTTPS reverse proxy.",
             });
         }
         if (url.protocol === "http:") {
@@ -639,9 +639,9 @@ async function maybeProbeGateway(params) {
             ? typeof remote?.token === "string" && remote.token.trim()
                 ? remote.token.trim()
                 : undefined
-            : process.env.GRAWKE_GATEWAY_TOKEN?.trim() ||
+            : process.env.MOLTX_GATEWAY_TOKEN?.trim() ||
                 (typeof authToken === "string" && authToken.trim() ? authToken.trim() : undefined);
-        const password = process.env.GRAWKE_GATEWAY_PASSWORD?.trim() ||
+        const password = process.env.MOLTX_GATEWAY_PASSWORD?.trim() ||
             (mode === "remote"
                 ? typeof remote?.password === "string" && remote.password.trim()
                     ? remote.password.trim()
@@ -718,7 +718,7 @@ export async function runSecurityAudit(opts) {
             severity: "warn",
             title: "Gateway probe failed (deep)",
             detail: deep.gateway.error ?? "gateway unreachable",
-            remediation: `Run "${formatCliCommand("grawke status --all")}" to debug connectivity/auth, then re-run "${formatCliCommand("grawke security audit --deep")}".`,
+            remediation: `Run "${formatCliCommand("moltx status --all")}" to debug connectivity/auth, then re-run "${formatCliCommand("moltx security audit --deep")}".`,
         });
     }
     const summary = countBySeverity(findings);

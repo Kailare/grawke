@@ -1,8 +1,8 @@
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadGrawkePlugins } from "./loader.js";
+import { loadMoltXPlugins } from "./loader.js";
 const log = createSubsystemLogger("plugins");
 export function resolvePluginProviders(params) {
-    const registry = loadGrawkePlugins({
+    const registry = loadMoltXPlugins({
         config: params.config,
         workspaceDir: params.workspaceDir,
         logger: {

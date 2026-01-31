@@ -1,17 +1,17 @@
-# @grawke/zalo
+# @moltx/zalo
 
-Zalo channel plugin for Grawke (Bot API).
+Zalo channel plugin for MoltX (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-grawke plugins install ./extensions/zalo
+moltx plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-grawke plugins install @grawke/zalo
+moltx plugins install @moltx/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

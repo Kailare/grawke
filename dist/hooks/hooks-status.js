@@ -3,10 +3,10 @@ import { CONFIG_DIR } from "../utils.js";
 import { hasBinary, isConfigPathTruthy, resolveConfigPath, resolveHookConfig } from "./config.js";
 import { loadWorkspaceHookEntries } from "./workspace.js";
 function resolveHookKey(entry) {
-    return entry.grawke?.hookKey ?? entry.hook.name;
+    return entry.moltx?.hookKey ?? entry.hook.name;
 }
 function normalizeInstallOptions(entry) {
-    const install = entry.grawke?.install ?? [];
+    const install = entry.moltx?.install ?? [];
     if (install.length === 0)
         return [];
     // For hooks, we just list all install options
@@ -16,7 +16,7 @@ function normalizeInstallOptions(entry) {
         let label = (spec.label ?? "").trim();
         if (!label) {
             if (spec.kind === "bundled") {
-                label = "Bundled with Grawke";
+                label = "Bundled with MoltX";
             }
             else if (spec.kind === "npm" && spec.package) {
                 label = `Install ${spec.package} (npm)`;
@@ -34,21 +34,21 @@ function normalizeInstallOptions(entry) {
 function buildHookStatus(entry, config, eligibility) {
     const hookKey = resolveHookKey(entry);
     const hookConfig = resolveHookConfig(config, hookKey);
-    const managedByPlugin = entry.hook.source === "grawke-plugin";
+    const managedByPlugin = entry.hook.source === "moltx-plugin";
     const disabled = managedByPlugin ? false : hookConfig?.enabled === false;
-    const always = entry.grawke?.always === true;
-    const emoji = entry.grawke?.emoji ?? entry.frontmatter.emoji;
-    const homepageRaw = entry.grawke?.homepage ??
+    const always = entry.moltx?.always === true;
+    const emoji = entry.moltx?.emoji ?? entry.frontmatter.emoji;
+    const homepageRaw = entry.moltx?.homepage ??
         entry.frontmatter.homepage ??
         entry.frontmatter.website ??
         entry.frontmatter.url;
     const homepage = homepageRaw?.trim() ? homepageRaw.trim() : undefined;
-    const events = entry.grawke?.events ?? [];
-    const requiredBins = entry.grawke?.requires?.bins ?? [];
-    const requiredAnyBins = entry.grawke?.requires?.anyBins ?? [];
-    const requiredEnv = entry.grawke?.requires?.env ?? [];
-    const requiredConfig = entry.grawke?.requires?.config ?? [];
-    const requiredOs = entry.grawke?.os ?? [];
+    const events = entry.moltx?.events ?? [];
+    const requiredBins = entry.moltx?.requires?.bins ?? [];
+    const requiredAnyBins = entry.moltx?.requires?.anyBins ?? [];
+    const requiredEnv = entry.moltx?.requires?.env ?? [];
+    const requiredConfig = entry.moltx?.requires?.config ?? [];
+    const requiredOs = entry.moltx?.os ?? [];
     const missingBins = requiredBins.filter((bin) => {
         if (hasBinary(bin))
             return false;

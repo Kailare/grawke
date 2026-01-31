@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/nostr",
+  "name": "@moltx/nostr",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Nostr channel plugin for NIP-04 encrypted DMs",
-  "grawke": {
+  "description": "MoltX Nostr channel plugin for NIP-04 encrypted DMs",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -18,13 +18,13 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@grawke/nostr",
+      "npmSpec": "@moltx/nostr",
       "localPath": "extensions/nostr",
       "defaultChoice": "npm"
     }
   },
   "dependencies": {
-    "grawke": "workspace:*",
+    "moltx": "workspace:*",
     "nostr-tools": "^2.20.0",
     "zod": "^4.3.6"
   }

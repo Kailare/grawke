@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { whatsappPlugin } from "./src/channel.js";
 import { setWhatsAppRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "WhatsApp",
   description: "WhatsApp channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     setWhatsAppRuntime(api.runtime);
     api.registerChannel({ plugin: whatsappPlugin });
   },

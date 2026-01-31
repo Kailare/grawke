@@ -1,9 +1,9 @@
 ---
-summary: "Schema-accurate configuration examples for common Grawke setups"
+summary: "Schema-accurate configuration examples for common MoltX setups"
 read_when:
-  - Learning how to configure Grawke
+  - Learning how to configure MoltX
   - Looking for configuration examples
-  - Setting up Grawke for the first time
+  - Setting up MoltX for the first time
 ---
 # Configuration Examples
 
@@ -19,7 +19,7 @@ Examples below are aligned with the current config schema. For the exhaustive re
 }
 ```
 
-Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
+Save to `~/.moltx/moltx.json` and you can DM the bot from that number.
 
 ### Recommended starter
 ```json5
@@ -85,7 +85,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
   // Logging
   logging: {
     level: "info",
-    file: "/tmp/grawke/grawke.log",
+    file: "/tmp/moltx/moltx.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools"
@@ -93,7 +93,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
 
   // Message formatting
   messages: {
-    messagePrefix: "[grawke]",
+    messagePrefix: "[moltx]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions"
@@ -102,7 +102,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
   // Routing + queue
   routing: {
     groupChat: {
-      mentionPatterns: ["@clawd", "grawke"],
+      mentionPatterns: ["@clawd", "moltx"],
       historyLimit: 50
     },
     queue: {
@@ -155,7 +155,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
       discord: { mode: "idle", idleMinutes: 10080 }
     },
     resetTriggers: ["/new", "/reset"],
-    store: "~/.grawke/agents/default/sessions/sessions.json",
+    store: "~/.moltx/agents/default/sessions/sessions.json",
     typingIntervalSeconds: 5,
     sendPolicy: {
       default: "allow",
@@ -272,9 +272,9 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
       sandbox: {
         mode: "non-main",
         perSession: true,
-        workspaceRoot: "~/.grawke/sandboxes",
+        workspaceRoot: "~/.moltx/sandboxes",
         docker: {
-          image: "grawke-sandbox:bookworm-slim",
+          image: "moltx-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -339,7 +339,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
   // Cron jobs
   cron: {
     enabled: true,
-    store: "~/.grawke/cron/cron.json",
+    store: "~/.moltx/cron/cron.json",
     maxConcurrentRuns: 2
   },
 
@@ -349,7 +349,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
     path: "/hooks",
     token: "shared-secret",
     presets: ["gmail"],
-    transformsDir: "~/.grawke/hooks",
+    transformsDir: "~/.moltx/hooks",
     mappings: [
       {
         id: "gmail-hook",
@@ -369,7 +369,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
       }
     ],
     gmail: {
-      account: "grawke@gmail.com",
+      account: "moltx@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -388,7 +388,7 @@ Save to `~/.grawke/grawke.json` and you can DM the bot from that number.
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/grawke" },
+    controlUi: { enabled: true, basePath: "/moltx" },
     auth: {
       mode: "token",
       token: "gateway-token",

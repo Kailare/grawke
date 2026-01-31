@@ -6,7 +6,7 @@ import { formatBonjourError } from "./bonjour-errors.js";
 import { isTruthyEnvValue } from "./env.js";
 import { registerUnhandledRejectionHandler } from "./unhandled-rejections.js";
 function isDisabledByEnv() {
-    if (isTruthyEnvValue(process.env.GRAWKE_DISABLE_BONJOUR))
+    if (isTruthyEnvValue(process.env.MOLTX_DISABLE_BONJOUR))
         return true;
     if (process.env.NODE_ENV === "test")
         return true;
@@ -16,11 +16,11 @@ function isDisabledByEnv() {
 }
 function safeServiceName(name) {
     const trimmed = name.trim();
-    return trimmed.length > 0 ? trimmed : "Grawke";
+    return trimmed.length > 0 ? trimmed : "MoltX";
 }
 function prettifyInstanceName(name) {
     const normalized = name.trim().replace(/\s+/g, " ");
-    return normalized.replace(/\s+\(Grawke\)\s*$/i, "").trim() || normalized;
+    return normalized.replace(/\s+\(MoltX\)\s*$/i, "").trim() || normalized;
 }
 function serviceSummary(label, svc) {
     let fqdn = "unknown";
@@ -60,10 +60,10 @@ export async function startGatewayBonjourAdvertiser(opts) {
         .hostname()
         .replace(/\.local$/i, "")
         .split(".")[0]
-        .trim() || "grawke";
+        .trim() || "moltx";
     const instanceName = typeof opts.instanceName === "string" && opts.instanceName.trim()
         ? opts.instanceName.trim()
-        : `${hostname} (Grawke)`;
+        : `${hostname} (MoltX)`;
     const displayName = prettifyInstanceName(instanceName);
     const txtBase = {
         role: "gateway",
@@ -89,7 +89,7 @@ export async function startGatewayBonjourAdvertiser(opts) {
     const services = [];
     const gateway = responder.createService({
         name: safeServiceName(instanceName),
-        type: "grawke-gw",
+        type: "moltx-gw",
         protocol: "tcp" /* Protocol.TCP */,
         port: opts.gatewayPort,
         domain: "local",

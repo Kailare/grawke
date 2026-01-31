@@ -2,8 +2,8 @@ import type {
   ChannelAccountSnapshot,
   ChannelDock,
   ChannelPlugin,
-  GrawkeConfig,
-} from "grawke/plugin-sdk";
+  MoltXConfig,
+} from "moltx/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   buildChannelConfigSchema,
@@ -14,7 +14,7 @@ import {
   normalizeAccountId,
   PAIRING_APPROVED_MESSAGE,
   setAccountEnabledInConfigSection,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { listZaloAccountIds, resolveDefaultZaloAccountId, resolveZaloAccount, type ResolvedZaloAccount } from "./accounts.js";
 import { zaloMessageActions } from "./actions.js";
@@ -53,7 +53,7 @@ export const zaloDock: ChannelDock = {
   outbound: { textChunkLimit: 2000 },
   config: {
     resolveAllowFrom: ({ cfg, accountId }) =>
-      (resolveZaloAccount({ cfg: cfg as GrawkeConfig, accountId }).config.allowFrom ?? []).map(
+      (resolveZaloAccount({ cfg: cfg as MoltXConfig, accountId }).config.allowFrom ?? []).map(
         (entry) => String(entry),
       ),
     formatAllowFrom: ({ allowFrom }) =>
@@ -87,12 +87,12 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
   reload: { configPrefixes: ["channels.zalo"] },
   configSchema: buildChannelConfigSchema(ZaloConfigSchema),
   config: {
-    listAccountIds: (cfg) => listZaloAccountIds(cfg as GrawkeConfig),
-    resolveAccount: (cfg, accountId) => resolveZaloAccount({ cfg: cfg as GrawkeConfig, accountId }),
-    defaultAccountId: (cfg) => resolveDefaultZaloAccountId(cfg as GrawkeConfig),
+    listAccountIds: (cfg) => listZaloAccountIds(cfg as MoltXConfig),
+    resolveAccount: (cfg, accountId) => resolveZaloAccount({ cfg: cfg as MoltXConfig, accountId }),
+    defaultAccountId: (cfg) => resolveDefaultZaloAccountId(cfg as MoltXConfig),
     setAccountEnabled: ({ cfg, accountId, enabled }) =>
       setAccountEnabledInConfigSection({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         sectionKey: "zalo",
         accountId,
         enabled,
@@ -100,7 +100,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
       }),
     deleteAccount: ({ cfg, accountId }) =>
       deleteAccountFromConfigSection({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         sectionKey: "zalo",
         accountId,
         clearBaseFields: ["botToken", "tokenFile", "name"],
@@ -114,7 +114,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
       tokenSource: account.tokenSource,
     }),
     resolveAllowFrom: ({ cfg, accountId }) =>
-      (resolveZaloAccount({ cfg: cfg as GrawkeConfig, accountId }).config.allowFrom ?? []).map(
+      (resolveZaloAccount({ cfg: cfg as MoltXConfig, accountId }).config.allowFrom ?? []).map(
         (entry) => String(entry),
       ),
     formatAllowFrom: ({ allowFrom }) =>
@@ -128,7 +128,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     resolveDmPolicy: ({ cfg, accountId, account }) => {
       const resolvedAccountId = accountId ?? account.accountId ?? DEFAULT_ACCOUNT_ID;
       const useAccountPath = Boolean(
-        (cfg as GrawkeConfig).channels?.zalo?.accounts?.[resolvedAccountId],
+        (cfg as MoltXConfig).channels?.zalo?.accounts?.[resolvedAccountId],
       );
       const basePath = useAccountPath
         ? `channels.zalo.accounts.${resolvedAccountId}.`
@@ -164,7 +164,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
   directory: {
     self: async () => null,
     listPeers: async ({ cfg, accountId, query, limit }) => {
-      const account = resolveZaloAccount({ cfg: cfg as GrawkeConfig, accountId });
+      const account = resolveZaloAccount({ cfg: cfg as MoltXConfig, accountId });
       const q = query?.trim().toLowerCase() || "";
       const peers = Array.from(
         new Set(
@@ -185,7 +185,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     resolveAccountId: ({ accountId }) => normalizeAccountId(accountId),
     applyAccountName: ({ cfg, accountId, name }) =>
       applyAccountNameToChannelSection({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         channelKey: "zalo",
         accountId,
         name,
@@ -201,7 +201,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     },
     applyAccountConfig: ({ cfg, accountId, input }) => {
       const namedConfig = applyAccountNameToChannelSection({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         channelKey: "zalo",
         accountId,
         name: input.name,
@@ -230,7 +230,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
                     : {}),
             },
           },
-        } as GrawkeConfig;
+        } as MoltXConfig;
       }
       return {
         ...next,
@@ -253,14 +253,14 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
             },
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     },
   },
   pairing: {
     idLabel: "zaloUserId",
     normalizeAllowEntry: (entry) => entry.replace(/^(zalo|zl):/i, ""),
     notifyApproval: async ({ cfg, id }) => {
-      const account = resolveZaloAccount({ cfg: cfg as GrawkeConfig });
+      const account = resolveZaloAccount({ cfg: cfg as MoltXConfig });
       if (!account.token) throw new Error("Zalo token not configured");
       await sendMessageZalo(id, PAIRING_APPROVED_MESSAGE, { token: account.token });
     },
@@ -293,7 +293,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
     sendText: async ({ to, text, accountId, cfg }) => {
       const result = await sendMessageZalo(to, text, {
         accountId: accountId ?? undefined,
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
       });
       return {
         channel: "zalo",
@@ -306,7 +306,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
       const result = await sendMessageZalo(to, text, {
         accountId: accountId ?? undefined,
         mediaUrl,
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
       });
       return {
         channel: "zalo",
@@ -379,7 +379,7 @@ export const zaloPlugin: ChannelPlugin<ResolvedZaloAccount> = {
       return monitorZaloProvider({
         token,
         account,
-        config: ctx.cfg as GrawkeConfig,
+        config: ctx.cfg as MoltXConfig,
         runtime: ctx.runtime,
         abortSignal: ctx.abortSignal,
         useWebhook: Boolean(account.config.webhookUrl),

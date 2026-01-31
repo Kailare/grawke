@@ -64,8 +64,8 @@ export function shouldIncludeHook(params) {
     const { entry, config, eligibility } = params;
     const hookKey = resolveHookKey(entry.hook.name, entry);
     const hookConfig = resolveHookConfig(config, hookKey);
-    const pluginManaged = entry.hook.source === "grawke-plugin";
-    const osList = entry.grawke?.os ?? [];
+    const pluginManaged = entry.hook.source === "moltx-plugin";
+    const osList = entry.moltx?.os ?? [];
     const remotePlatforms = eligibility?.remote?.platforms ?? [];
     // Check if explicitly disabled
     if (!pluginManaged && hookConfig?.enabled === false)
@@ -77,11 +77,11 @@ export function shouldIncludeHook(params) {
         return false;
     }
     // If marked as 'always', bypass all other checks
-    if (entry.grawke?.always === true) {
+    if (entry.moltx?.always === true) {
         return true;
     }
     // Check required binaries (all must be present)
-    const requiredBins = entry.grawke?.requires?.bins ?? [];
+    const requiredBins = entry.moltx?.requires?.bins ?? [];
     if (requiredBins.length > 0) {
         for (const bin of requiredBins) {
             if (hasBinary(bin))
@@ -92,7 +92,7 @@ export function shouldIncludeHook(params) {
         }
     }
     // Check anyBins (at least one must be present)
-    const requiredAnyBins = entry.grawke?.requires?.anyBins ?? [];
+    const requiredAnyBins = entry.moltx?.requires?.anyBins ?? [];
     if (requiredAnyBins.length > 0) {
         const anyFound = requiredAnyBins.some((bin) => hasBinary(bin)) ||
             eligibility?.remote?.hasAnyBin?.(requiredAnyBins);
@@ -100,7 +100,7 @@ export function shouldIncludeHook(params) {
             return false;
     }
     // Check required environment variables
-    const requiredEnv = entry.grawke?.requires?.env ?? [];
+    const requiredEnv = entry.moltx?.requires?.env ?? [];
     if (requiredEnv.length > 0) {
         for (const envName of requiredEnv) {
             if (process.env[envName])
@@ -111,7 +111,7 @@ export function shouldIncludeHook(params) {
         }
     }
     // Check required config paths
-    const requiredConfig = entry.grawke?.requires?.config ?? [];
+    const requiredConfig = entry.moltx?.requires?.config ?? [];
     if (requiredConfig.length > 0) {
         for (const configPath of requiredConfig) {
             if (!isConfigPathTruthy(config, configPath))

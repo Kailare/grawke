@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke dns` (wide-area discovery helpers)"
+summary: "CLI reference for `moltx dns` (wide-area discovery helpers)"
 read_when:
   - You want wide-area discovery (DNS-SD) via Tailscale + CoreDNS
-  - You’re setting up split DNS for grawke.internal
+  - You’re setting up split DNS for moltx.internal
 ---
 
-# `grawke dns`
+# `moltx dns`
 
 DNS helpers for wide-area discovery (Tailscale + CoreDNS). Currently focused on macOS + Homebrew CoreDNS.
 
@@ -16,7 +16,7 @@ Related:
 ## Setup
 
 ```bash
-grawke dns setup
-grawke dns setup --apply
+moltx dns setup
+moltx dns setup --apply
 ```
 

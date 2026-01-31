@@ -3,7 +3,7 @@ import type {
   ChannelResolveKind,
   ChannelResolveResult,
   RuntimeEnv,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import {
   listMatrixDirectoryGroupsLive,

@@ -4,4 +4,4 @@ export * from "./paths.js";
 export * from "./runtime-overrides.js";
 export * from "./types.js";
 export { validateConfigObject, validateConfigObjectWithPlugins } from "./validation.js";
-export { GrawkeSchema } from "./zod-schema.js";
+export { MoltXSchema } from "./zod-schema.js";

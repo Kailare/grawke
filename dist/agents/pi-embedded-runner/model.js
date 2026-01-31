@@ -1,5 +1,5 @@
 import { discoverAuthStorage, discoverModels } from "@mariozechner/pi-coding-agent";
-import { resolveGrawkeAgentDir } from "../agent-paths.js";
+import { resolveMoltXAgentDir } from "../agent-paths.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../defaults.js";
 import { normalizeModelCompat } from "../model-compat.js";
 import { normalizeProviderId } from "../model-selection.js";
@@ -28,7 +28,7 @@ export function buildModelAliasLines(cfg) {
         .map((entry) => `- ${entry.alias}: ${entry.model}`);
 }
 export function resolveModel(provider, modelId, agentDir, cfg) {
-    const resolvedAgentDir = agentDir ?? resolveGrawkeAgentDir();
+    const resolvedAgentDir = agentDir ?? resolveMoltXAgentDir();
     const authStorage = discoverAuthStorage(resolvedAgentDir);
     const modelRegistry = discoverModels(authStorage, resolvedAgentDir);
     const model = modelRegistry.find(provider, modelId);

@@ -1,7 +1,7 @@
 ---
 name: voice-call
-description: Start voice calls via the Grawke voice-call plugin.
-metadata: {"grawke":{"emoji":"📞","skillKey":"voice-call","requires":{"config":["plugins.entries.voice-call.enabled"]}}}
+description: Start voice calls via the MoltX voice-call plugin.
+metadata: {"moltx":{"emoji":"📞","skillKey":"voice-call","requires":{"config":["plugins.entries.voice-call.enabled"]}}}
 ---
 
 # Voice Call
@@ -11,8 +11,8 @@ Use the voice-call plugin to start or inspect calls (Twilio, Telnyx, Plivo, or m
 ## CLI
 
 ```bash
-grawke voicecall call --to "+15555550123" --message "Hello from Grawke"
-grawke voicecall status --call-id <id>
+moltx voicecall call --to "+15555550123" --message "Hello from MoltX"
+moltx voicecall status --call-id <id>
 ```
 
 ## Tool

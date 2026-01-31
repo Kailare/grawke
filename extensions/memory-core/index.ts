@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 const memoryCorePlugin = {
   id: "memory-core",
@@ -7,7 +7,7 @@ const memoryCorePlugin = {
   description: "File-backed memory search tools and CLI",
   kind: "memory",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     api.registerTool(
       (ctx) => {
         const memorySearchTool = api.runtime.tools.createMemorySearchTool({

@@ -1,7 +1,7 @@
 ---
-summary: "Install Grawke (recommended installer, global install, or from source)"
+summary: "Install MoltX (recommended installer, global install, or from source)"
 read_when:
-  - Installing Grawke
+  - Installing MoltX
   - You want to install from GitHub
 ---
 
@@ -24,7 +24,7 @@ iwr -useb https://clawd.bot/install.ps1 | iex
 Next step (if you skipped onboarding):
 
 ```bash
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
 ## System requirements
@@ -37,7 +37,7 @@ grawke onboard --install-daemon
 
 ### 1) Installer script (recommended)
 
-Installs `grawke` globally via npm and runs onboarding.
+Installs `moltx` globally via npm and runs onboarding.
 
 ```bash
 curl -fsSL https://clawd.bot/install.sh | bash
@@ -62,13 +62,13 @@ curl -fsSL https://clawd.bot/install.sh | bash -s -- --no-onboard
 If you already have Node:
 
 ```bash
-npm install -g grawke@latest
+npm install -g moltx@latest
 ```
 
 If you have libvips installed globally (common on macOS via Homebrew) and `sharp` fails to install, force prebuilt binaries:
 
 ```bash
-SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g grawke@latest
+SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g moltx@latest
 ```
 
 If you see `sharp: Please add node-gyp to your dependencies`, either install build tooling (macOS: Xcode CLT + `npm install -g node-gyp`) or use the `SHARP_IGNORE_GLOBAL_LIBVIPS=1` workaround above to skip the native build.
@@ -76,27 +76,27 @@ If you see `sharp: Please add node-gyp to your dependencies`, either install bui
 Or:
 
 ```bash
-pnpm add -g grawke@latest
+pnpm add -g moltx@latest
 ```
 
 Then:
 
 ```bash
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
 ### 3) From source (contributors/dev)
 
 ```bash
 git clone https://github.com/clawdbot/clawdbot.git
-cd grawke
+cd moltx
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
-Tip: if you don’t have a global install yet, run repo commands via `pnpm grawke ...`.
+Tip: if you don’t have a global install yet, run repo commands via `pnpm moltx ...`.
 
 ### 4) Other install options
 
@@ -107,16 +107,16 @@ Tip: if you don’t have a global install yet, run repo commands via `pnpm grawk
 
 ## After install
 
-- Run onboarding: `grawke onboard --install-daemon`
-- Quick check: `grawke doctor`
-- Check gateway health: `grawke status` + `grawke health`
-- Open the dashboard: `grawke dashboard`
+- Run onboarding: `moltx onboard --install-daemon`
+- Quick check: `moltx doctor`
+- Check gateway health: `moltx status` + `moltx health`
+- Open the dashboard: `moltx dashboard`
 
 ## Install method: npm vs git (installer)
 
 The installer supports two methods:
 
-- `npm` (default): `npm install -g grawke@latest`
+- `npm` (default): `npm install -g moltx@latest`
 - `git`: clone/build from GitHub and run from a source checkout
 
 ### CLI flags
@@ -132,7 +132,7 @@ curl -fsSL https://clawd.bot/install.sh | bash -s -- --install-method git
 Common flags:
 
 - `--install-method npm|git`
-- `--git-dir <path>` (default: `~/grawke`)
+- `--git-dir <path>` (default: `~/moltx`)
 - `--no-git-update` (skip `git pull` when using an existing checkout)
 - `--no-prompt` (disable prompts; required in CI/automation)
 - `--dry-run` (print what would happen; make no changes)
@@ -142,15 +142,15 @@ Common flags:
 
 Equivalent env vars (useful for automation):
 
-- `GRAWKE_INSTALL_METHOD=git|npm`
-- `GRAWKE_GIT_DIR=...`
-- `GRAWKE_GIT_UPDATE=0|1`
-- `GRAWKE_NO_PROMPT=1`
-- `GRAWKE_DRY_RUN=1`
-- `GRAWKE_NO_ONBOARD=1`
+- `MOLTX_INSTALL_METHOD=git|npm`
+- `MOLTX_GIT_DIR=...`
+- `MOLTX_GIT_UPDATE=0|1`
+- `MOLTX_NO_PROMPT=1`
+- `MOLTX_DRY_RUN=1`
+- `MOLTX_NO_ONBOARD=1`
 - `SHARP_IGNORE_GLOBAL_LIBVIPS=0|1` (default: `1`; avoids `sharp` building against system libvips)
 
-## Troubleshooting: `grawke` not found (PATH)
+## Troubleshooting: `moltx` not found (PATH)
 
 Quick diagnosis:
 
@@ -161,7 +161,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** present inside `echo "$PATH"`, your shell can’t find global npm binaries (including `grawke`).
+If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** present inside `echo "$PATH"`, your shell can’t find global npm binaries (including `moltx`).
 
 Fix: add it to your shell startup file (zsh: `~/.zshrc`, bash: `~/.bashrc`):
 

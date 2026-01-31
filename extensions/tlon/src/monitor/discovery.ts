@@ -1,4 +1,4 @@
-import type { RuntimeEnv } from "grawke/plugin-sdk";
+import type { RuntimeEnv } from "moltx/plugin-sdk";
 
 import { formatChangesDate } from "./utils.js";
 

@@ -2,9 +2,9 @@ import type { Request, Response } from "express";
 import {
   mergeAllowlist,
   summarizeMapping,
-  type GrawkeConfig,
+  type MoltXConfig,
   type RuntimeEnv,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import { formatUnknownError } from "./errors.js";
@@ -20,7 +20,7 @@ import { resolveMSTeamsCredentials } from "./token.js";
 import { getMSTeamsRuntime } from "./runtime.js";
 
 export type MonitorMSTeamsOpts = {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   conversationStore?: MSTeamsConversationStore;

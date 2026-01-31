@@ -13,7 +13,7 @@ import { ensureBinary } from "./infra/binaries.js";
 import { loadDotEnv } from "./infra/dotenv.js";
 import { normalizeEnv } from "./infra/env.js";
 import { isMainModule } from "./infra/is-main.js";
-import { ensureGrawkeCliOnPath } from "./infra/path-env.js";
+import { ensureMoltXCliOnPath } from "./infra/path-env.js";
 import { describePortOwner, ensurePortAvailable, handlePortError, PortInUseError, } from "./infra/ports.js";
 import { assertSupportedRuntime } from "./infra/runtime-guard.js";
 import { formatUncaughtError } from "./infra/errors.js";
@@ -23,7 +23,7 @@ import { runCommandWithTimeout, runExec } from "./process/exec.js";
 import { assertWebChannel, normalizeE164, toWhatsappJid } from "./utils.js";
 loadDotEnv({ quiet: true });
 normalizeEnv();
-ensureGrawkeCliOnPath();
+ensureMoltXCliOnPath();
 // Capture all console output into structured logs while keeping stdout/stderr behavior.
 enableConsoleCapture();
 // Enforce the minimum supported runtime before doing any work.
@@ -39,11 +39,11 @@ if (isMain) {
     // These log the error and exit gracefully instead of crashing without trace.
     installUnhandledRejectionHandler();
     process.on("uncaughtException", (error) => {
-        console.error("[grawke] Uncaught exception:", formatUncaughtError(error));
+        console.error("[moltx] Uncaught exception:", formatUncaughtError(error));
         process.exit(1);
     });
     void program.parseAsync(process.argv).catch((err) => {
-        console.error("[grawke] CLI failed:", formatUncaughtError(err));
+        console.error("[moltx] CLI failed:", formatUncaughtError(err));
         process.exit(1);
     });
 }

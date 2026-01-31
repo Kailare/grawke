@@ -139,11 +139,11 @@ function listWorkspaceDirs(cfg) {
 function collectRequiredBins(entries, targetPlatform) {
     const bins = new Set();
     for (const entry of entries) {
-        const os = entry.grawke?.os ?? [];
+        const os = entry.moltx?.os ?? [];
         if (os.length > 0 && !os.includes(targetPlatform))
             continue;
-        const required = entry.grawke?.requires?.bins ?? [];
-        const anyBins = entry.grawke?.requires?.anyBins ?? [];
+        const required = entry.moltx?.requires?.bins ?? [];
+        const anyBins = entry.moltx?.requires?.anyBins ?? [];
         for (const bin of required) {
             if (bin.trim())
                 bins.add(bin.trim());

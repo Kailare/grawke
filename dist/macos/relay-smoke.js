@@ -13,7 +13,7 @@ export function parseRelaySmokeTest(args, env) {
         return "qr";
     // Back-compat: only run env-based smoke mode when no CLI args are present,
     // to avoid surprising early-exit when users set env vars globally.
-    if (args.length === 0 && (env.GRAWKE_SMOKE_QR === "1" || env.GRAWKE_SMOKE === "qr")) {
+    if (args.length === 0 && (env.MOLTX_SMOKE_QR === "1" || env.MOLTX_SMOKE === "qr")) {
         return "qr";
     }
     return null;

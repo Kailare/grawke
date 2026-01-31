@@ -1,25 +1,25 @@
 ---
-summary: "OAuth in Grawke: token exchange, storage, CLI sync, and multi-account patterns"
+summary: "OAuth in MoltX: token exchange, storage, CLI sync, and multi-account patterns"
 read_when:
-  - You want to understand Grawke OAuth end-to-end
+  - You want to understand MoltX OAuth end-to-end
   - You hit token invalidation / logout issues
   - You want to reuse Claude Code / Codex CLI OAuth tokens
   - You want multiple accounts or profile routing
 ---
 # OAuth
 
-Grawke supports “subscription auth” via OAuth for providers that offer it (notably **Anthropic (Claude Pro/Max)** and **OpenAI Codex (ChatGPT OAuth)**). This page explains:
+MoltX supports “subscription auth” via OAuth for providers that offer it (notably **Anthropic (Claude Pro/Max)** and **OpenAI Codex (ChatGPT OAuth)**). This page explains:
 
 - how the OAuth **token exchange** works (PKCE)
 - where tokens are **stored** (and why)
 - how we **reuse external CLI tokens** (Claude Code / Codex CLI)
 - how to handle **multiple accounts** (profiles + per-session overrides)
 
-Grawke also supports **provider plugins** that ship their own OAuth or API‑key
+MoltX also supports **provider plugins** that ship their own OAuth or API‑key
 flows. Run them via:
 
 ```bash
-grawke models auth login --provider <id>
+moltx models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -27,9 +27,9 @@ grawke models auth login --provider <id>
 OAuth providers commonly mint a **new refresh token** during login/refresh flows. Some providers (or OAuth clients) can invalidate older refresh tokens when a new one is issued for the same user/app.
 
 Practical symptom:
-- you log in via Grawke *and* via Claude Code / Codex CLI → one of them randomly gets “logged out” later
+- you log in via MoltX *and* via Claude Code / Codex CLI → one of them randomly gets “logged out” later
 
-To reduce that, Grawke treats `auth-profiles.json` as a **token sink**:
+To reduce that, MoltX treats `auth-profiles.json` as a **token sink**:
 - the runtime reads credentials from **one place**
 - we can **sync in** credentials from external CLIs instead of doing a second login
 - we can keep multiple profiles and route them deterministically
@@ -38,43 +38,43 @@ To reduce that, Grawke treats `auth-profiles.json` as a **token sink**:
 
 Secrets are stored **per-agent**:
 
-- Auth profiles (OAuth + API keys): `~/.grawke/agents/<agentId>/agent/auth-profiles.json`
-- Runtime cache (managed automatically; don’t edit): `~/.grawke/agents/<agentId>/agent/auth.json`
+- Auth profiles (OAuth + API keys): `~/.moltx/agents/<agentId>/agent/auth-profiles.json`
+- Runtime cache (managed automatically; don’t edit): `~/.moltx/agents/<agentId>/agent/auth.json`
 
 Legacy import-only file (still supported, but not the main store):
-- `~/.grawke/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
+- `~/.moltx/credentials/oauth.json` (imported into `auth-profiles.json` on first use)
 
-All of the above also respect `$GRAWKE_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
+All of the above also respect `$MOLTX_STATE_DIR` (state dir override). Full reference: [/gateway/configuration](/gateway/configuration#auth-storage-oauth--api-keys)
 
 ## Reusing Claude Code / Codex CLI OAuth tokens (recommended)
 
-If you already signed in with the external CLIs *on the gateway host*, Grawke can reuse those tokens without starting a separate OAuth flow:
+If you already signed in with the external CLIs *on the gateway host*, MoltX can reuse those tokens without starting a separate OAuth flow:
 
 - Claude Code: `anthropic:claude-cli`
   - macOS: Keychain item "Claude Code-credentials" (choose "Always Allow" to avoid launchd prompts)
   - Linux/Windows: `~/.claude/.credentials.json`
 - Codex CLI: reads `~/.codex/auth.json` → profile `openai-codex:codex-cli`
 
-Sync happens when Grawke loads the auth store (so it stays up-to-date when the CLIs refresh tokens).
-On macOS, the first read may trigger a Keychain prompt; run `grawke models status`
+Sync happens when MoltX loads the auth store (so it stays up-to-date when the CLIs refresh tokens).
+On macOS, the first read may trigger a Keychain prompt; run `moltx models status`
 in a terminal once if the Gateway runs headless and can’t access the entry.
 
 How to verify:
 
 ```bash
-grawke models status
-grawke channels list
+moltx models status
+moltx channels list
 ```
 
 Or JSON:
 
 ```bash
-grawke channels list --json
+moltx channels list --json
 ```
 
 ## OAuth exchange (how login works)
 
-Grawke’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
+MoltX’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
 
 ### Anthropic (Claude Pro/Max)
 
@@ -86,7 +86,7 @@ Flow shape (PKCE):
 4) exchange at `https://console.anthropic.com/v1/oauth/token`
 5) store `{ access, refresh, expires }` under an auth profile
 
-The wizard path is `grawke onboard` → auth choice `oauth` (Anthropic).
+The wizard path is `moltx onboard` → auth choice `oauth` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
@@ -99,7 +99,7 @@ Flow shape (PKCE):
 5) exchange at `https://auth.openai.com/oauth/token`
 6) extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `grawke onboard` → auth choice `openai-codex` (or `codex-cli` to reuse an existing Codex CLI login).
+Wizard path is `moltx onboard` → auth choice `openai-codex` (or `codex-cli` to reuse an existing Codex CLI login).
 
 ## Refresh + expiry
 
@@ -113,7 +113,7 @@ The refresh flow is automatic; you generally don't need to manage tokens manuall
 
 ### Bidirectional sync with Claude Code
 
-When Grawke refreshes an Anthropic OAuth token (profile `anthropic:claude-cli`), it **writes the new credentials back** to Claude Code's storage:
+When MoltX refreshes an Anthropic OAuth token (profile `anthropic:claude-cli`), it **writes the new credentials back** to Claude Code's storage:
 
 - **Linux/Windows**: updates `~/.claude/.credentials.json`
 - **macOS**: updates Keychain item "Claude Code-credentials"
@@ -123,7 +123,7 @@ This ensures both tools stay in sync and neither gets "logged out" after the oth
 **Why this matters for long-running agents:**
 
 Anthropic OAuth tokens expire after a few hours. Without bidirectional sync:
-1. Grawke refreshes the token → gets new access token
+1. MoltX refreshes the token → gets new access token
 2. Claude Code still has the old token → gets logged out
 
 With bidirectional sync, both tools always have the latest valid token, enabling autonomous operation for days or weeks without manual intervention.
@@ -137,8 +137,8 @@ Two patterns:
 If you want “personal” and “work” to never interact, use isolated agents (separate sessions + credentials + workspace):
 
 ```bash
-grawke agents add work
-grawke agents add personal
+moltx agents add work
+moltx agents add personal
 ```
 
 Then configure auth per-agent (wizard) and route chats to the right agent.
@@ -155,7 +155,7 @@ Example (session override):
 - `/model Opus@anthropic:work`
 
 How to see what profile IDs exist:
-- `grawke channels list --json` (shows `auth[]`)
+- `moltx channels list --json` (shows `auth[]`)
 
 Related docs:
 - [/concepts/model-failover](/concepts/model-failover) (rotation + cooldown rules)

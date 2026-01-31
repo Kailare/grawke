@@ -59,7 +59,7 @@ function buildMessagingSection(params) {
         "## Messaging",
         "- Reply in current session → automatically routes to the source channel (Signal, Telegram, etc.)",
         "- Cross-session messaging → use sessions_send(sessionKey, message)",
-        "- Never use exec/curl for provider messaging; Grawke handles all routing internally.",
+        "- Never use exec/curl for provider messaging; MoltX handles all routing internally.",
         params.availableTools.has("message")
             ? [
                 "",
@@ -95,13 +95,13 @@ function buildDocsSection(params) {
         return [];
     return [
         "## Documentation",
-        `Grawke docs: ${docsPath}`,
+        `MoltX docs: ${docsPath}`,
         "Mirror: https://docs.clawd.bot",
-        "Source: https://github.com/Kailare/grawke",
+        "Source: https://github.com/Kailare/moltx",
         "Community: https://discord.com/invite/clawd",
         "Find new skills: https://clawdhub.com",
-        "For Grawke behavior, commands, config, or architecture: consult local docs first.",
-        "When diagnosing issues, run `grawke status` yourself when possible; only ask the user if you lack access (e.g., sandboxed).",
+        "For MoltX behavior, commands, config, or architecture: consult local docs first.",
+        "When diagnosing issues, run `moltx status` yourself when possible; only ask the user if you lack access (e.g., sandboxed).",
         "",
     ];
 }
@@ -124,7 +124,7 @@ export function buildAgentSystemPrompt(params) {
         nodes: "List/describe/notify/camera/screen on paired nodes",
         cron: "Manage cron jobs and wake events (use for reminders; when scheduling a reminder, write the systemEvent text as something that will read like a reminder when it fires, and mention that it is a reminder depending on the time gap between setting and firing; include recent context in reminder text if appropriate)",
         message: "Send messages and channel actions",
-        gateway: "Restart, apply config, or run updates on the running Grawke process",
+        gateway: "Restart, apply config, or run updates on the running MoltX process",
         agents_list: "List agent ids allowed for sessions_spawn",
         sessions_list: "List other sessions (incl. sub-agents) with filters/last",
         sessions_history: "Fetch history for another session/sub-agent",
@@ -242,10 +242,10 @@ export function buildAgentSystemPrompt(params) {
     const workspaceNotes = (params.workspaceNotes ?? []).map((note) => note.trim()).filter(Boolean);
     // For "none" mode, return just the basic identity line
     if (promptMode === "none") {
-        return "You are a personal assistant running inside Grawke.";
+        return "You are a personal assistant running inside MoltX.";
     }
     const lines = [
-        "You are Grawke, a Grok-powered AI assistant running inside the Grawke platform.",
+        "You are MoltX, a Grok-powered AI assistant running inside the MoltX platform.",
         "You have a LIMITED set of tools. Do not attempt to use tools not listed below.",
         "",
         "## CRITICAL: Output Rules",
@@ -299,25 +299,25 @@ export function buildAgentSystemPrompt(params) {
         "The user should NEVER see raw API responses, stack traces, debug output, or code blocks containing tool results in chat.",
         "When presenting information, use clear natural language. Bullet points and short paragraphs are fine. Raw data dumps are not.",
         "",
-        "## Grawke CLI Quick Reference",
-        "Grawke is controlled via subcommands. Do not invent commands.",
+        "## MoltX CLI Quick Reference",
+        "MoltX is controlled via subcommands. Do not invent commands.",
         "To manage the Gateway daemon service (start/stop/restart):",
-        "- grawke gateway status",
-        "- grawke gateway start",
-        "- grawke gateway stop",
-        "- grawke gateway restart",
-        "If unsure, ask the user to run `grawke help` (or `grawke gateway --help`) and paste the output.",
+        "- moltx gateway status",
+        "- moltx gateway start",
+        "- moltx gateway stop",
+        "- moltx gateway restart",
+        "If unsure, ask the user to run `moltx help` (or `moltx gateway --help`) and paste the output.",
         "",
         ...skillsSection,
         ...memorySection,
         // Skip self-update for subagent/none modes
-        hasGateway && !isMinimal ? "## Grawke Self-Update" : "",
+        hasGateway && !isMinimal ? "## MoltX Self-Update" : "",
         hasGateway && !isMinimal
             ? [
                 "Get Updates (self-update) is ONLY allowed when the user explicitly asks for it.",
                 "Do not run config.apply or update.run unless the user explicitly requests an update or config change; if it's not explicit, ask first.",
                 "Actions: config.get, config.schema, config.apply (validate + write full config, then restart), update.run (update deps or git, then restart).",
-                "After restart, Grawke pings the last active session automatically.",
+                "After restart, MoltX pings the last active session automatically.",
             ].join("\n")
             : "",
         hasGateway && !isMinimal ? "" : "",
@@ -395,7 +395,7 @@ export function buildAgentSystemPrompt(params) {
             userTimezone,
         }),
         "## Workspace Files (injected)",
-        "These user-editable files are loaded by Grawke and included below in Project Context.",
+        "These user-editable files are loaded by MoltX and included below in Project Context.",
         "",
         ...buildReplyTagsSection(isMinimal),
         ...buildMessagingSection({
@@ -460,7 +460,7 @@ export function buildAgentSystemPrompt(params) {
     }
     // Skip heartbeats for subagent/none modes
     if (!isMinimal) {
-        lines.push("## Heartbeats", heartbeatPromptLine, "If you receive a heartbeat poll (a user message matching the heartbeat prompt above), and there is nothing that needs attention, reply exactly:", "HEARTBEAT_OK", 'Grawke treats a leading/trailing "HEARTBEAT_OK" as a heartbeat ack (and may discard it).', 'If something needs attention, do NOT include "HEARTBEAT_OK"; reply with the alert text instead.', "");
+        lines.push("## Heartbeats", heartbeatPromptLine, "If you receive a heartbeat poll (a user message matching the heartbeat prompt above), and there is nothing that needs attention, reply exactly:", "HEARTBEAT_OK", 'MoltX treats a leading/trailing "HEARTBEAT_OK" as a heartbeat ack (and may discard it).', 'If something needs attention, do NOT include "HEARTBEAT_OK"; reply with the alert text instead.', "");
     }
     lines.push("## Runtime", buildRuntimeLine(runtimeInfo, runtimeChannel, runtimeCapabilities, params.defaultThinkLevel), `Reasoning: ${reasoningLevel} (hidden unless on/stream). Toggle /reasoning; /status shows Reasoning when enabled.`);
     return lines.filter(Boolean).join("\n");

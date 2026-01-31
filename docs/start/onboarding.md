@@ -1,5 +1,5 @@
 ---
-summary: "First-run onboarding flow for Grawke (macOS app)"
+summary: "First-run onboarding flow for MoltX (macOS app)"
 read_when:
   - Designing the macOS onboarding assistant
   - Implementing auth or identity setup
@@ -42,7 +42,7 @@ The macOS app supports Anthropic OAuth (Claude Pro/Max). The flow:
 
 - Opens the browser for OAuth (PKCE)
 - Asks the user to paste the `code#state` value
-- Writes credentials to `~/.grawke/credentials/oauth.json`
+- Writes credentials to `~/.moltx/credentials/oauth.json`
 
 Other providers (OpenAI, custom APIs) are configured via environment variables
 or config files for now.
@@ -64,7 +64,7 @@ Onboarding requests TCC permissions needed for:
 
 ## 5) CLI (optional)
 
-The app can install the global `grawke` CLI via npm/pnpm so terminal
+The app can install the global `moltx` CLI via npm/pnpm so terminal
 workflows and launchd tasks work out of the box.
 
 ## 6) Onboarding chat (dedicated session)
@@ -75,7 +75,7 @@ from your normal conversation.
 
 ## Agent bootstrap ritual
 
-On the first agent run, Grawke bootstraps a workspace (default `~/clawd`):
+On the first agent run, MoltX bootstraps a workspace (default `~/clawd`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`
 - Runs a short Q&A ritual (one question at a time)
@@ -87,7 +87,7 @@ On the first agent run, Grawke bootstraps a workspace (default `~/clawd`):
 Gmail Pub/Sub setup is currently a manual step. Use:
 
 ```bash
-grawke webhooks gmail setup --account you@gmail.com
+moltx webhooks gmail setup --account you@gmail.com
 ```
 
 See [/automation/gmail-pubsub](/automation/gmail-pubsub) for details.
@@ -97,7 +97,7 @@ See [/automation/gmail-pubsub](/automation/gmail-pubsub) for details.
 When the Gateway runs on another machine, credentials and workspace files live
 **on that host**. If you need OAuth in remote mode, create:
 
-- `~/.grawke/credentials/oauth.json`
-- `~/.grawke/agents/<agentId>/agent/auth-profiles.json`
+- `~/.moltx/credentials/oauth.json`
+- `~/.moltx/agents/<agentId>/agent/auth-profiles.json`
 
 on the gateway host.

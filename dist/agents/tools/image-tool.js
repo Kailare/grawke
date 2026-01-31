@@ -11,7 +11,7 @@ import { minimaxUnderstandImage } from "../minimax-vlm.js";
 import { getApiKeyForModel, requireApiKey, resolveEnvApiKey } from "../model-auth.js";
 import { runWithImageModelFallback } from "../model-fallback.js";
 import { resolveConfiguredModelRef } from "../model-selection.js";
-import { ensureGrawkeModelsJson } from "../models-config.js";
+import { ensureMoltXModelsJson } from "../models-config.js";
 import { assertSandboxPath } from "../sandbox-paths.js";
 import { coerceImageAssistantText, coerceImageModelConfig, decodeDataUrl, resolveProviderVisionModelFromConfig, } from "./image-tool.helpers.js";
 const DEFAULT_PROMPT = "Describe the image.";
@@ -187,7 +187,7 @@ async function runImagePrompt(params) {
             },
         }
         : undefined;
-    await ensureGrawkeModelsJson(effectiveCfg, params.agentDir);
+    await ensureMoltXModelsJson(effectiveCfg, params.agentDir);
     const authStorage = discoverAuthStorage(params.agentDir);
     const modelRegistry = discoverModels(authStorage, params.agentDir);
     const result = await runWithImageModelFallback({

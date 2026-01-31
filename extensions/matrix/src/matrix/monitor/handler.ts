@@ -8,7 +8,7 @@ import {
   logTypingFailure,
   resolveControlCommandGate,
   type RuntimeEnv,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import type { CoreConfig, ReplyToMode } from "../../types.js";
 import {
   formatPollAsText,
@@ -37,7 +37,7 @@ export type MatrixMonitorHandlerParams = {
     logging: {
       shouldLogVerbose: () => boolean;
     };
-    channel: typeof import("grawke/plugin-sdk")["channel"];
+    channel: typeof import("moltx/plugin-sdk")["channel"];
     system: {
       enqueueSystemEvent: (
         text: string,
@@ -59,7 +59,7 @@ export type MatrixMonitorHandlerParams = {
       : Record<string, unknown> | undefined
     : Record<string, unknown> | undefined;
   mentionRegexes: ReturnType<
-    typeof import("grawke/plugin-sdk")["channel"]["mentions"]["buildMentionRegexes"]
+    typeof import("moltx/plugin-sdk")["channel"]["mentions"]["buildMentionRegexes"]
   >;
   groupPolicy: "open" | "allowlist" | "disabled";
   replyToMode: ReplyToMode;
@@ -252,12 +252,12 @@ export function createMatrixRoomMessageHandler(params: MatrixMonitorHandlerParam
                   await sendMessageMatrix(
                     `room:${roomId}`,
                     [
-                      "Grawke: access not configured.",
+                      "MoltX: access not configured.",
                       "",
                       `Pairing code: ${code}`,
                       "",
                       "Ask the bot owner to approve with:",
-                      "grawke pairing approve matrix <code>",
+                      "moltx pairing approve matrix <code>",
                     ].join("\n"),
                     { client },
                   );

@@ -1,16 +1,16 @@
 export const GATEWAY_CLIENT_IDS = {
     WEBCHAT_UI: "webchat-ui",
-    CONTROL_UI: "grawke-control-ui",
+    CONTROL_UI: "moltx-control-ui",
     WEBCHAT: "webchat",
     CLI: "cli",
     GATEWAY_CLIENT: "gateway-client",
-    MACOS_APP: "grawke-macos",
-    IOS_APP: "grawke-ios",
-    ANDROID_APP: "grawke-android",
+    MACOS_APP: "moltx-macos",
+    IOS_APP: "moltx-ios",
+    ANDROID_APP: "moltx-android",
     NODE_HOST: "node-host",
     TEST: "test",
     FINGERPRINT: "fingerprint",
-    PROBE: "grawke-probe",
+    PROBE: "moltx-probe",
 };
 // Back-compat naming (internal): these values are IDs, not display names.
 export const GATEWAY_CLIENT_NAMES = GATEWAY_CLIENT_IDS;

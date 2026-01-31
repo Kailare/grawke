@@ -11,29 +11,29 @@ Manage Docker-based sandbox containers for isolated agent execution.
 
 ## Overview
 
-Grawke can run agents in isolated Docker containers for security. The `sandbox` commands help you manage these containers, especially after updates or configuration changes.
+MoltX can run agents in isolated Docker containers for security. The `sandbox` commands help you manage these containers, especially after updates or configuration changes.
 
 ## Commands
 
-### `grawke sandbox explain`
+### `moltx sandbox explain`
 
 Inspect the **effective** sandbox mode/scope/workspace access, sandbox tool policy, and elevated gates (with fix-it config key paths).
 
 ```bash
-grawke sandbox explain
-grawke sandbox explain --session agent:main:main
-grawke sandbox explain --agent work
-grawke sandbox explain --json
+moltx sandbox explain
+moltx sandbox explain --session agent:main:main
+moltx sandbox explain --agent work
+moltx sandbox explain --json
 ```
 
-### `grawke sandbox list`
+### `moltx sandbox list`
 
 List all sandbox containers with their status and configuration.
 
 ```bash
-grawke sandbox list
-grawke sandbox list --browser  # List only browser containers
-grawke sandbox list --json     # JSON output
+moltx sandbox list
+moltx sandbox list --browser  # List only browser containers
+moltx sandbox list --json     # JSON output
 ```
 
 **Output includes:**
@@ -43,16 +43,16 @@ grawke sandbox list --json     # JSON output
 - Idle time (time since last use)
 - Associated session/agent
 
-### `grawke sandbox recreate`
+### `moltx sandbox recreate`
 
 Remove sandbox containers to force recreation with updated images/config.
 
 ```bash
-grawke sandbox recreate --all                # Recreate all containers
-grawke sandbox recreate --session main       # Specific session
-grawke sandbox recreate --agent mybot        # Specific agent
-grawke sandbox recreate --browser            # Only browser containers
-grawke sandbox recreate --all --force        # Skip confirmation
+moltx sandbox recreate --all                # Recreate all containers
+moltx sandbox recreate --session main       # Specific session
+moltx sandbox recreate --agent mybot        # Specific agent
+moltx sandbox recreate --browser            # Only browser containers
+moltx sandbox recreate --all --force        # Skip confirmation
 ```
 
 **Options:**
@@ -70,14 +70,14 @@ grawke sandbox recreate --all --force        # Skip confirmation
 
 ```bash
 # Pull new image
-docker pull grawke-sandbox:latest
-docker tag grawke-sandbox:latest grawke-sandbox:bookworm-slim
+docker pull moltx-sandbox:latest
+docker tag moltx-sandbox:latest moltx-sandbox:bookworm-slim
 
 # Update config to use new image
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-grawke sandbox recreate --all
+moltx sandbox recreate --all
 ```
 
 ### After changing sandbox configuration
@@ -86,15 +86,15 @@ grawke sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-grawke sandbox recreate --all
+moltx sandbox recreate --all
 ```
 
 ### After changing setupCommand
 
 ```bash
-grawke sandbox recreate --all
+moltx sandbox recreate --all
 # or just one agent:
-grawke sandbox recreate --agent family
+moltx sandbox recreate --agent family
 ```
 
 
@@ -102,7 +102,7 @@ grawke sandbox recreate --agent family
 
 ```bash
 # Update only one agent's containers
-grawke sandbox recreate --agent alfred
+moltx sandbox recreate --agent alfred
 ```
 
 ## Why is this needed?
@@ -112,14 +112,14 @@ grawke sandbox recreate --agent alfred
 - Containers are only pruned after 24h of inactivity
 - Regularly-used agents keep old containers running indefinitely
 
-**Solution:** Use `grawke sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
+**Solution:** Use `moltx sandbox recreate` to force removal of old containers. They'll be recreated automatically with current settings when next needed.
 
-Tip: prefer `grawke sandbox recreate` over manual `docker rm`. It uses the
+Tip: prefer `moltx sandbox recreate` over manual `docker rm`. It uses the
 Gateway’s container naming and avoids mismatches when scope/session keys change.
 
 ## Configuration
 
-Sandbox settings live in `~/.grawke/grawke.json` under `agents.defaults.sandbox` (per-agent overrides go in `agents.list[].sandbox`):
+Sandbox settings live in `~/.moltx/moltx.json` under `agents.defaults.sandbox` (per-agent overrides go in `agents.list[].sandbox`):
 
 ```jsonc
 {
@@ -129,8 +129,8 @@ Sandbox settings live in `~/.grawke/grawke.json` under `agents.defaults.sandbox`
         "mode": "all",                    // off, non-main, all
         "scope": "agent",                 // session, agent, shared
         "docker": {
-          "image": "grawke-sandbox:bookworm-slim",
-          "containerPrefix": "grawke-sbx-"
+          "image": "moltx-sandbox:bookworm-slim",
+          "containerPrefix": "moltx-sbx-"
           // ... more Docker options
         },
         "prune": {

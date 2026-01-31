@@ -6,20 +6,20 @@ import { runDaemonInstall, runDaemonRestart, runDaemonStart, runDaemonStatus, ru
 import { runNodeDaemonInstall, runNodeDaemonRestart, runNodeDaemonStart, runNodeDaemonStatus, runNodeDaemonStop, runNodeDaemonUninstall, } from "./node-cli/daemon.js";
 export function registerServiceCli(program) {
     const gatewayExamples = [
-        ["grawke service gateway status", "Show gateway service status + probe."],
+        ["moltx service gateway status", "Show gateway service status + probe."],
         [
-            "grawke service gateway install --port 18789 --token <token>",
+            "moltx service gateway install --port 18789 --token <token>",
             "Install the Gateway service on port 18789.",
         ],
-        ["grawke service gateway restart", "Restart the Gateway service."],
+        ["moltx service gateway restart", "Restart the Gateway service."],
     ];
     const nodeExamples = [
-        ["grawke service node status", "Show node host service status."],
+        ["moltx service node status", "Show node host service status."],
         [
-            "grawke service node install --host gateway.local --port 18789 --tls",
+            "moltx service node install --host gateway.local --port 18789 --tls",
             "Install the node host service with TLS.",
         ],
-        ["grawke service node restart", "Restart the node host service."],
+        ["moltx service node restart", "Restart the node host service."],
     ];
     const service = program
         .command("service")

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import type { RuntimeEnv } from "grawke/plugin-sdk";
+import type { RuntimeEnv } from "moltx/plugin-sdk";
 
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 

@@ -1,16 +1,16 @@
 ---
-summary: "CLI reference for `grawke sessions` (list stored sessions + usage)"
+summary: "CLI reference for `moltx sessions` (list stored sessions + usage)"
 read_when:
   - You want to list stored sessions and see recent activity
 ---
 
-# `grawke sessions`
+# `moltx sessions`
 
 List stored conversation sessions.
 
 ```bash
-grawke sessions
-grawke sessions --active 120
-grawke sessions --json
+moltx sessions
+moltx sessions --active 120
+moltx sessions --json
 ```
 

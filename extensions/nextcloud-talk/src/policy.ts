@@ -1,11 +1,11 @@
-import type { AllowlistMatch, ChannelGroupContext, GroupPolicy, GroupToolPolicyConfig } from "grawke/plugin-sdk";
+import type { AllowlistMatch, ChannelGroupContext, GroupPolicy, GroupToolPolicyConfig } from "moltx/plugin-sdk";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
   resolveChannelEntryMatchWithFallback,
   resolveMentionGatingWithBypass,
   resolveNestedAllowlistDecision,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import type { NextcloudTalkRoomConfig } from "./types.js";
 

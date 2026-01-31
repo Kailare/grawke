@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/mattermost",
+  "name": "@moltx/mattermost",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Mattermost channel plugin",
-  "grawke": {
+  "description": "MoltX Mattermost channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -17,7 +17,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@grawke/mattermost",
+      "npmSpec": "@moltx/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

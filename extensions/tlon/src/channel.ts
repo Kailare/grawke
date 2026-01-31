@@ -2,13 +2,13 @@ import type {
   ChannelOutboundAdapter,
   ChannelPlugin,
   ChannelSetupInput,
-  GrawkeConfig,
-} from "grawke/plugin-sdk";
+  MoltXConfig,
+} from "moltx/plugin-sdk";
 import {
   applyAccountNameToChannelSection,
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { resolveTlonAccount, listTlonAccountIds } from "./types.js";
 import { formatTargetHint, normalizeShip, parseTlonTarget } from "./targets.js";
@@ -30,10 +30,10 @@ type TlonSetupInput = ChannelSetupInput & {
 };
 
 function applyTlonSetupConfig(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   accountId: string;
   input: TlonSetupInput;
-}): GrawkeConfig {
+}): MoltXConfig {
   const { cfg, accountId, input } = params;
   const useDefault = accountId === DEFAULT_ACCOUNT_ID;
   const namedConfig = applyAccountNameToChannelSection({
@@ -108,7 +108,7 @@ const tlonOutbound: ChannelOutboundAdapter = {
     return { ok: true, to: parsed.nest };
   },
   sendText: async ({ cfg, to, text, accountId, replyToId, threadId }) => {
-    const account = resolveTlonAccount(cfg as GrawkeConfig, accountId ?? undefined);
+    const account = resolveTlonAccount(cfg as MoltXConfig, accountId ?? undefined);
     if (!account.configured || !account.ship || !account.url || !account.code) {
       throw new Error("Tlon account not configured");
     }
@@ -188,8 +188,8 @@ export const tlonPlugin: ChannelPlugin = {
   reload: { configPrefixes: ["channels.tlon"] },
   configSchema: tlonChannelConfigSchema,
   config: {
-    listAccountIds: (cfg) => listTlonAccountIds(cfg as GrawkeConfig),
-    resolveAccount: (cfg, accountId) => resolveTlonAccount(cfg as GrawkeConfig, accountId ?? undefined),
+    listAccountIds: (cfg) => listTlonAccountIds(cfg as MoltXConfig),
+    resolveAccount: (cfg, accountId) => resolveTlonAccount(cfg as MoltXConfig, accountId ?? undefined),
     defaultAccountId: () => "default",
     setAccountEnabled: ({ cfg, accountId, enabled }) => {
       const useDefault = !accountId || accountId === "default";
@@ -203,7 +203,7 @@ export const tlonPlugin: ChannelPlugin = {
               enabled,
             },
           },
-        } as GrawkeConfig;
+        } as MoltXConfig;
       }
       return {
         ...cfg,
@@ -220,7 +220,7 @@ export const tlonPlugin: ChannelPlugin = {
             },
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     },
     deleteAccount: ({ cfg, accountId }) => {
       const useDefault = !accountId || accountId === "default";
@@ -232,7 +232,7 @@ export const tlonPlugin: ChannelPlugin = {
             ...cfg.channels,
             tlon: rest,
           },
-        } as GrawkeConfig;
+        } as MoltXConfig;
       }
       const { [accountId]: removed, ...remainingAccounts } = cfg.channels?.tlon?.accounts ?? {};
       return {
@@ -244,7 +244,7 @@ export const tlonPlugin: ChannelPlugin = {
             accounts: remainingAccounts,
           },
         },
-      } as GrawkeConfig;
+      } as MoltXConfig;
     },
     isConfigured: (account) => account.configured,
     describeAccount: (account) => ({
@@ -260,14 +260,14 @@ export const tlonPlugin: ChannelPlugin = {
     resolveAccountId: ({ accountId }) => normalizeAccountId(accountId),
     applyAccountName: ({ cfg, accountId, name }) =>
       applyAccountNameToChannelSection({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         channelKey: "tlon",
         accountId,
         name,
       }),
     validateInput: ({ cfg, accountId, input }) => {
       const setupInput = input as TlonSetupInput;
-      const resolved = resolveTlonAccount(cfg as GrawkeConfig, accountId ?? undefined);
+      const resolved = resolveTlonAccount(cfg as MoltXConfig, accountId ?? undefined);
       const ship = setupInput.ship?.trim() || resolved.ship;
       const url = setupInput.url?.trim() || resolved.url;
       const code = setupInput.code?.trim() || resolved.code;
@@ -278,7 +278,7 @@ export const tlonPlugin: ChannelPlugin = {
     },
     applyAccountConfig: ({ cfg, accountId, input }) =>
       applyTlonSetupConfig({
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
         accountId,
         input: input as TlonSetupInput,
       }),

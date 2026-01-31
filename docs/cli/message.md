@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke message` (send + channel actions)"
+summary: "CLI reference for `moltx message` (send + channel actions)"
 read_when:
   - Adding or modifying message CLI actions
   - Changing outbound channel behavior
 ---
 
-# `grawke message`
+# `moltx message`
 
 Single outbound command for sending messages and channel actions
 (Discord/Google Chat/Slack/Mattermost (plugin)/Telegram/WhatsApp/Signal/iMessage/MS Teams).
@@ -13,7 +13,7 @@ Single outbound command for sending messages and channel actions
 ## Usage
 
 ```
-grawke message <subcommand> [flags]
+moltx message <subcommand> [flags]
 ```
 
 Channel selection:
@@ -34,7 +34,7 @@ Target formats (`--target`):
 
 Name lookup:
 - For supported providers (Discord/Slack/etc), channel names like `Help` or `#help` are resolved via the directory cache.
-- On cache miss, Grawke will attempt a live directory lookup when the provider supports it.
+- On cache miss, MoltX will attempt a live directory lookup when the provider supports it.
 
 ## Common flags
 
@@ -181,13 +181,13 @@ Name lookup:
 
 Send a Discord reply:
 ```
-grawke message send --channel discord \
+moltx message send --channel discord \
   --target channel:123 --message "hi" --reply-to 456
 ```
 
 Create a Discord poll:
 ```
-grawke message poll --channel discord \
+moltx message poll --channel discord \
   --target channel:123 \
   --poll-question "Snack?" \
   --poll-option Pizza --poll-option Sushi \
@@ -196,13 +196,13 @@ grawke message poll --channel discord \
 
 Send a Teams proactive message:
 ```
-grawke message send --channel msteams \
+moltx message send --channel msteams \
   --target conversation:19:abc@thread.tacv2 --message "hi"
 ```
 
 Create a Teams poll:
 ```
-grawke message poll --channel msteams \
+moltx message poll --channel msteams \
   --target conversation:19:abc@thread.tacv2 \
   --poll-question "Lunch?" \
   --poll-option Pizza --poll-option Sushi
@@ -210,19 +210,19 @@ grawke message poll --channel msteams \
 
 React in Slack:
 ```
-grawke message react --channel slack \
+moltx message react --channel slack \
   --target C123 --message-id 456 --emoji "✅"
 ```
 
 React in a Signal group:
 ```
-grawke message react --channel signal \
+moltx message react --channel signal \
   --target signal:group:abc123 --message-id 1737630212345 \
   --emoji "✅" --target-author-uuid 123e4567-e89b-12d3-a456-426614174000
 ```
 
 Send Telegram inline buttons:
 ```
-grawke message send --channel telegram --target @mychat --message "Choose:" \
+moltx message send --channel telegram --target @mychat --message "Choose:" \
   --buttons '[ [{"text":"Yes","callback_data":"cmd:yes"}], [{"text":"No","callback_data":"cmd:no"}] ]'
 ```

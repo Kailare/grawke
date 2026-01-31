@@ -14,10 +14,10 @@ const formatLine = (label, value) => {
     return `${colorize(rich, theme.muted, `${label}:`)} ${colorize(rich, theme.command, value)}`;
 };
 function resolveLaunchAgentLabel(args) {
-    const envLabel = args?.env?.GRAWKE_LAUNCHD_LABEL?.trim();
+    const envLabel = args?.env?.MOLTX_LAUNCHD_LABEL?.trim();
     if (envLabel)
         return envLabel;
-    return resolveGatewayLaunchAgentLabel(args?.env?.GRAWKE_PROFILE);
+    return resolveGatewayLaunchAgentLabel(args?.env?.MOLTX_PROFILE);
 }
 function resolveLaunchAgentPlistPathForLabel(env, label) {
     const home = toPosixPath(resolveHomeDir(env));
@@ -30,7 +30,7 @@ export function resolveLaunchAgentPlistPath(env) {
 export function resolveGatewayLogPaths(env) {
     const stateDir = resolveGatewayStateDir(env);
     const logDir = path.join(stateDir, "logs");
-    const prefix = env.GRAWKE_LOG_PREFIX?.trim() || "gateway";
+    const prefix = env.MOLTX_LOG_PREFIX?.trim() || "gateway";
     return {
         logDir,
         stdoutPath: path.join(logDir, `${prefix}.log`),
@@ -277,8 +277,8 @@ export async function installLaunchAgent({ env, stdout, programArguments, workin
     await fs.mkdir(path.dirname(plistPath), { recursive: true });
     const serviceDescription = description ??
         formatGatewayServiceDescription({
-            profile: env.GRAWKE_PROFILE,
-            version: environment?.GRAWKE_SERVICE_VERSION ?? env.GRAWKE_SERVICE_VERSION,
+            profile: env.MOLTX_PROFILE,
+            version: environment?.MOLTX_SERVICE_VERSION ?? env.MOLTX_SERVICE_VERSION,
         });
     const plist = buildLaunchAgentPlist({
         label,

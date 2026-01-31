@@ -16,8 +16,8 @@ export const __setMaxChatHistoryMessagesBytesForTest = (value) => {
 };
 export const DEFAULT_HANDSHAKE_TIMEOUT_MS = 10_000;
 export const getHandshakeTimeoutMs = () => {
-    if (process.env.VITEST && process.env.GRAWKE_TEST_HANDSHAKE_TIMEOUT_MS) {
-        const parsed = Number(process.env.GRAWKE_TEST_HANDSHAKE_TIMEOUT_MS);
+    if (process.env.VITEST && process.env.MOLTX_TEST_HANDSHAKE_TIMEOUT_MS) {
+        const parsed = Number(process.env.MOLTX_TEST_HANDSHAKE_TIMEOUT_MS);
         if (Number.isFinite(parsed) && parsed > 0)
             return parsed;
     }

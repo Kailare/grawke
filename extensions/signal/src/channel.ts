@@ -21,7 +21,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { getSignalRuntime } from "./runtime.js";
 

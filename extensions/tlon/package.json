@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/tlon",
+  "name": "@moltx/tlon",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Tlon/Urbit channel plugin",
-  "grawke": {
+  "description": "MoltX Tlon/Urbit channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -18,7 +18,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@grawke/tlon",
+      "npmSpec": "@moltx/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

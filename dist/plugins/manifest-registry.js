@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import { resolveUserPath } from "../utils.js";
 import { normalizePluginsConfig } from "./config-state.js";
-import { discoverGrawkePlugins } from "./discovery.js";
+import { discoverMoltXPlugins } from "./discovery.js";
 import { loadPluginManifest } from "./manifest.js";
 const registryCache = new Map();
 const DEFAULT_MANIFEST_CACHE_MS = 200;
 function resolveManifestCacheMs(env) {
-    const raw = env.GRAWKE_PLUGIN_MANIFEST_CACHE_MS?.trim();
+    const raw = env.MOLTX_PLUGIN_MANIFEST_CACHE_MS?.trim();
     if (raw === "" || raw === "0")
         return 0;
     if (!raw)
@@ -17,7 +17,7 @@ function resolveManifestCacheMs(env) {
     return Math.max(0, parsed);
 }
 function shouldUseManifestCache(env) {
-    const disabled = env.GRAWKE_DISABLE_PLUGIN_MANIFEST_CACHE?.trim();
+    const disabled = env.MOLTX_DISABLE_PLUGIN_MANIFEST_CACHE?.trim();
     if (disabled)
         return false;
     return resolveManifestCacheMs(env) > 0;
@@ -74,7 +74,7 @@ export function loadPluginManifestRegistry(params) {
             candidates: params.candidates,
             diagnostics: params.diagnostics ?? [],
         }
-        : discoverGrawkePlugins({
+        : discoverMoltXPlugins({
             workspaceDir: params.workspaceDir,
             extraPaths: normalized.loadPaths,
         });

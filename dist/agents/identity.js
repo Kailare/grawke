@@ -27,7 +27,7 @@ export function resolveMessagePrefix(cfg, agentId, opts) {
     const hasAllowFrom = opts?.hasAllowFrom === true;
     if (hasAllowFrom)
         return "";
-    return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[grawke]";
+    return resolveIdentityNamePrefix(cfg, agentId) ?? opts?.fallback ?? "[moltx]";
 }
 export function resolveResponsePrefix(cfg, agentId) {
     const configured = cfg.messages?.responsePrefix;

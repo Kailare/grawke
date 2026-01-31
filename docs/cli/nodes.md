@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke nodes` (list/status/approve/invoke, camera/canvas/screen)"
+summary: "CLI reference for `moltx nodes` (list/status/approve/invoke, camera/canvas/screen)"
 read_when:
   - You’re managing paired nodes (cameras, screen, canvas)
   - You need to approve requests or invoke node commands
 ---
 
-# `grawke nodes`
+# `moltx nodes`
 
 Manage paired nodes (devices) and invoke node capabilities.
 
@@ -20,14 +20,14 @@ Common options:
 ## Common commands
 
 ```bash
-grawke nodes list
-grawke nodes list --connected
-grawke nodes list --last-connected 24h
-grawke nodes pending
-grawke nodes approve <requestId>
-grawke nodes status
-grawke nodes status --connected
-grawke nodes status --last-connected 24h
+moltx nodes list
+moltx nodes list --connected
+moltx nodes list --last-connected 24h
+moltx nodes pending
+moltx nodes approve <requestId>
+moltx nodes status
+moltx nodes status --connected
+moltx nodes status --last-connected 24h
 ```
 
 `nodes list` prints pending/paired tables. Paired rows include the most recent connect age (Last Connect).
@@ -37,10 +37,10 @@ filter to nodes that connected within a duration (e.g. `24h`, `7d`).
 ## Invoke / run
 
 ```bash
-grawke nodes invoke --node <id|name|ip> --command <command> --params <json>
-grawke nodes run --node <id|name|ip> <command...>
-grawke nodes run --raw "git status"
-grawke nodes run --agent main --node <id|name|ip> --raw "git status"
+moltx nodes invoke --node <id|name|ip> --command <command> --params <json>
+moltx nodes run --node <id|name|ip> <command...>
+moltx nodes run --raw "git status"
+moltx nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 Invoke flags:

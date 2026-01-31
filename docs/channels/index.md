@@ -1,12 +1,12 @@
 ---
-summary: "Messaging platforms Grawke can connect to"
+summary: "Messaging platforms MoltX can connect to"
 read_when:
-  - You want to choose a chat channel for Grawke
+  - You want to choose a chat channel for MoltX
   - You need a quick overview of supported messaging platforms
 ---
 # Chat Channels
 
-Grawke can talk to you on any chat app you already use. Each channel connects via the Gateway.
+MoltX can talk to you on any chat app you already use. Each channel connects via the Gateway.
 Text is supported everywhere; media and reactions vary by channel.
 
 ## Supported channels
@@ -31,7 +31,7 @@ Text is supported everywhere; media and reactions vary by channel.
 
 ## Notes
 
-- Channels can run simultaneously; configure multiple and Grawke will route per chat.
+- Channels can run simultaneously; configure multiple and MoltX will route per chat.
 - Fastest setup is usually **Telegram** (simple bot token). WhatsApp requires QR pairing and
   stores more state on disk.
 - Group behavior varies by channel; see [Groups](/concepts/groups).

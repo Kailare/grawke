@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { DEFAULT_ACCOUNT_ID } from "grawke/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID } from "moltx/plugin-sdk";
 
 import type { ZaloConfig } from "./types.js";
 

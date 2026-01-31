@@ -76,7 +76,7 @@ export async function fetchWithGuard(params) {
             await assertPublicHostname(parsedUrl.hostname);
             const response = await fetch(parsedUrl, {
                 signal: controller.signal,
-                headers: { "User-Agent": "Grawke-Gateway/1.0" },
+                headers: { "User-Agent": "MoltX-Gateway/1.0" },
                 redirect: "manual",
             });
             if (isRedirectStatus(response.status)) {

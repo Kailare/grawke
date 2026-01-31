@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/slack",
+  "name": "@moltx/slack",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Slack channel plugin",
-  "grawke": {
+  "description": "MoltX Slack channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

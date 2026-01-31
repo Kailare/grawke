@@ -1,11 +1,11 @@
 ---
-summary: "Setup guide for developers working on the Grawke macOS app"
+summary: "Setup guide for developers working on the MoltX macOS app"
 read_when:
   - Setting up the macOS development environment
 ---
 # macOS Developer Setup
 
-This guide covers the necessary steps to build and run the Grawke macOS application from source.
+This guide covers the necessary steps to build and run the MoltX macOS application from source.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ pnpm install
 
 ## 2. Build and Package the App
 
-To build the macOS app and package it into `dist/Grawke.app`, run:
+To build the macOS app and package it into `dist/MoltX.app`, run:
 
 ```bash
 ./scripts/package-mac-app.sh
@@ -39,16 +39,16 @@ https://github.com/clawdbot/clawdbot/blob/main/apps/macos/README.md
 
 ## 3. Install the CLI
 
-The macOS app expects a global `grawke` CLI install to manage background tasks.
+The macOS app expects a global `moltx` CLI install to manage background tasks.
 
 **To install it (recommended):**
-1.  Open the Grawke app.
+1.  Open the MoltX app.
 2.  Go to the **General** settings tab.
 3.  Click **"Install CLI"**.
 
 Alternatively, install it manually:
 ```bash
-npm install -g grawke@<version>
+npm install -g moltx@<version>
 ```
 
 ## Troubleshooting
@@ -74,7 +74,7 @@ If the app crashes when you try to allow **Speech Recognition** or **Microphone*
 **Fix:**
 1. Reset the TCC permissions:
    ```bash
-   tccutil reset All com.grawke.mac.debug
+   tccutil reset All com.moltx.mac.debug
    ```
 2. If that fails, change the `BUNDLE_ID` temporarily in [`scripts/package-mac-app.sh`](https://github.com/clawdbot/clawdbot/blob/main/scripts/package-mac-app.sh) to force a "clean slate" from macOS.
 
@@ -82,8 +82,8 @@ If the app crashes when you try to allow **Speech Recognition** or **Microphone*
 If the gateway status stays on "Starting...", check if a zombie process is holding the port:
 
 ```bash
-grawke gateway status
-grawke gateway stop
+moltx gateway status
+moltx gateway stop
 
 # If you’re not using a LaunchAgent (dev mode / manual runs), find the listener:
 lsof -nP -iTCP:18789 -sTCP:LISTEN

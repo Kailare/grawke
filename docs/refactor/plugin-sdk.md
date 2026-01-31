@@ -28,12 +28,12 @@ Contents (examples):
 - Docs link helper: `formatDocsLink`.
 
 Delivery:
-- Publish as `@grawke/plugin-sdk` (or export from core under `grawke/plugin-sdk`).
+- Publish as `@moltx/plugin-sdk` (or export from core under `moltx/plugin-sdk`).
 - Semver with explicit stability guarantees.
 
 ### 2) Plugin Runtime (execution surface, injected)
 Scope: everything that touches core runtime behavior.
-Accessed via `GrawkePluginApi.runtime` so plugins never import `src/**`.
+Accessed via `MoltXPluginApi.runtime` so plugins never import `src/**`.
 
 Proposed surface (minimal but complete):
 ```ts
@@ -41,8 +41,8 @@ export type PluginRuntime = {
   channel: {
     text: {
       chunkMarkdownText(text: string, limit: number): string[];
-      resolveTextChunkLimit(cfg: GrawkeConfig, channel: string, accountId?: string): number;
-      hasControlCommand(text: string, cfg: GrawkeConfig): boolean;
+      resolveTextChunkLimit(cfg: MoltXConfig, channel: string, accountId?: string): number;
+      hasControlCommand(text: string, cfg: MoltXConfig): boolean;
     };
     reply: {
       dispatchReplyWithBufferedBlockDispatcher(params: {
@@ -83,18 +83,18 @@ export type PluginRuntime = {
       ): Promise<{ path: string; contentType?: string }>;
     };
     mentions: {
-      buildMentionRegexes(cfg: GrawkeConfig, agentId?: string): RegExp[];
+      buildMentionRegexes(cfg: MoltXConfig, agentId?: string): RegExp[];
       matchesMentionPatterns(text: string, regexes: RegExp[]): boolean;
     };
     groups: {
-      resolveGroupPolicy(cfg: GrawkeConfig, channel: string, accountId: string, groupId: string): {
+      resolveGroupPolicy(cfg: MoltXConfig, channel: string, accountId: string, groupId: string): {
         allowlistEnabled: boolean;
         allowed: boolean;
         groupConfig?: unknown;
         defaultConfig?: unknown;
       };
       resolveRequireMention(
-        cfg: GrawkeConfig,
+        cfg: MoltXConfig,
         channel: string,
         accountId: string,
         groupId: string,
@@ -109,7 +109,7 @@ export type PluginRuntime = {
         onFlush: (entries: T[]) => Promise<void>;
         onError?: (err: unknown) => void;
       }): { push: (v: T) => void; flush: () => Promise<void> };
-      resolveInboundDebounceMs(cfg: GrawkeConfig, channel: string): number;
+      resolveInboundDebounceMs(cfg: MoltXConfig, channel: string): number;
     };
     commands: {
       resolveCommandAuthorizedFromAuthorizers(params: {
@@ -123,7 +123,7 @@ export type PluginRuntime = {
     getChildLogger(name: string): PluginLogger;
   };
   state: {
-    resolveStateDir(cfg: GrawkeConfig): string;
+    resolveStateDir(cfg: MoltXConfig): string;
   };
 };
 ```
@@ -136,8 +136,8 @@ Notes:
 ## Migration plan (phased, safe)
 
 ### Phase 0: scaffolding
-- Introduce `@grawke/plugin-sdk`.
-- Add `api.runtime` to `GrawkePluginApi` with the surface above.
+- Introduce `@moltx/plugin-sdk`.
+- Add `api.runtime` to `MoltXPluginApi` with the surface above.
 - Maintain existing imports during a transition window (deprecation warnings).
 
 ### Phase 1: bridge cleanup (low risk)
@@ -165,7 +165,7 @@ Notes:
 ## Compatibility and versioning
 - SDK: semver, published, documented changes.
 - Runtime: versioned per core release. Add `api.runtime.version`.
-- Plugins declare a required runtime range (e.g., `grawkeRuntime: ">=2026.2.0"`).
+- Plugins declare a required runtime range (e.g., `moltxRuntime: ">=2026.2.0"`).
 
 ## Testing strategy
 - Adapter-level unit tests (runtime functions exercised with real core implementation).

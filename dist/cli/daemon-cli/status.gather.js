@@ -106,10 +106,10 @@ export async function gatherDaemonStatus(opts) {
         ? await probeGatewayStatus({
             url: probeUrl,
             token: opts.rpc.token ||
-                mergedDaemonEnv.GRAWKE_GATEWAY_TOKEN ||
+                mergedDaemonEnv.MOLTX_GATEWAY_TOKEN ||
                 daemonCfg.gateway?.auth?.token,
             password: opts.rpc.password ||
-                mergedDaemonEnv.GRAWKE_GATEWAY_PASSWORD ||
+                mergedDaemonEnv.MOLTX_GATEWAY_PASSWORD ||
                 daemonCfg.gateway?.auth?.password,
             timeoutMs,
             json: opts.rpc.json,

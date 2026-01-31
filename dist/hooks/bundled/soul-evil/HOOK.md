@@ -4,12 +4,12 @@ description: "Swap SOUL.md with SOUL_EVIL.md during a purge window or by random 
 homepage: https://docs.clawd.bot/hooks/soul-evil
 metadata:
   {
-    "grawke":
+    "moltx":
       {
         "emoji": "😈",
         "events": ["agent:bootstrap"],
         "requires": { "config": ["hooks.internal.entries.soul-evil.enabled"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Grawke" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltX" }],
       },
   }
 ---
@@ -31,7 +31,7 @@ You can change the filename via hook config.
 
 ## Configuration
 
-Add this to your config (`~/.grawke/grawke.json`):
+Add this to your config (`~/.moltx/moltx.json`):
 
 ```json
 {
@@ -67,5 +67,5 @@ Add this to your config (`~/.grawke/grawke.json`):
 ## Enable
 
 ```bash
-grawke hooks enable soul-evil
+moltx hooks enable soul-evil
 ```

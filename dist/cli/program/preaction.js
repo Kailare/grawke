@@ -11,9 +11,9 @@ function setProcessTitleForCommand(actionCommand) {
         current = current.parent;
     }
     const name = current.name();
-    if (!name || name === "grawke")
+    if (!name || name === "moltx")
         return;
-    process.title = `grawke-${name}`;
+    process.title = `moltx-${name}`;
 }
 // Commands that need channel plugins loaded
 const PLUGIN_REQUIRED_COMMANDS = new Set(["message", "channels", "directory"]);
@@ -24,7 +24,7 @@ export function registerPreActionHooks(program, programVersion) {
         if (hasHelpOrVersion(argv))
             return;
         const commandPath = getCommandPath(argv, 2);
-        const hideBanner = isTruthyEnvValue(process.env.GRAWKE_HIDE_BANNER) ||
+        const hideBanner = isTruthyEnvValue(process.env.MOLTX_HIDE_BANNER) ||
             commandPath[0] === "update" ||
             (commandPath[0] === "plugins" && commandPath[1] === "update");
         if (!hideBanner) {

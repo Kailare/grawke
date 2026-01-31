@@ -1,5 +1,5 @@
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
-export function parseGrawkeVersion(raw) {
+export function parseMoltXVersion(raw) {
     if (!raw)
         return null;
     const match = raw.trim().match(VERSION_RE);
@@ -13,9 +13,9 @@ export function parseGrawkeVersion(raw) {
         revision: revision ? Number.parseInt(revision, 10) : 0,
     };
 }
-export function compareGrawkeVersions(a, b) {
-    const parsedA = parseGrawkeVersion(a);
-    const parsedB = parseGrawkeVersion(b);
+export function compareMoltXVersions(a, b) {
+    const parsedA = parseMoltXVersion(a);
+    const parsedB = parseMoltXVersion(b);
     if (!parsedA || !parsedB)
         return null;
     if (parsedA.major !== parsedB.major)

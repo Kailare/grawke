@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke doctor` (health checks + guided repairs)"
+summary: "CLI reference for `moltx doctor` (health checks + guided repairs)"
 read_when:
   - You have connectivity/auth issues and want guided fixes
   - You updated and want a sanity check
 ---
 
-# `grawke doctor`
+# `moltx doctor`
 
 Health checks + quick fixes for the gateway and channels.
 
@@ -16,23 +16,23 @@ Related:
 ## Examples
 
 ```bash
-grawke doctor
-grawke doctor --repair
-grawke doctor --deep
+moltx doctor
+moltx doctor --repair
+moltx doctor --deep
 ```
 
 Notes:
 - Interactive prompts (like keychain/OAuth fixes) only run when stdin is a TTY and `--non-interactive` is **not** set. Headless runs (cron, Telegram, no terminal) will skip prompts.
-- `--fix` (alias for `--repair`) writes a backup to `~/.grawke/grawke.json.bak` and drops unknown config keys, listing each removal.
+- `--fix` (alias for `--repair`) writes a backup to `~/.moltx/moltx.json.bak` and drops unknown config keys, listing each removal.
 
 ## macOS: `launchctl` env overrides
 
-If you previously ran `launchctl setenv GRAWKE_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
+If you previously ran `launchctl setenv MOLTX_GATEWAY_TOKEN ...` (or `...PASSWORD`), that value overrides your config file and can cause persistent “unauthorized” errors.
 
 ```bash
-launchctl getenv GRAWKE_GATEWAY_TOKEN
-launchctl getenv GRAWKE_GATEWAY_PASSWORD
+launchctl getenv MOLTX_GATEWAY_TOKEN
+launchctl getenv MOLTX_GATEWAY_PASSWORD
 
-launchctl unsetenv GRAWKE_GATEWAY_TOKEN
-launchctl unsetenv GRAWKE_GATEWAY_PASSWORD
+launchctl unsetenv MOLTX_GATEWAY_TOKEN
+launchctl unsetenv MOLTX_GATEWAY_PASSWORD
 ```

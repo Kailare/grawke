@@ -40,7 +40,7 @@ Supported keys:
 - `seed`, `normalize`, `lang`, `output_format`, `latency_tier`
 - `once`
 
-## Config (`~/.grawke/grawke.json`)
+## Config (`~/.moltx/moltx.json`)
 ```json5
 {
   "talk": {

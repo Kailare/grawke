@@ -1,5 +1,5 @@
 ---
-summary: "Run multiple Grawke Gateways on one host (isolation, ports, and profiles)"
+summary: "Run multiple MoltX Gateways on one host (isolation, ports, and profiles)"
 read_when:
   - Running more than one Gateway on the same machine
   - You need isolated config/state/ports per Gateway
@@ -9,8 +9,8 @@ read_when:
 Most setups should use one Gateway because a single Gateway can handle multiple messaging connections and agents. If you need stronger isolation or redundancy (e.g., a rescue bot), run separate Gateways with isolated profiles/ports.
 
 ## Isolation checklist (required)
-- `GRAWKE_CONFIG_PATH` — per-instance config file
-- `GRAWKE_STATE_DIR` — per-instance sessions, creds, caches
+- `MOLTX_CONFIG_PATH` — per-instance config file
+- `MOLTX_STATE_DIR` — per-instance sessions, creds, caches
 - `agents.defaults.workspace` — per-instance workspace root
 - `gateway.port` (or `--port`) — unique per instance
 - Derived ports (browser/canvas) must not overlap
@@ -19,22 +19,22 @@ If these are shared, you will hit config races and port conflicts.
 
 ## Recommended: profiles (`--profile`)
 
-Profiles auto-scope `GRAWKE_STATE_DIR` + `GRAWKE_CONFIG_PATH` and suffix service names.
+Profiles auto-scope `MOLTX_STATE_DIR` + `MOLTX_CONFIG_PATH` and suffix service names.
 
 ```bash
 # main
-grawke --profile main setup
-grawke --profile main gateway --port 18789
+moltx --profile main setup
+moltx --profile main gateway --port 18789
 
 # rescue
-grawke --profile rescue setup
-grawke --profile rescue gateway --port 19001
+moltx --profile rescue setup
+moltx --profile rescue gateway --port 19001
 ```
 
 Per-profile services:
 ```bash
-grawke --profile main gateway install
-grawke --profile rescue gateway install
+moltx --profile main gateway install
+moltx --profile rescue gateway install
 ```
 
 ## Rescue-bot guide
@@ -54,11 +54,11 @@ Port spacing: leave at least 20 ports between base ports so the derived browser/
 ```bash
 # Main bot (existing or fresh, without --profile param)
 # Runs on port 18789 + Chrome CDC/Canvas/... Ports 
-grawke onboard
-grawke gateway install
+moltx onboard
+moltx gateway install
 
 # Rescue bot (isolated profile + ports)
-grawke --profile rescue onboard
+moltx --profile rescue onboard
 # Notes: 
 # - workspace name will be postfixed with -rescue per default
 # - Port should be at least 18789 + 20 Ports, 
@@ -66,12 +66,12 @@ grawke --profile rescue onboard
 # - rest of the onboarding is the same as normal
 
 # To install the service (if not happened automatically during onboarding)
-grawke --profile rescue gateway install
+moltx --profile rescue gateway install
 ```
 
 ## Port mapping (derived)
 
-Base port = `gateway.port` (or `GRAWKE_GATEWAY_PORT` / `--port`).
+Base port = `gateway.port` (or `MOLTX_GATEWAY_PORT` / `--port`).
 
 - `browser.controlUrl port = base + 2`
 - `canvasHost.port = base + 4`
@@ -89,19 +89,19 @@ If you override any of these in config or env, you must keep them unique per ins
 ## Manual env example
 
 ```bash
-GRAWKE_CONFIG_PATH=~/.grawke/main.json \
-GRAWKE_STATE_DIR=~/.grawke-main \
-grawke gateway --port 18789
+MOLTX_CONFIG_PATH=~/.moltx/main.json \
+MOLTX_STATE_DIR=~/.moltx-main \
+moltx gateway --port 18789
 
-GRAWKE_CONFIG_PATH=~/.grawke/rescue.json \
-GRAWKE_STATE_DIR=~/.grawke-rescue \
-grawke gateway --port 19001
+MOLTX_CONFIG_PATH=~/.moltx/rescue.json \
+MOLTX_STATE_DIR=~/.moltx-rescue \
+moltx gateway --port 19001
 ```
 
 ## Quick checks
 
 ```bash
-grawke --profile main status
-grawke --profile rescue status
-grawke --profile rescue browser status
+moltx --profile main status
+moltx --profile rescue status
+moltx --profile rescue browser status
 ```

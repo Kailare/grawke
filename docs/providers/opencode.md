@@ -1,5 +1,5 @@
 ---
-summary: "Use OpenCode Zen (curated models) with Grawke"
+summary: "Use OpenCode Zen (curated models) with MoltX"
 read_when:
   - You want OpenCode Zen for model access
   - You want a curated list of coding-friendly models
@@ -13,9 +13,9 @@ Zen is currently in beta.
 ## CLI setup
 
 ```bash
-grawke onboard --auth-choice opencode-zen
+moltx onboard --auth-choice opencode-zen
 # or non-interactive
-grawke onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
+moltx onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet

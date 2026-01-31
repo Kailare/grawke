@@ -45,11 +45,11 @@ export function pickProbeHostForBind(bindMode, tailnetIPv4, customBindHost) {
     return "127.0.0.1";
 }
 const SAFE_DAEMON_ENV_KEYS = [
-    "GRAWKE_PROFILE",
-    "GRAWKE_STATE_DIR",
-    "GRAWKE_CONFIG_PATH",
-    "GRAWKE_GATEWAY_PORT",
-    "GRAWKE_NIX_MODE",
+    "MOLTX_PROFILE",
+    "MOLTX_STATE_DIR",
+    "MOLTX_CONFIG_PATH",
+    "MOLTX_GATEWAY_PORT",
+    "MOLTX_NIX_MODE",
 ];
 export function filterDaemonEnv(env) {
     if (!env)
@@ -113,7 +113,7 @@ export function renderRuntimeHints(runtime, env = process.env) {
         }
     })();
     if (runtime.missingUnit) {
-        hints.push(`Service not installed. Run: ${formatCliCommand("grawke gateway install", env)}`);
+        hints.push(`Service not installed. Run: ${formatCliCommand("moltx gateway install", env)}`);
         if (fileLog)
             hints.push(`File logs: ${fileLog}`);
         return hints;
@@ -127,11 +127,11 @@ export function renderRuntimeHints(runtime, env = process.env) {
             hints.push(`Launchd stderr (if installed): ${logs.stderrPath}`);
         }
         else if (process.platform === "linux") {
-            const unit = resolveGatewaySystemdServiceName(env.GRAWKE_PROFILE);
+            const unit = resolveGatewaySystemdServiceName(env.MOLTX_PROFILE);
             hints.push(`Logs: journalctl --user -u ${unit}.service -n 200 --no-pager`);
         }
         else if (process.platform === "win32") {
-            const task = resolveGatewayWindowsTaskName(env.GRAWKE_PROFILE);
+            const task = resolveGatewayWindowsTaskName(env.MOLTX_PROFILE);
             hints.push(`Logs: schtasks /Query /TN "${task}" /V /FO LIST`);
         }
     }
@@ -139,10 +139,10 @@ export function renderRuntimeHints(runtime, env = process.env) {
 }
 export function renderGatewayServiceStartHints(env = process.env) {
     const base = [
-        formatCliCommand("grawke gateway install", env),
-        formatCliCommand("grawke gateway", env),
+        formatCliCommand("moltx gateway install", env),
+        formatCliCommand("moltx gateway", env),
     ];
-    const profile = env.GRAWKE_PROFILE;
+    const profile = env.MOLTX_PROFILE;
     switch (process.platform) {
         case "darwin": {
             const label = resolveGatewayLaunchAgentLabel(profile);

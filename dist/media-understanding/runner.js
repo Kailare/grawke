@@ -737,7 +737,7 @@ async function runCliEntry(params) {
         maxBytes,
         timeoutMs,
     });
-    const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-media-cli-"));
+    const outputDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-media-cli-"));
     const mediaPath = pathResult.path;
     const outputBase = path.join(outputDir, path.parse(mediaPath).name);
     const templCtx = {

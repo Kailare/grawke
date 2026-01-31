@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke skills` (list/info/check) and skill eligibility"
+summary: "CLI reference for `moltx skills` (list/info/check) and skill eligibility"
 read_when:
   - You want to see which skills are available and ready to run
   - You want to debug missing binaries/env/config for skills
 ---
 
-# `grawke skills`
+# `moltx skills`
 
 Inspect skills (bundled + workspace + managed overrides) and see what’s eligible vs missing requirements.
 
@@ -17,9 +17,9 @@ Related:
 ## Commands
 
 ```bash
-grawke skills list
-grawke skills list --eligible
-grawke skills info <name>
-grawke skills check
+moltx skills list
+moltx skills list --eligible
+moltx skills info <name>
+moltx skills check
 ```
 

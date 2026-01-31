@@ -1,4 +1,4 @@
-import { resolveChannelMediaMaxBytes, type GrawkeConfig, type PluginRuntime } from "grawke/plugin-sdk";
+import { resolveChannelMediaMaxBytes, type MoltXConfig, type PluginRuntime } from "moltx/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type {
   MSTeamsConversationStore,
@@ -84,7 +84,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;

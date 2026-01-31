@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/llm-task",
+  "name": "@moltx/llm-task",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke JSON-only LLM task plugin",
-  "grawke": {
+  "description": "MoltX JSON-only LLM task plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

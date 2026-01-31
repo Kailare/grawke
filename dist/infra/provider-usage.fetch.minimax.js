@@ -260,7 +260,7 @@ export async function fetchMinimaxUsage(apiKey, timeoutMs, fetchFn) {
         headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
-            "MM-API-Source": "Grawke",
+            "MM-API-Source": "MoltX",
         },
     }, timeoutMs, fetchFn);
     if (!res.ok) {

@@ -32,15 +32,15 @@ export function registerStatusHealthSessionsCommands(program) {
         .option("--verbose", "Verbose logging", false)
         .option("--debug", "Alias for --verbose", false)
         .addHelpText("after", () => `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-        ["grawke status", "Show channel health + session summary."],
-        ["grawke status --all", "Full diagnosis (read-only)."],
-        ["grawke status --json", "Machine-readable output."],
-        ["grawke status --usage", "Show model provider usage/quota snapshots."],
+        ["moltx status", "Show channel health + session summary."],
+        ["moltx status --all", "Full diagnosis (read-only)."],
+        ["moltx status --json", "Machine-readable output."],
+        ["moltx status --usage", "Show model provider usage/quota snapshots."],
         [
-            "grawke status --deep",
+            "moltx status --deep",
             "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
         ],
-        ["grawke status --deep --timeout 5000", "Tighten probe timeout."],
+        ["moltx status --deep --timeout 5000", "Tighten probe timeout."],
     ])}`)
         .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/status", "docs.clawd.bot/cli/status")}\n`)
         .action(async (opts) => {
@@ -92,10 +92,10 @@ export function registerStatusHealthSessionsCommands(program) {
         .option("--store <path>", "Path to session store (default: resolved from config)")
         .option("--active <minutes>", "Only show sessions updated within the past N minutes")
         .addHelpText("after", () => `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-        ["grawke sessions", "List all sessions."],
-        ["grawke sessions --active 120", "Only last 2 hours."],
-        ["grawke sessions --json", "Machine-readable output."],
-        ["grawke sessions --store ./tmp/sessions.json", "Use a specific session store."],
+        ["moltx sessions", "List all sessions."],
+        ["moltx sessions --active 120", "Only last 2 hours."],
+        ["moltx sessions --json", "Machine-readable output."],
+        ["moltx sessions --store ./tmp/sessions.json", "Use a specific session store."],
     ])}\n\n${theme.muted("Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to see % of your model window.")}`)
         .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/sessions", "docs.clawd.bot/cli/sessions")}\n`)
         .action(async (opts) => {

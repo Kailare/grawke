@@ -9,8 +9,8 @@ read_when:
 Start with:
 
 ```bash
-grawke doctor
-grawke channels status --probe
+moltx doctor
+moltx channels status --probe
 ```
 
 `channels status --probe` prints warnings when it can detect common channel misconfigurations, and includes small live checks (credentials, some permissions/membership).

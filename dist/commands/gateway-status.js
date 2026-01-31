@@ -215,8 +215,8 @@ export async function gatewayStatusCommand(opts, runtime) {
     runtime.log("");
     runtime.log(colorize(rich, theme.heading, "Discovery (this machine)"));
     runtime.log(discovery.length > 0
-        ? `Found ${discovery.length} gateway(s) via Bonjour (local. + grawke.internal.)`
-        : "Found 0 gateways via Bonjour (local. + grawke.internal.)");
+        ? `Found ${discovery.length} gateway(s) via Bonjour (local. + moltx.internal.)`
+        : "Found 0 gateways via Bonjour (local. + moltx.internal.)");
     if (discovery.length === 0) {
         runtime.log(colorize(rich, theme.muted, "Tip: if the gateway is remote, mDNS won’t cross networks; use Wide-Area Bonjour (split DNS) or SSH tunnels."));
     }

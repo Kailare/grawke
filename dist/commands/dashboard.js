@@ -9,7 +9,7 @@ export async function dashboardCommand(runtime = defaultRuntime, options = {}) {
     const bind = cfg.gateway?.bind ?? "loopback";
     const basePath = cfg.gateway?.controlUi?.basePath;
     const customBindHost = cfg.gateway?.customBindHost;
-    const token = cfg.gateway?.auth?.token ?? process.env.GRAWKE_GATEWAY_TOKEN ?? "";
+    const token = cfg.gateway?.auth?.token ?? process.env.MOLTX_GATEWAY_TOKEN ?? "";
     const links = resolveControlUiLinks({
         port,
         bind,
@@ -39,7 +39,7 @@ export async function dashboardCommand(runtime = defaultRuntime, options = {}) {
         hint = "Browser launch disabled (--no-open). Use the URL above.";
     }
     if (opened) {
-        runtime.log("Opened in your browser. Keep that tab to control Grawke.");
+        runtime.log("Opened in your browser. Keep that tab to control MoltX.");
     }
     else if (hint) {
         runtime.log(hint);

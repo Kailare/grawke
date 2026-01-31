@@ -1,22 +1,22 @@
-import type { GrawkeConfig } from "grawke/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltx/plugin-sdk";
 
 import type { ResolvedZaloAccount, ZaloAccountConfig, ZaloConfig } from "./types.js";
 import { resolveZaloToken } from "./token.js";
 
-function listConfiguredAccountIds(cfg: GrawkeConfig): string[] {
+function listConfiguredAccountIds(cfg: MoltXConfig): string[] {
   const accounts = (cfg.channels?.zalo as ZaloConfig | undefined)?.accounts;
   if (!accounts || typeof accounts !== "object") return [];
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listZaloAccountIds(cfg: GrawkeConfig): string[] {
+export function listZaloAccountIds(cfg: MoltXConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) return [DEFAULT_ACCOUNT_ID];
   return ids.sort((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultZaloAccountId(cfg: GrawkeConfig): string {
+export function resolveDefaultZaloAccountId(cfg: MoltXConfig): string {
   const zaloConfig = cfg.channels?.zalo as ZaloConfig | undefined;
   if (zaloConfig?.defaultAccount?.trim()) return zaloConfig.defaultAccount.trim();
   const ids = listZaloAccountIds(cfg);
@@ -25,7 +25,7 @@ export function resolveDefaultZaloAccountId(cfg: GrawkeConfig): string {
 }
 
 function resolveAccountConfig(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   accountId: string,
 ): ZaloAccountConfig | undefined {
   const accounts = (cfg.channels?.zalo as ZaloConfig | undefined)?.accounts;
@@ -33,7 +33,7 @@ function resolveAccountConfig(
   return accounts[accountId] as ZaloAccountConfig | undefined;
 }
 
-function mergeZaloAccountConfig(cfg: GrawkeConfig, accountId: string): ZaloAccountConfig {
+function mergeZaloAccountConfig(cfg: MoltXConfig, accountId: string): ZaloAccountConfig {
   const raw = (cfg.channels?.zalo ?? {}) as ZaloConfig;
   const { accounts: _ignored, defaultAccount: _ignored2, ...base } = raw;
   const account = resolveAccountConfig(cfg, accountId) ?? {};
@@ -41,7 +41,7 @@ function mergeZaloAccountConfig(cfg: GrawkeConfig, accountId: string): ZaloAccou
 }
 
 export function resolveZaloAccount(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   accountId?: string | null;
 }): ResolvedZaloAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -64,7 +64,7 @@ export function resolveZaloAccount(params: {
   };
 }
 
-export function listEnabledZaloAccounts(cfg: GrawkeConfig): ResolvedZaloAccount[] {
+export function listEnabledZaloAccounts(cfg: MoltXConfig): ResolvedZaloAccount[] {
   return listZaloAccountIds(cfg)
     .map((accountId) => resolveZaloAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

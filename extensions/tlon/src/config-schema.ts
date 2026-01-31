@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { buildChannelConfigSchema } from "grawke/plugin-sdk";
+import { buildChannelConfigSchema } from "moltx/plugin-sdk";
 
 const ShipSchema = z.string().min(1);
 const ChannelNestSchema = z.string().min(1);

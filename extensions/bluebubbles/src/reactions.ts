@@ -1,5 +1,5 @@
 import { resolveBlueBubblesAccount } from "./accounts.js";
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 import { blueBubblesFetchWithTimeout, buildBlueBubblesApiUrl } from "./types.js";
 
 export type BlueBubblesReactionOpts = {
@@ -7,7 +7,7 @@ export type BlueBubblesReactionOpts = {
   password?: string;
   accountId?: string;
   timeoutMs?: number;
-  cfg?: GrawkeConfig;
+  cfg?: MoltXConfig;
 };
 
 const REACTION_TYPES = new Set([

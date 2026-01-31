@@ -1,7 +1,7 @@
 import { resolvePluginTools } from "../plugins/tools.js";
 import { resolveSessionAgentId } from "./agent-scope.js";
 import { createAgentsListTool } from "./tools/agents-list-tool.js";
-// GRAWKE: browser, canvas, nodes disabled — Grok dumps raw DOM/JSON/errors to chat
+// MOLTX: browser, canvas, nodes disabled — Grok dumps raw DOM/JSON/errors to chat
 // import { createBrowserTool } from "./tools/browser-tool.js";
 // import { createCanvasTool } from "./tools/canvas-tool.js";
 import { createCronTool } from "./tools/cron-tool.js";
@@ -17,7 +17,7 @@ import { createSessionsSpawnTool } from "./tools/sessions-spawn-tool.js";
 import { createWebFetchTool, createWebSearchTool } from "./tools/web-tools.js";
 import { createTtsTool } from "./tools/tts-tool.js";
 import { createMoltbookTool, createTweetTool } from "./tools/social-tools.js";
-export function createGrawkeTools(options) {
+export function createMoltXTools(options) {
     const imageTool = options?.agentDir?.trim()
         ? createImageTool({
             config: options?.config,
@@ -35,7 +35,7 @@ export function createGrawkeTools(options) {
         sandboxed: options?.sandboxed,
     });
     const tools = [
-        // GRAWKE: browser, canvas, nodes removed — Grok can't handle complex tool output cleanly
+        // MOLTX: browser, canvas, nodes removed — Grok can't handle complex tool output cleanly
         createCronTool({
             agentSessionKey: options?.agentSessionKey,
         }),

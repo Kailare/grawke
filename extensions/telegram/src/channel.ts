@@ -23,9 +23,9 @@ import {
   TelegramConfigSchema,
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
-  type GrawkeConfig,
+  type MoltXConfig,
   type ResolvedTelegramAccount,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { getTelegramRuntime } from "./runtime.js";
 
@@ -408,7 +408,7 @@ export const telegramPlugin: ChannelPlugin<ResolvedTelegramAccount> = {
     },
     logoutAccount: async ({ accountId, cfg }) => {
       const envToken = process.env.TELEGRAM_BOT_TOKEN?.trim() ?? "";
-      const nextCfg = { ...cfg } as GrawkeConfig;
+      const nextCfg = { ...cfg } as MoltXConfig;
       const nextTelegram = cfg.channels?.telegram ? { ...cfg.channels.telegram } : undefined;
       let cleared = false;
       let changed = false;

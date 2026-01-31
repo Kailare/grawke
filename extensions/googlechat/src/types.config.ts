@@ -1,3 +1,3 @@
-import type { GoogleChatAccountConfig, GoogleChatConfig } from "grawke/plugin-sdk";
+import type { GoogleChatAccountConfig, GoogleChatConfig } from "moltx/plugin-sdk";
 
 export type { GoogleChatAccountConfig, GoogleChatConfig };

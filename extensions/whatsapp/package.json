@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/whatsapp",
+  "name": "@moltx/whatsapp",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke WhatsApp channel plugin",
-  "grawke": {
+  "description": "MoltX WhatsApp channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

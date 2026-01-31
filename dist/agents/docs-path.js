@@ -1,14 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
-import { resolveGrawkePackageRoot } from "../infra/grawke-root.js";
-export async function resolveGrawkeDocsPath(params) {
+import { resolveMoltXPackageRoot } from "../infra/moltx-root.js";
+export async function resolveMoltXDocsPath(params) {
     const workspaceDir = params.workspaceDir?.trim();
     if (workspaceDir) {
         const workspaceDocs = path.join(workspaceDir, "docs");
         if (fs.existsSync(workspaceDocs))
             return workspaceDocs;
     }
-    const packageRoot = await resolveGrawkePackageRoot({
+    const packageRoot = await resolveMoltXPackageRoot({
         cwd: params.cwd,
         argv1: params.argv1,
         moduleUrl: params.moduleUrl,

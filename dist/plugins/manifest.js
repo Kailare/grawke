@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-export const PLUGIN_MANIFEST_FILENAME = "grawke.plugin.json";
+export const PLUGIN_MANIFEST_FILENAME = "moltx.plugin.json";
 function normalizeStringList(value) {
     if (!Array.isArray(value))
         return [];

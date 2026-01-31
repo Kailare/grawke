@@ -22,7 +22,7 @@ function readPackageManifest(dir) {
     }
 }
 function resolvePackageExtensions(manifest) {
-    const raw = manifest.grawke?.extensions;
+    const raw = manifest.moltx?.extensions;
     if (!Array.isArray(raw))
         return [];
     return raw.map((entry) => (typeof entry === "string" ? entry.trim() : "")).filter(Boolean);
@@ -33,7 +33,7 @@ function deriveIdHint(params) {
     if (!rawPackageName)
         return base;
     // Prefer the unscoped name so config keys stay stable even when the npm
-    // package is scoped (example: @grawke/voice-call -> voice-call).
+    // package is scoped (example: @moltx/voice-call -> voice-call).
     const unscoped = rawPackageName.includes("/")
         ? (rawPackageName.split("/").pop() ?? rawPackageName)
         : rawPackageName;
@@ -57,7 +57,7 @@ function addCandidate(params) {
         packageVersion: manifest?.version?.trim() || undefined,
         packageDescription: manifest?.description?.trim() || undefined,
         packageDir: params.packageDir,
-        packageGrawke: manifest?.grawke,
+        packageMoltX: manifest?.moltx,
     });
 }
 function discoverInDirectory(params) {
@@ -218,7 +218,7 @@ function discoverFromPath(params) {
         return;
     }
 }
-export function discoverGrawkePlugins(params) {
+export function discoverMoltXPlugins(params) {
     const candidates = [];
     const diagnostics = [];
     const seen = new Set();
@@ -241,7 +241,7 @@ export function discoverGrawkePlugins(params) {
     }
     if (workspaceDir) {
         const workspaceRoot = resolveUserPath(workspaceDir);
-        const workspaceExt = path.join(workspaceRoot, ".grawke", "extensions");
+        const workspaceExt = path.join(workspaceRoot, ".moltx", "extensions");
         discoverInDirectory({
             dir: workspaceExt,
             origin: "workspace",

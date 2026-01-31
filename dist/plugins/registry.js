@@ -64,11 +64,11 @@ export function createPluginRegistry(registryParams) {
                     ...entry.hook,
                     name,
                     description,
-                    source: "grawke-plugin",
+                    source: "moltx-plugin",
                     pluginId: record.id,
                 },
-                grawke: {
-                    ...entry.grawke,
+                moltx: {
+                    ...entry.moltx,
                     events: normalizedEvents,
                 },
             }
@@ -76,14 +76,14 @@ export function createPluginRegistry(registryParams) {
                 hook: {
                     name,
                     description,
-                    source: "grawke-plugin",
+                    source: "moltx-plugin",
                     pluginId: record.id,
                     filePath: record.source,
                     baseDir: path.dirname(record.source),
                     handlerPath: record.source,
                 },
                 frontmatter: {},
-                grawke: { events: normalizedEvents },
+                moltx: { events: normalizedEvents },
                 invocation: { enabled: true },
             };
         record.hookNames.push(name);

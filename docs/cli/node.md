@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke node` (headless node host)"
+summary: "CLI reference for `moltx node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 ---
 
-# `grawke node`
+# `moltx node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -44,7 +44,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-grawke node run --host <gateway-host> --port 18789
+moltx node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -60,7 +60,7 @@ Options:
 Install a headless node host as a user service.
 
 ```bash
-grawke node install --host <gateway-host> --port 18789
+moltx node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -76,13 +76,13 @@ Options:
 Manage the service:
 
 ```bash
-grawke node status
-grawke node stop
-grawke node restart
-grawke node uninstall
+moltx node status
+moltx node stop
+moltx node restart
+moltx node uninstall
 ```
 
-Use `grawke node run` for a foreground node host (no service).
+Use `moltx node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -92,17 +92,17 @@ The first connection creates a pending node pair request on the Gateway.
 Approve it via:
 
 ```bash
-grawke nodes pending
-grawke nodes approve <requestId>
+moltx nodes pending
+moltx nodes approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
-`~/.grawke/node.json`.
+`~/.moltx/node.json`.
 
 ## Exec approvals
 
 `system.run` is gated by local exec approvals:
 
-- `~/.grawke/exec-approvals.json`
+- `~/.moltx/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `grawke approvals --node <id|name|ip>` (edit from the Gateway)
+- `moltx approvals --node <id|name|ip>` (edit from the Gateway)

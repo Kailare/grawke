@@ -13,16 +13,16 @@ import { normalizeMessageChannel } from "../../utils/message-channel.js";
 import { isSubagentSessionKey } from "../../routing/session-key.js";
 import { isReasoningTagProvider } from "../../utils/provider-utils.js";
 import { resolveUserPath } from "../../utils.js";
-import { resolveGrawkeAgentDir } from "../agent-paths.js";
+import { resolveMoltXAgentDir } from "../agent-paths.js";
 import { resolveSessionAgentIds } from "../agent-scope.js";
 import { makeBootstrapWarn, resolveBootstrapContextForRun } from "../bootstrap-files.js";
-import { resolveGrawkeDocsPath } from "../docs-path.js";
+import { resolveMoltXDocsPath } from "../docs-path.js";
 import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../defaults.js";
 import { getApiKeyForModel, resolveModelAuthMode } from "../model-auth.js";
-import { ensureGrawkeModelsJson } from "../models-config.js";
+import { ensureMoltXModelsJson } from "../models-config.js";
 import { ensureSessionHeader, validateAnthropicTurns, validateGeminiTurns, } from "../pi-embedded-helpers.js";
 import { ensurePiCompactionReserveTokens, resolveCompactionReserveTokensFloor, } from "../pi-settings.js";
-import { createGrawkeCodingTools } from "../pi-tools.js";
+import { createMoltXCodingTools } from "../pi-tools.js";
 import { resolveSandboxContext } from "../sandbox.js";
 import { guardSessionManager } from "../session-tool-result-guard-wrapper.js";
 import { resolveTranscriptPolicy } from "../transcript-policy.js";
@@ -50,8 +50,8 @@ export async function compactEmbeddedPiSessionDirect(params) {
     const prevCwd = process.cwd();
     const provider = (params.provider ?? DEFAULT_PROVIDER).trim() || DEFAULT_PROVIDER;
     const modelId = (params.model ?? DEFAULT_MODEL).trim() || DEFAULT_MODEL;
-    const agentDir = params.agentDir ?? resolveGrawkeAgentDir();
-    await ensureGrawkeModelsJson(params.config, agentDir);
+    const agentDir = params.agentDir ?? resolveMoltXAgentDir();
+    await ensureMoltXModelsJson(params.config, agentDir);
     const { model, error, authStorage, modelRegistry } = resolveModel(provider, modelId, agentDir, params.config);
     if (!model) {
         return {
@@ -139,7 +139,7 @@ export async function compactEmbeddedPiSessionDirect(params) {
             warn: makeBootstrapWarn({ sessionLabel, warn: (message) => log.warn(message) }),
         });
         const runAbortController = new AbortController();
-        const toolsRaw = createGrawkeCodingTools({
+        const toolsRaw = createMoltXCodingTools({
             exec: {
                 ...resolveExecToolDefaults(params.config),
                 elevated: params.bashElevated,
@@ -240,7 +240,7 @@ export async function compactEmbeddedPiSessionDirect(params) {
         });
         const isDefaultAgent = sessionAgentId === defaultAgentId;
         const promptMode = isSubagentSessionKey(params.sessionKey) ? "minimal" : "full";
-        const docsPath = await resolveGrawkeDocsPath({
+        const docsPath = await resolveMoltXDocsPath({
             workspaceDir: effectiveWorkspace,
             argv1: process.argv[1],
             cwd: process.cwd(),

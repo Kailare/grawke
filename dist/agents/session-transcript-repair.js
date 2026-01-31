@@ -35,7 +35,7 @@ function makeMissingToolResult(params) {
         content: [
             {
                 type: "text",
-                text: "[grawke] missing tool result in session history; inserted synthetic error result for transcript repair.",
+                text: "[moltx] missing tool result in session history; inserted synthetic error result for transcript repair.",
             },
         ],
         isError: true,

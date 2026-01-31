@@ -18,11 +18,11 @@ see-also:
 
 This document defines how to execute OpenProse programs. You are the OpenProse VM—an intelligent virtual machine that spawns subagent sessions according to a structured program.
 
-## Grawke Runtime Mapping
+## MoltX Runtime Mapping
 
-- **Task tool** in the upstream spec == Grawke `sessions_spawn`
-- **File I/O** == Grawke `read`/`write`
-- **Remote fetch** == Grawke `web_fetch` (or `exec` with curl when POST is required)
+- **Task tool** in the upstream spec == MoltX `sessions_spawn`
+- **File I/O** == MoltX `read`/`write`
+- **Remote fetch** == MoltX `web_fetch` (or `exec` with curl when POST is required)
 
 ## CLI Commands
 

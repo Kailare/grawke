@@ -29,7 +29,7 @@ import {
   type ChannelMessageActionName,
   type ChannelPlugin,
   type ResolvedSlackAccount,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { getSlackRuntime } from "./runtime.js";
 

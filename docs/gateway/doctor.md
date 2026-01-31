@@ -6,44 +6,44 @@ read_when:
 ---
 # Doctor
 
-`grawke doctor` is the repair + migration tool for Grawke. It fixes stale
+`moltx doctor` is the repair + migration tool for MoltX. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
 
 ```bash
-grawke doctor
+moltx doctor
 ```
 
 ### Headless / automation
 
 ```bash
-grawke doctor --yes
+moltx doctor --yes
 ```
 
 Accept defaults without prompting (including restart/service/sandbox repair steps when applicable).
 
 ```bash
-grawke doctor --repair
+moltx doctor --repair
 ```
 
 Apply recommended repairs without prompting (repairs + restarts where safe).
 
 ```bash
-grawke doctor --repair --force
+moltx doctor --repair --force
 ```
 
 Apply aggressive repairs too (overwrites custom supervisor configs).
 
 ```bash
-grawke doctor --non-interactive
+moltx doctor --non-interactive
 ```
 
 Run without prompts and only apply safe migrations (config normalization + on-disk state moves). Skips restart/service/sandbox actions that require human confirmation.
 Legacy state migrations run automatically when detected.
 
 ```bash
-grawke doctor --deep
+moltx doctor --deep
 ```
 
 Scan system services for extra gateway installs (launchd/systemd/schtasks).
@@ -51,7 +51,7 @@ Scan system services for extra gateway installs (launchd/systemd/schtasks).
 If you want to review changes before writing, open the config file first:
 
 ```bash
-cat ~/.grawke/grawke.json
+cat ~/.moltx/moltx.json
 ```
 
 ## What it does (summary)
@@ -65,7 +65,7 @@ cat ~/.grawke/grawke.json
 - State integrity and permissions checks (sessions, transcripts, state dir).
 - Config file permission checks (chmod 600) when running locally.
 - Model auth health: checks OAuth expiry, can refresh expiring tokens, and reports auth-profile cooldown/disabled states.
-- Extra workspace dir detection (`~/grawke`).
+- Extra workspace dir detection (`~/moltx`).
 - Sandbox image repair when sandboxing is enabled.
 - Legacy service migration and extra gateway detection.
 - Gateway runtime checks (service installed but not running; cached launchd label).
@@ -92,12 +92,12 @@ schema.
 
 ### 2) Legacy config key migrations
 When the config contains deprecated keys, other commands refuse to run and ask
-you to run `grawke doctor`.
+you to run `moltx doctor`.
 
 Doctor will:
 - Explain which legacy keys were found.
 - Show the migration it applied.
-- Rewrite `~/.grawke/grawke.json` with the updated schema.
+- Rewrite `~/.moltx/moltx.json` with the updated schema.
 
 The Gateway also auto-runs doctor migrations on startup when it detects a
 legacy config format, so stale configs are repaired without manual intervention.
@@ -127,18 +127,18 @@ remove the override and restore per-model API routing + costs.
 ### 3) Legacy state migrations (disk layout)
 Doctor can migrate older on-disk layouts into the current structure:
 - Sessions store + transcripts:
-  - from `~/.grawke/sessions/` to `~/.grawke/agents/<agentId>/sessions/`
+  - from `~/.moltx/sessions/` to `~/.moltx/agents/<agentId>/sessions/`
 - Agent dir:
-  - from `~/.grawke/agent/` to `~/.grawke/agents/<agentId>/agent/`
+  - from `~/.moltx/agent/` to `~/.moltx/agents/<agentId>/agent/`
 - WhatsApp auth state (Baileys):
-  - from legacy `~/.grawke/credentials/*.json` (except `oauth.json`)
-  - to `~/.grawke/credentials/whatsapp/<accountId>/...` (default account id: `default`)
+  - from legacy `~/.moltx/credentials/*.json` (except `oauth.json`)
+  - to `~/.moltx/credentials/whatsapp/<accountId>/...` (default account id: `default`)
 
 These migrations are best-effort and idempotent; doctor will emit warnings when
 it leaves any legacy folders behind as backups. The Gateway/CLI also auto-migrates
 the legacy sessions + agent dir on startup so history/auth/models land in the
 per-agent path without a manual doctor run. WhatsApp auth is intentionally only
-migrated via `grawke doctor`.
+migrated via `moltx doctor`.
 
 ### 4) State integrity checks (session persistence, routing, and safety)
 The state directory is the operational brainstem. If it vanishes, you lose
@@ -155,12 +155,12 @@ Doctor checks:
   transcript files.
 - **Main session “1-line JSONL”**: flags when the main transcript has only one
   line (history is not accumulating).
-- **Multiple state dirs**: warns when multiple `~/.grawke` folders exist across
-  home directories or when `GRAWKE_STATE_DIR` points elsewhere (history can
+- **Multiple state dirs**: warns when multiple `~/.moltx` folders exist across
+  home directories or when `MOLTX_STATE_DIR` points elsewhere (history can
   split between installs).
 - **Remote mode reminder**: if `gateway.mode=remote`, doctor reminds you to run
   it on the remote host (the state lives there).
-- **Config file permissions**: warns if `~/.grawke/grawke.json` is
+- **Config file permissions**: warns if `~/.moltx/moltx.json` is
   group/world readable and offers to tighten to `600`.
 
 ### 5) Model auth health (OAuth expiry)
@@ -184,9 +184,9 @@ switch to legacy names if the current image is missing.
 
 ### 8) Gateway service migrations and cleanup hints
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the Grawke service using the current gateway
+offers to remove them and install the MoltX service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named Grawke gateway services are considered first-class and are not
+Profile-named MoltX gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings
@@ -203,7 +203,7 @@ workspace.
 
 ### 12) Gateway auth checks (local token)
 Doctor warns when `gateway.auth` is missing on a local gateway and offers to
-generate a token. Use `grawke doctor --generate-gateway-token` to force token
+generate a token. Use `moltx doctor --generate-gateway-token` to force token
 creation in automation.
 
 ### 13) Gateway health check + restart
@@ -221,11 +221,11 @@ restart delay). When it finds a mismatch, it recommends an update and can
 rewrite the service file/task to the current defaults.
 
 Notes:
-- `grawke doctor` prompts before rewriting supervisor config.
-- `grawke doctor --yes` accepts the default repair prompts.
-- `grawke doctor --repair` applies recommended fixes without prompts.
-- `grawke doctor --repair --force` overwrites custom supervisor configs.
-- You can always force a full rewrite via `grawke gateway install --force`.
+- `moltx doctor` prompts before rewriting supervisor config.
+- `moltx doctor --yes` accepts the default repair prompts.
+- `moltx doctor --repair` applies recommended fixes without prompts.
+- `moltx doctor --repair --force` overwrites custom supervisor configs.
+- You can always force a full rewrite via `moltx gateway install --force`.
 
 ### 16) Gateway runtime + port diagnostics
 Doctor inspects the service runtime (PID, last exit status) and warns when the

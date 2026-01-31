@@ -60,25 +60,25 @@ export function extractGatewayMiskeys(parsed) {
     return { hasGatewayToken, hasRemoteToken };
 }
 export function renderGatewayServiceStopHints(env = process.env) {
-    const profile = env.GRAWKE_PROFILE;
+    const profile = env.MOLTX_PROFILE;
     switch (process.platform) {
         case "darwin":
             return [
-                `Tip: ${formatCliCommand("grawke gateway stop")}`,
+                `Tip: ${formatCliCommand("moltx gateway stop")}`,
                 `Or: launchctl bootout gui/$UID/${resolveGatewayLaunchAgentLabel(profile)}`,
             ];
         case "linux":
             return [
-                `Tip: ${formatCliCommand("grawke gateway stop")}`,
+                `Tip: ${formatCliCommand("moltx gateway stop")}`,
                 `Or: systemctl --user stop ${resolveGatewaySystemdServiceName(profile)}.service`,
             ];
         case "win32":
             return [
-                `Tip: ${formatCliCommand("grawke gateway stop")}`,
+                `Tip: ${formatCliCommand("moltx gateway stop")}`,
                 `Or: schtasks /End /TN "${resolveGatewayWindowsTaskName(profile)}"`,
             ];
         default:
-            return [`Tip: ${formatCliCommand("grawke gateway stop")}`];
+            return [`Tip: ${formatCliCommand("moltx gateway stop")}`];
     }
 }
 export async function maybeExplainGatewayServiceStop() {

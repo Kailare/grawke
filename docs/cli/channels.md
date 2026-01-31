@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke channels` (accounts, status, login/logout, logs)"
+summary: "CLI reference for `moltx channels` (accounts, status, login/logout, logs)"
 read_when:
   - You want to add/remove channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost (plugin)/Signal/iMessage)
   - You want to check channel status or tail channel logs
 ---
 
-# `grawke channels`
+# `moltx channels`
 
 Manage chat channel accounts and their runtime status on the Gateway.
 
@@ -16,43 +16,43 @@ Related docs:
 ## Common commands
 
 ```bash
-grawke channels list
-grawke channels status
-grawke channels capabilities
-grawke channels capabilities --channel discord --target channel:123
-grawke channels resolve --channel slack "#general" "@jane"
-grawke channels logs --channel all
+moltx channels list
+moltx channels status
+moltx channels capabilities
+moltx channels capabilities --channel discord --target channel:123
+moltx channels resolve --channel slack "#general" "@jane"
+moltx channels logs --channel all
 ```
 
 ## Add / remove accounts
 
 ```bash
-grawke channels add --channel telegram --token <bot-token>
-grawke channels remove --channel telegram --delete
+moltx channels add --channel telegram --token <bot-token>
+moltx channels remove --channel telegram --delete
 ```
 
-Tip: `grawke channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
+Tip: `moltx channels add --help` shows per-channel flags (token, app token, signal-cli paths, etc).
 
 ## Login / logout (interactive)
 
 ```bash
-grawke channels login --channel whatsapp
-grawke channels logout --channel whatsapp
+moltx channels login --channel whatsapp
+moltx channels logout --channel whatsapp
 ```
 
 ## Troubleshooting
 
-- Run `grawke status --deep` for a broad probe.
-- Use `grawke doctor` for guided fixes.
-- `grawke channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- Run `moltx status --deep` for a broad probe.
+- Use `moltx doctor` for guided fixes.
+- `moltx channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
 
 ## Capabilities probe
 
 Fetch provider capability hints (intents/scopes where available) plus static feature support:
 
 ```bash
-grawke channels capabilities
-grawke channels capabilities --channel discord --target channel:123
+moltx channels capabilities
+moltx channels capabilities --channel discord --target channel:123
 ```
 
 Notes:
@@ -65,9 +65,9 @@ Notes:
 Resolve channel/user names to IDs using the provider directory:
 
 ```bash
-grawke channels resolve --channel slack "#general" "@jane"
-grawke channels resolve --channel discord "My Server/#support" "@someone"
-grawke channels resolve --channel matrix "Project Room"
+moltx channels resolve --channel slack "#general" "@jane"
+moltx channels resolve --channel discord "My Server/#support" "@someone"
+moltx channels resolve --channel matrix "Project Room"
 ```
 
 Notes:

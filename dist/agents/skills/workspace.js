@@ -5,7 +5,7 @@ import { createSubsystemLogger } from "../../logging/subsystem.js";
 import { CONFIG_DIR, resolveUserPath } from "../../utils.js";
 import { resolveBundledSkillsDir } from "./bundled-dir.js";
 import { shouldIncludeSkill } from "./config.js";
-import { parseFrontmatter, resolveGrawkeMetadata, resolveSkillInvocationPolicy, } from "./frontmatter.js";
+import { parseFrontmatter, resolveMoltXMetadata, resolveSkillInvocationPolicy, } from "./frontmatter.js";
 import { resolvePluginSkillDirs } from "./plugin-skills.js";
 import { serializeByKey } from "./serialize.js";
 const fsp = fs.promises;
@@ -89,23 +89,23 @@ function loadSkillEntries(workspaceDir, opts) {
     const bundledSkills = bundledSkillsDir
         ? loadSkills({
             dir: bundledSkillsDir,
-            source: "grawke-bundled",
+            source: "moltx-bundled",
         })
         : [];
     const extraSkills = mergedExtraDirs.flatMap((dir) => {
         const resolved = resolveUserPath(dir);
         return loadSkills({
             dir: resolved,
-            source: "grawke-extra",
+            source: "moltx-extra",
         });
     });
     const managedSkills = loadSkills({
         dir: managedSkillsDir,
-        source: "grawke-managed",
+        source: "moltx-managed",
     });
     const workspaceSkills = loadSkills({
         dir: workspaceSkillsDir,
-        source: "grawke-workspace",
+        source: "moltx-workspace",
     });
     const merged = new Map();
     // Precedence: extra < bundled < managed < workspace
@@ -129,7 +129,7 @@ function loadSkillEntries(workspaceDir, opts) {
         return {
             skill,
             frontmatter,
-            grawke: resolveGrawkeMetadata(frontmatter),
+            moltx: resolveMoltXMetadata(frontmatter),
             invocation: resolveSkillInvocationPolicy(frontmatter),
         };
     });
@@ -146,7 +146,7 @@ export function buildWorkspaceSkillSnapshot(workspaceDir, opts) {
         prompt,
         skills: eligible.map((entry) => ({
             name: entry.skill.name,
-            primaryEnv: entry.grawke?.primaryEnv,
+            primaryEnv: entry.moltx?.primaryEnv,
         })),
         resolvedSkills,
         version: opts?.snapshotVersion,

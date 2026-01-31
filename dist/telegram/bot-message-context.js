@@ -114,14 +114,14 @@ export const buildTelegramMessageContext = async ({ primaryCtx, allMedia, storeA
                                 matchSource: allowMatch.matchSource ?? "none",
                             }, "telegram pairing request");
                             await bot.api.sendMessage(chatId, [
-                                "Grawke: access not configured.",
+                                "MoltX: access not configured.",
                                 "",
                                 `Your Telegram user id: ${telegramUserId}`,
                                 "",
                                 `Pairing code: ${code}`,
                                 "",
                                 "Ask the bot owner to approve with:",
-                                formatCliCommand("grawke pairing approve telegram <code>"),
+                                formatCliCommand("moltx pairing approve telegram <code>"),
                             ].join("\n"));
                         }
                     }

@@ -97,7 +97,7 @@ const formatQueueDetails = (queue) => {
     return detailParts.length ? ` (${detailParts.join(" · ")})` : "";
 };
 const readUsageFromSessionLog = (sessionId, sessionEntry) => {
-    // Transcripts are stored at the session file path (fallback: ~/.grawke/sessions/<SessionId>.jsonl)
+    // Transcripts are stored at the session file path (fallback: ~/.moltx/sessions/<SessionId>.jsonl)
     if (!sessionId)
         return undefined;
     const logPath = resolveSessionFilePath(sessionId, sessionEntry);
@@ -317,7 +317,7 @@ export function buildStatusMessage(args) {
     const authLabel = authLabelValue ? ` · 🔑 ${authLabelValue}` : "";
     const modelLine = `🧠 Model: ${modelLabel}${authLabel}`;
     const commit = resolveCommitHash();
-    const versionLine = `🦞 Grawke ${VERSION}${commit ? ` (${commit})` : ""}`;
+    const versionLine = `🦞 MoltX ${VERSION}${commit ? ` (${commit})` : ""}`;
     const usagePair = formatUsagePair(inputTokens, outputTokens);
     const costLine = costLabel ? `💵 Cost: ${costLabel}` : null;
     const usageCostLine = usagePair && costLine ? `${usagePair} · ${costLine}` : (usagePair ?? costLine);

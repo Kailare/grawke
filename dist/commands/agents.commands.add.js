@@ -129,7 +129,7 @@ export async function agentsAddCommand(opts, runtime = defaultRuntime, params) {
     }
     const prompter = createClackPrompter();
     try {
-        await prompter.intro("Add Grawke agent");
+        await prompter.intro("Add MoltX agent");
         const name = nameInput ??
             (await prompter.text({
                 message: "Agent name",

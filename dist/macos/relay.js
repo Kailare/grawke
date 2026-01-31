@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import process from "node:process";
-const BUNDLED_VERSION = (typeof __GRAWKE_VERSION__ === "string" && __GRAWKE_VERSION__) ||
-    process.env.GRAWKE_BUNDLED_VERSION ||
+const BUNDLED_VERSION = (typeof __MOLTX_VERSION__ === "string" && __MOLTX_VERSION__) ||
+    process.env.MOLTX_BUNDLED_VERSION ||
     "0.0.0";
 function hasFlag(args, flag) {
     return args.includes(flag);
@@ -37,8 +37,8 @@ async function main() {
     await patchBunLongForProtobuf();
     const { loadDotEnv } = await import("../infra/dotenv.js");
     loadDotEnv({ quiet: true });
-    const { ensureGrawkeCliOnPath } = await import("../infra/path-env.js");
-    ensureGrawkeCliOnPath();
+    const { ensureMoltXCliOnPath } = await import("../infra/path-env.js");
+    ensureMoltXCliOnPath();
     const { enableConsoleCapture } = await import("../logging.js");
     enableConsoleCapture();
     const { assertSupportedRuntime } = await import("../infra/runtime-guard.js");
@@ -49,12 +49,12 @@ async function main() {
     const program = buildProgram();
     installUnhandledRejectionHandler();
     process.on("uncaughtException", (error) => {
-        console.error("[grawke] Uncaught exception:", formatUncaughtError(error));
+        console.error("[moltx] Uncaught exception:", formatUncaughtError(error));
         process.exit(1);
     });
     await program.parseAsync(process.argv);
 }
 void main().catch((err) => {
-    console.error("[grawke] Relay failed:", err instanceof Error ? (err.stack ?? err.message) : err);
+    console.error("[moltx] Relay failed:", err instanceof Error ? (err.stack ?? err.message) : err);
     process.exit(1);
 });

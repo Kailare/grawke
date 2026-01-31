@@ -3,7 +3,7 @@ import { isTruthyEnvValue } from "../infra/env.js";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { note } from "../terminal/note.js";
 import { formatCliCommand } from "../cli/command-format.js";
-async function detectGrawkeGitCheckout(root) {
+async function detectMoltXGitCheckout(root) {
     const res = await runCommandWithTimeout(["git", "-C", root, "rev-parse", "--show-toplevel"], {
         timeoutMs: 5000,
     }).catch(() => null);
@@ -20,7 +20,7 @@ async function detectGrawkeGitCheckout(root) {
     return res.stdout.trim() === root ? "git" : "not-git";
 }
 export async function maybeOfferUpdateBeforeDoctor(params) {
-    const updateInProgress = isTruthyEnvValue(process.env.GRAWKE_UPDATE_IN_PROGRESS);
+    const updateInProgress = isTruthyEnvValue(process.env.MOLTX_UPDATE_IN_PROGRESS);
     const canOfferUpdate = !updateInProgress &&
         params.options.nonInteractive !== true &&
         params.options.yes !== true &&
@@ -28,10 +28,10 @@ export async function maybeOfferUpdateBeforeDoctor(params) {
         Boolean(process.stdin.isTTY);
     if (!canOfferUpdate || !params.root)
         return { updated: false };
-    const git = await detectGrawkeGitCheckout(params.root);
+    const git = await detectMoltXGitCheckout(params.root);
     if (git === "git") {
         const shouldUpdate = await params.confirm({
-            message: "Update Grawke from git before running doctor?",
+            message: "Update MoltX from git before running doctor?",
             initialValue: true,
         });
         if (!shouldUpdate)
@@ -58,7 +58,7 @@ export async function maybeOfferUpdateBeforeDoctor(params) {
     if (git === "not-git") {
         note([
             "This install is not a git checkout.",
-            `Run \`${formatCliCommand("grawke update")}\` to update via your package manager (npm/pnpm), then rerun doctor.`,
+            `Run \`${formatCliCommand("moltx update")}\` to update via your package manager (npm/pnpm), then rerun doctor.`,
         ].join("\n"), "Update");
     }
     return { updated: false };

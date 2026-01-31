@@ -278,7 +278,7 @@ function main() {
 
 try {
   const skip =
-    process.env.GRAWKE_SKIP_POSTINSTALL === "1" ||
+    process.env.MOLTX_SKIP_POSTINSTALL === "1" ||
     process.env.VITEST === "true" ||
     process.env.NODE_ENV === "test";
 

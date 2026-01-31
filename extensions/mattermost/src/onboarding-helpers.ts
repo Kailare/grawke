@@ -1,12 +1,12 @@
-import type { GrawkeConfig, WizardPrompter } from "grawke/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
+import type { MoltXConfig, WizardPrompter } from "moltx/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltx/plugin-sdk";
 
 type PromptAccountIdParams = {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   prompter: WizardPrompter;
   label: string;
   currentId?: string;
-  listAccountIds: (cfg: GrawkeConfig) => string[];
+  listAccountIds: (cfg: MoltXConfig) => string[];
   defaultAccountId: string;
 };
 

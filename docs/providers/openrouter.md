@@ -1,8 +1,8 @@
 ---
-summary: "Use OpenRouter's unified API to access many models in Grawke"
+summary: "Use OpenRouter's unified API to access many models in MoltX"
 read_when:
   - You want a single API key for many LLMs
-  - You want to run models via OpenRouter in Grawke
+  - You want to run models via OpenRouter in MoltX
 ---
 # OpenRouter
 
@@ -12,7 +12,7 @@ endpoint and API key. It is OpenAI-compatible, so most OpenAI SDKs work by switc
 ## CLI setup
 
 ```bash
-grawke onboard --auth-choice apiKey --token-provider openrouter --token "$OPENROUTER_API_KEY"
+moltx onboard --auth-choice apiKey --token-provider openrouter --token "$OPENROUTER_API_KEY"
 ```
 
 ## Config snippet

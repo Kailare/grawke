@@ -6,7 +6,7 @@ read_when:
 ---
 # OpenResponses API (HTTP)
 
-Grawke’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
+MoltX’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
@@ -14,7 +14,7 @@ This endpoint is **disabled by default**. Enable it in config first.
 - Same port as the Gateway (WS + HTTP multiplex): `http://<gateway-host>:<port>/v1/responses`
 
 Under the hood, requests are executed as a normal Gateway agent run (same codepath as
-`grawke agent`), so routing/permissions/config match your Gateway.
+`moltx agent`), so routing/permissions/config match your Gateway.
 
 ## Authentication
 
@@ -23,22 +23,22 @@ Uses the Gateway auth configuration. Send a bearer token:
 - `Authorization: Bearer <token>`
 
 Notes:
-- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `GRAWKE_GATEWAY_TOKEN`).
-- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `GRAWKE_GATEWAY_PASSWORD`).
+- When `gateway.auth.mode="token"`, use `gateway.auth.token` (or `MOLTX_GATEWAY_TOKEN`).
+- When `gateway.auth.mode="password"`, use `gateway.auth.password` (or `MOLTX_GATEWAY_PASSWORD`).
 
 ## Choosing an agent
 
 No custom headers required: encode the agent id in the OpenResponses `model` field:
 
-- `model: "grawke:<agentId>"` (example: `"grawke:main"`, `"grawke:beta"`)
+- `model: "moltx:<agentId>"` (example: `"moltx:main"`, `"moltx:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
-Or target a specific Grawke agent by header:
+Or target a specific MoltX agent by header:
 
-- `x-grawke-agent-id: <agentId>` (default: `main`)
+- `x-moltx-agent-id: <agentId>` (default: `main`)
 
 Advanced:
-- `x-grawke-session-key: <sessionKey>` to fully control session routing.
+- `x-moltx-session-key: <sessionKey>` to fully control session routing.
 
 ## Enabling the endpoint
 
@@ -277,9 +277,9 @@ Non-streaming:
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-grawke-agent-id: main' \
+  -H 'x-moltx-agent-id: main' \
   -d '{
-    "model": "grawke",
+    "model": "moltx",
     "input": "hi"
   }'
 ```
@@ -289,9 +289,9 @@ Streaming:
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-grawke-agent-id: main' \
+  -H 'x-moltx-agent-id: main' \
   -d '{
-    "model": "grawke",
+    "model": "moltx",
     "stream": true,
     "input": "hi"
   }'

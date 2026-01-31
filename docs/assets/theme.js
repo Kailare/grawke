@@ -1,4 +1,4 @@
-const THEME_STORAGE_KEY = "grawke:theme";
+const THEME_STORAGE_KEY = "moltx:theme";
 
 function safeGet(key) {
   try {

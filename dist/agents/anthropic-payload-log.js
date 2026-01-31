@@ -8,8 +8,8 @@ import { createSubsystemLogger } from "../logging/subsystem.js";
 const writers = new Map();
 const log = createSubsystemLogger("agent/anthropic-payload");
 function resolvePayloadLogConfig(env) {
-    const enabled = parseBooleanValue(env.GRAWKE_ANTHROPIC_PAYLOAD_LOG) ?? false;
-    const fileOverride = env.GRAWKE_ANTHROPIC_PAYLOAD_LOG_FILE?.trim();
+    const enabled = parseBooleanValue(env.MOLTX_ANTHROPIC_PAYLOAD_LOG) ?? false;
+    const fileOverride = env.MOLTX_ANTHROPIC_PAYLOAD_LOG_FILE?.trim();
     const filePath = fileOverride
         ? resolveUserPath(fileOverride)
         : path.join(resolveStateDir(env), "logs", "anthropic-payload.jsonl");

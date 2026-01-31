@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { MSTeamsConfig } from "grawke/plugin-sdk";
+import type { MSTeamsConfig } from "moltx/plugin-sdk";
 
 const hostMockState = vi.hoisted(() => ({
   tokenError: null as Error | null,

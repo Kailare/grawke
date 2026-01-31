@@ -21,7 +21,7 @@ import {
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 const messageActions = new Set(["sendMessage", "editMessage", "deleteMessage", "readMessages"]);
 const reactionActions = new Set(["react", "reactions"]);

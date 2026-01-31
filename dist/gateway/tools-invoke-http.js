@@ -1,4 +1,4 @@
-import { createGrawkeTools } from "../agents/grawke-tools.js";
+import { createMoltXTools } from "../agents/moltx-tools.js";
 import { filterToolsByPolicy, resolveEffectiveToolPolicy, resolveGroupToolPolicy, resolveSubagentToolPolicy, } from "../agents/pi-tools.policy.js";
 import { buildPluginToolGroups, collectExplicitAllowlist, expandPolicyWithPluginGroups, normalizeToolName, resolveToolProfilePolicy, stripPluginOnlyAllowlist, } from "../agents/tool-policy.js";
 import { loadConfig } from "../config/config.js";
@@ -69,8 +69,8 @@ export async function handleToolsInvokeHttpRequest(req, res, opts) {
     const rawSessionKey = resolveSessionKeyFromBody(body);
     const sessionKey = !rawSessionKey || rawSessionKey === "main" ? resolveMainSessionKey(cfg) : rawSessionKey;
     // Resolve message channel/account hints (optional headers) for policy inheritance.
-    const messageChannel = normalizeMessageChannel(getHeader(req, "x-grawke-message-channel") ?? "");
-    const accountId = getHeader(req, "x-grawke-account-id")?.trim() || undefined;
+    const messageChannel = normalizeMessageChannel(getHeader(req, "x-moltx-message-channel") ?? "");
+    const accountId = getHeader(req, "x-moltx-account-id")?.trim() || undefined;
     const { agentId, globalPolicy, globalProviderPolicy, agentPolicy, agentProviderPolicy, profile, providerProfile, } = resolveEffectiveToolPolicy({ config: cfg, sessionKey });
     const profilePolicy = resolveToolProfilePolicy(profile);
     const providerProfilePolicy = resolveToolProfilePolicy(providerProfile);
@@ -84,7 +84,7 @@ export async function handleToolsInvokeHttpRequest(req, res, opts) {
         ? resolveSubagentToolPolicy(cfg)
         : undefined;
     // Build tool list (core + plugin tools).
-    const allTools = createGrawkeTools({
+    const allTools = createMoltXTools({
         agentSessionKey: sessionKey,
         agentChannel: messageChannel ?? undefined,
         agentAccountId: accountId,

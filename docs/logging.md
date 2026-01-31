@@ -8,7 +8,7 @@ read_when:
 
 # Logging
 
-Grawke logs in two places:
+MoltX logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -20,16 +20,16 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/grawke/grawke-YYYY-MM-DD.log`
+`/tmp/moltx/moltx-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
-You can override this in `~/.grawke/grawke.json`:
+You can override this in `~/.moltx/moltx.json`:
 
 ```json
 {
   "logging": {
-    "file": "/path/to/grawke.log"
+    "file": "/path/to/moltx.log"
   }
 }
 ```
@@ -41,7 +41,7 @@ You can override this in `~/.grawke/grawke.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-grawke logs --follow
+moltx logs --follow
 ```
 
 Output modes:
@@ -62,7 +62,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-grawke doctor
+moltx doctor
 ```
 
 ### Control UI (web)
@@ -75,7 +75,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-grawke channels logs --channel whatsapp
+moltx channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -97,13 +97,13 @@ Console formatting is controlled by `logging.consoleStyle`.
 
 ## Configuring logging
 
-All logging configuration lives under `logging` in `~/.grawke/grawke.json`.
+All logging configuration lives under `logging` in `~/.moltx/moltx.json`.
 
 ```json
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/grawke/grawke-YYYY-MM-DD.log",
+    "file": "/tmp/moltx/moltx-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -151,7 +151,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- Grawke exports via **OTLP/HTTP (protobuf)** today.
+- MoltX exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -208,7 +208,7 @@ Flags are case-insensitive and support wildcards (e.g. `telegram.*` or `*`).
 Env override (one-off):
 
 ```
-GRAWKE_DIAGNOSTICS=telegram.http,telegram.payload
+MOLTX_DIAGNOSTICS=telegram.http,telegram.payload
 ```
 
 Notes:
@@ -237,7 +237,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
       "enabled": true,
       "endpoint": "http://otel-collector:4318",
       "protocol": "http/protobuf",
-      "serviceName": "grawke-gateway",
+      "serviceName": "moltx-gateway",
       "traces": true,
       "metrics": true,
       "logs": true,
@@ -249,7 +249,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 ```
 
 Notes:
-- You can also enable the plugin with `grawke plugins enable diagnostics-otel`.
+- You can also enable the plugin with `moltx plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -262,58 +262,58 @@ Notes:
 ### Exported metrics (names + types)
 
 Model usage:
-- `grawke.tokens` (counter, attrs: `grawke.token`, `grawke.channel`,
-  `grawke.provider`, `grawke.model`)
-- `grawke.cost.usd` (counter, attrs: `grawke.channel`, `grawke.provider`,
-  `grawke.model`)
-- `grawke.run.duration_ms` (histogram, attrs: `grawke.channel`,
-  `grawke.provider`, `grawke.model`)
-- `grawke.context.tokens` (histogram, attrs: `grawke.context`,
-  `grawke.channel`, `grawke.provider`, `grawke.model`)
+- `moltx.tokens` (counter, attrs: `moltx.token`, `moltx.channel`,
+  `moltx.provider`, `moltx.model`)
+- `moltx.cost.usd` (counter, attrs: `moltx.channel`, `moltx.provider`,
+  `moltx.model`)
+- `moltx.run.duration_ms` (histogram, attrs: `moltx.channel`,
+  `moltx.provider`, `moltx.model`)
+- `moltx.context.tokens` (histogram, attrs: `moltx.context`,
+  `moltx.channel`, `moltx.provider`, `moltx.model`)
 
 Message flow:
-- `grawke.webhook.received` (counter, attrs: `grawke.channel`,
-  `grawke.webhook`)
-- `grawke.webhook.error` (counter, attrs: `grawke.channel`,
-  `grawke.webhook`)
-- `grawke.webhook.duration_ms` (histogram, attrs: `grawke.channel`,
-  `grawke.webhook`)
-- `grawke.message.queued` (counter, attrs: `grawke.channel`,
-  `grawke.source`)
-- `grawke.message.processed` (counter, attrs: `grawke.channel`,
-  `grawke.outcome`)
-- `grawke.message.duration_ms` (histogram, attrs: `grawke.channel`,
-  `grawke.outcome`)
+- `moltx.webhook.received` (counter, attrs: `moltx.channel`,
+  `moltx.webhook`)
+- `moltx.webhook.error` (counter, attrs: `moltx.channel`,
+  `moltx.webhook`)
+- `moltx.webhook.duration_ms` (histogram, attrs: `moltx.channel`,
+  `moltx.webhook`)
+- `moltx.message.queued` (counter, attrs: `moltx.channel`,
+  `moltx.source`)
+- `moltx.message.processed` (counter, attrs: `moltx.channel`,
+  `moltx.outcome`)
+- `moltx.message.duration_ms` (histogram, attrs: `moltx.channel`,
+  `moltx.outcome`)
 
 Queues + sessions:
-- `grawke.queue.lane.enqueue` (counter, attrs: `grawke.lane`)
-- `grawke.queue.lane.dequeue` (counter, attrs: `grawke.lane`)
-- `grawke.queue.depth` (histogram, attrs: `grawke.lane` or
-  `grawke.channel=heartbeat`)
-- `grawke.queue.wait_ms` (histogram, attrs: `grawke.lane`)
-- `grawke.session.state` (counter, attrs: `grawke.state`, `grawke.reason`)
-- `grawke.session.stuck` (counter, attrs: `grawke.state`)
-- `grawke.session.stuck_age_ms` (histogram, attrs: `grawke.state`)
-- `grawke.run.attempt` (counter, attrs: `grawke.attempt`)
+- `moltx.queue.lane.enqueue` (counter, attrs: `moltx.lane`)
+- `moltx.queue.lane.dequeue` (counter, attrs: `moltx.lane`)
+- `moltx.queue.depth` (histogram, attrs: `moltx.lane` or
+  `moltx.channel=heartbeat`)
+- `moltx.queue.wait_ms` (histogram, attrs: `moltx.lane`)
+- `moltx.session.state` (counter, attrs: `moltx.state`, `moltx.reason`)
+- `moltx.session.stuck` (counter, attrs: `moltx.state`)
+- `moltx.session.stuck_age_ms` (histogram, attrs: `moltx.state`)
+- `moltx.run.attempt` (counter, attrs: `moltx.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `grawke.model.usage`
-  - `grawke.channel`, `grawke.provider`, `grawke.model`
-  - `grawke.sessionKey`, `grawke.sessionId`
-  - `grawke.tokens.*` (input/output/cache_read/cache_write/total)
-- `grawke.webhook.processed`
-  - `grawke.channel`, `grawke.webhook`, `grawke.chatId`
-- `grawke.webhook.error`
-  - `grawke.channel`, `grawke.webhook`, `grawke.chatId`,
-    `grawke.error`
-- `grawke.message.processed`
-  - `grawke.channel`, `grawke.outcome`, `grawke.chatId`,
-    `grawke.messageId`, `grawke.sessionKey`, `grawke.sessionId`,
-    `grawke.reason`
-- `grawke.session.stuck`
-  - `grawke.state`, `grawke.ageMs`, `grawke.queueDepth`,
-    `grawke.sessionKey`, `grawke.sessionId`
+- `moltx.model.usage`
+  - `moltx.channel`, `moltx.provider`, `moltx.model`
+  - `moltx.sessionKey`, `moltx.sessionId`
+  - `moltx.tokens.*` (input/output/cache_read/cache_write/total)
+- `moltx.webhook.processed`
+  - `moltx.channel`, `moltx.webhook`, `moltx.chatId`
+- `moltx.webhook.error`
+  - `moltx.channel`, `moltx.webhook`, `moltx.chatId`,
+    `moltx.error`
+- `moltx.message.processed`
+  - `moltx.channel`, `moltx.outcome`, `moltx.chatId`,
+    `moltx.messageId`, `moltx.sessionKey`, `moltx.sessionId`,
+    `moltx.reason`
+- `moltx.session.stuck`
+  - `moltx.state`, `moltx.ageMs`, `moltx.queueDepth`,
+    `moltx.sessionKey`, `moltx.sessionId`
 
 ### Sampling + flushing
 
@@ -337,7 +337,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `grawke doctor` first.
+- **Gateway not reachable?** Run `moltx doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

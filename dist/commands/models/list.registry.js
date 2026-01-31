@@ -1,8 +1,8 @@
 import { discoverAuthStorage, discoverModels } from "@mariozechner/pi-coding-agent";
-import { resolveGrawkeAgentDir } from "../../agents/agent-paths.js";
+import { resolveMoltXAgentDir } from "../../agents/agent-paths.js";
 import { listProfilesForProvider } from "../../agents/auth-profiles.js";
 import { getCustomProviderApiKey, resolveAwsSdkEnvVarName, resolveEnvApiKey, } from "../../agents/model-auth.js";
-import { ensureGrawkeModelsJson } from "../../agents/models-config.js";
+import { ensureMoltXModelsJson } from "../../agents/models-config.js";
 import { modelKey } from "./shared.js";
 const isLocalBaseUrl = (baseUrl) => {
     try {
@@ -30,8 +30,8 @@ const hasAuthForProvider = (provider, cfg, authStore) => {
     return false;
 };
 export async function loadModelRegistry(cfg) {
-    await ensureGrawkeModelsJson(cfg);
-    const agentDir = resolveGrawkeAgentDir();
+    await ensureMoltXModelsJson(cfg);
+    const agentDir = resolveMoltXAgentDir();
     const authStorage = discoverAuthStorage(agentDir);
     const registry = discoverModels(authStorage, agentDir);
     const models = registry.getAll();

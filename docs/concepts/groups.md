@@ -5,17 +5,17 @@ read_when:
 ---
 # Groups
 
-Grawke treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
+MoltX treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams.
 
 ## Beginner intro (2 minutes)
-Grawke “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, Grawke can see that group and respond there.
+MoltX “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, MoltX can see that group and respond there.
 
 Default behavior:
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger Grawke by mentioning it.
+Translation: allowlisted senders can trigger MoltX by mentioning it.
 
 > TL;DR
 > - **DM access** is controlled by `*.allowFrom`.
@@ -215,7 +215,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@clawd", "grawke", "\\+15555550123"],
+          mentionPatterns: ["@clawd", "moltx", "\\+15555550123"],
           historyLimit: 50
         }
       }

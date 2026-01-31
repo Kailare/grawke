@@ -1,4 +1,4 @@
-import type { ChannelAccountSnapshot, ChannelStatusIssue } from "grawke/plugin-sdk";
+import type { ChannelAccountSnapshot, ChannelStatusIssue } from "moltx/plugin-sdk";
 
 type ZaloAccountStatus = {
   accountId?: unknown;

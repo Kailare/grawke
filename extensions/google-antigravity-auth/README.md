@@ -1,4 +1,4 @@
-# Google Antigravity Auth (Grawke plugin)
+# Google Antigravity Auth (MoltX plugin)
 
 OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Google Antigravity** (Cloud Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-grawke plugins enable google-antigravity-auth
+moltx plugins enable google-antigravity-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-grawke models auth login --provider google-antigravity --set-default
+moltx models auth login --provider google-antigravity --set-default
 ```
 
 ## Notes

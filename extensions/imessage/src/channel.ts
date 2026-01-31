@@ -21,7 +21,7 @@ import {
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
   type ResolvedIMessageAccount,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { getIMessageRuntime } from "./runtime.js";
 

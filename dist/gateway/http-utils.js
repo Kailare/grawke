@@ -16,8 +16,8 @@ export function getBearerToken(req) {
     return token || undefined;
 }
 export function resolveAgentIdFromHeader(req) {
-    const raw = getHeader(req, "x-grawke-agent-id")?.trim() ||
-        getHeader(req, "x-grawke-agent")?.trim() ||
+    const raw = getHeader(req, "x-moltx-agent-id")?.trim() ||
+        getHeader(req, "x-moltx-agent")?.trim() ||
         "";
     if (!raw)
         return undefined;
@@ -27,7 +27,7 @@ export function resolveAgentIdFromModel(model) {
     const raw = model?.trim();
     if (!raw)
         return undefined;
-    const m = raw.match(/^grawke[:/](?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i) ??
+    const m = raw.match(/^moltx[:/](?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i) ??
         raw.match(/^agent:(?<agentId>[a-z0-9][a-z0-9_-]{0,63})$/i);
     const agentId = m?.groups?.agentId;
     if (!agentId)
@@ -42,7 +42,7 @@ export function resolveAgentIdForRequest(params) {
     return fromModel ?? "main";
 }
 export function resolveSessionKey(params) {
-    const explicit = getHeader(params.req, "x-grawke-session-key")?.trim();
+    const explicit = getHeader(params.req, "x-moltx-session-key")?.trim();
     if (explicit)
         return explicit;
     const user = params.user?.trim();

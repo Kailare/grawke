@@ -1,12 +1,12 @@
 ---
-summary: "Use Amazon Bedrock (Converse API) models with Grawke"
+summary: "Use Amazon Bedrock (Converse API) models with MoltX"
 read_when:
-  - You want to use Amazon Bedrock models with Grawke
+  - You want to use Amazon Bedrock models with MoltX
   - You need AWS credential/region setup for model calls
 ---
 # Amazon Bedrock
 
-Grawke can use **Amazon Bedrock** models via pi‑ai’s **Bedrock Converse**
+MoltX can use **Amazon Bedrock** models via pi‑ai’s **Bedrock Converse**
 streaming provider. Bedrock auth uses the **AWS SDK default credential chain**,
 not an API key.
 
@@ -19,7 +19,7 @@ not an API key.
 
 ## Automatic model discovery
 
-If AWS credentials are detected, Grawke can automatically discover Bedrock
+If AWS credentials are detected, MoltX can automatically discover Bedrock
 models that support **streaming** and **text output**. Discovery uses
 `bedrock:ListFoundationModels` and is cached (default: 1 hour).
 
@@ -97,9 +97,9 @@ export AWS_BEARER_TOKEN_BEDROCK="..."
 
 ## EC2 Instance Roles
 
-When running Grawke on an EC2 instance with an IAM role attached, the AWS SDK
+When running MoltX on an EC2 instance with an IAM role attached, the AWS SDK
 will automatically use the instance metadata service (IMDS) for authentication.
-However, Grawke's credential detection currently only checks for environment
+However, MoltX's credential detection currently only checks for environment
 variables, not IMDS credentials.
 
 **Workaround:** Set `AWS_PROFILE=default` to signal that AWS credentials are
@@ -146,8 +146,8 @@ aws ec2 associate-iam-instance-profile \
   --iam-instance-profile Name=EC2-Bedrock-Access
 
 # 3. On the EC2 instance, enable discovery
-grawke config set models.bedrockDiscovery.enabled true
-grawke config set models.bedrockDiscovery.region us-east-1
+moltx config set models.bedrockDiscovery.enabled true
+moltx config set models.bedrockDiscovery.region us-east-1
 
 # 4. Set the workaround env vars
 echo 'export AWS_PROFILE=default' >> ~/.bashrc
@@ -155,7 +155,7 @@ echo 'export AWS_REGION=us-east-1' >> ~/.bashrc
 source ~/.bashrc
 
 # 5. Verify models are discovered
-grawke models list
+moltx models list
 ```
 
 ## Notes
@@ -163,7 +163,7 @@ grawke models list
 - Bedrock requires **model access** enabled in your AWS account/region.
 - Automatic discovery needs the `bedrock:ListFoundationModels` permission.
 - If you use profiles, set `AWS_PROFILE` on the gateway host.
-- Grawke surfaces the credential source in this order: `AWS_BEARER_TOKEN_BEDROCK`,
+- MoltX surfaces the credential source in this order: `AWS_BEARER_TOKEN_BEDROCK`,
   then `AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY`, then `AWS_PROFILE`, then the
   default AWS SDK chain.
 - Reasoning support depends on the model; check the Bedrock model card for

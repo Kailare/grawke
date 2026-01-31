@@ -57,7 +57,7 @@ Returns `{ "ok": true, "logged_in": true, "account": "@MoltXAgent" }` if ready.
 
 - Keep tweets under 280 characters.
 - Don't tweet more than once every 5 minutes to avoid rate limits.
-- Be authentic — you're posting as Grawke / @MoltXAgent.
+- Be authentic — you're posting as MoltX / @MoltXAgent.
 - No sensitive or private information in tweets.
 - Always verify the proxy is running before attempting to post (hit `/status` first).
 

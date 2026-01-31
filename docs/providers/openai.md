@@ -1,7 +1,7 @@
 ---
-summary: "Use OpenAI via API keys or Codex subscription in Grawke"
+summary: "Use OpenAI via API keys or Codex subscription in MoltX"
 read_when:
-  - You want to use OpenAI models in Grawke
+  - You want to use OpenAI models in MoltX
   - You want Codex subscription auth instead of API keys
 ---
 # OpenAI
@@ -9,7 +9,7 @@ read_when:
 OpenAI provides developer APIs for GPT models. Codex supports **ChatGPT sign-in** for subscription
 access or **API key** sign-in for usage-based access. Codex cloud requires ChatGPT sign-in, while
 the Codex CLI supports either sign-in method. The Codex CLI caches login details in
-`~/.codex/auth.json` (or your OS credential store), which Grawke can reuse.
+`~/.codex/auth.json` (or your OS credential store), which MoltX can reuse.
 
 ## Option A: OpenAI API key (OpenAI Platform)
 
@@ -19,9 +19,9 @@ Get your API key from the OpenAI dashboard.
 ### CLI setup
 
 ```bash
-grawke onboard --auth-choice openai-api-key
+moltx onboard --auth-choice openai-api-key
 # or non-interactive
-grawke onboard --openai-api-key "$OPENAI_API_KEY"
+moltx onboard --openai-api-key "$OPENAI_API_KEY"
 ```
 
 ### Config snippet
@@ -38,16 +38,16 @@ grawke onboard --openai-api-key "$OPENAI_API_KEY"
 **Best for:** using ChatGPT/Codex subscription access instead of an API key.
 Codex cloud requires ChatGPT sign-in, while the Codex CLI supports ChatGPT or API key sign-in.
 
-Grawke can reuse your **Codex CLI** login (`~/.codex/auth.json`) or run the OAuth flow.
+MoltX can reuse your **Codex CLI** login (`~/.codex/auth.json`) or run the OAuth flow.
 
 ### CLI setup
 
 ```bash
 # Reuse existing Codex CLI login
-grawke onboard --auth-choice codex-cli
+moltx onboard --auth-choice codex-cli
 
 # Or run Codex OAuth in the wizard
-grawke onboard --auth-choice openai-codex
+moltx onboard --auth-choice openai-codex
 ```
 
 ### Config snippet

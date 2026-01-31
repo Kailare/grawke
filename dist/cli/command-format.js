@@ -1,9 +1,9 @@
 import { normalizeProfileName } from "./profile-utils.js";
-const CLI_PREFIX_RE = /^(?:pnpm|npm|bunx|npx)\s+grawke\b|^grawke\b/;
+const CLI_PREFIX_RE = /^(?:pnpm|npm|bunx|npx)\s+moltx\b|^moltx\b/;
 const PROFILE_FLAG_RE = /(?:^|\s)--profile(?:\s|=|$)/;
 const DEV_FLAG_RE = /(?:^|\s)--dev(?:\s|$)/;
 export function formatCliCommand(command, env = process.env) {
-    const profile = normalizeProfileName(env.GRAWKE_PROFILE);
+    const profile = normalizeProfileName(env.MOLTX_PROFILE);
     if (!profile)
         return command;
     if (!CLI_PREFIX_RE.test(command))

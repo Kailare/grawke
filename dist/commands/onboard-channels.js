@@ -123,7 +123,7 @@ async function noteChannelPrimer(prompter, channels) {
     }));
     await prompter.note([
         "DM security: default is pairing; unknown DMs get a pairing code.",
-        `Approve with: ${formatCliCommand("grawke pairing approve <channel> <code>")}`,
+        `Approve with: ${formatCliCommand("moltx pairing approve <channel> <code>")}`,
         'Public DMs require dmPolicy="open" + allowFrom=["*"].',
         'Multi-user DMs: set session.dmScope="per-channel-peer" to isolate sessions.',
         `Docs: ${formatDocsLink("/start/pairing", "start/pairing")}`,
@@ -159,7 +159,7 @@ async function maybeConfigureDmPolicies(params) {
     const selectPolicy = async (policy) => {
         await prompter.note([
             "Default: pairing (unknown DMs get a pairing code).",
-            `Approve: ${formatCliCommand(`grawke pairing approve ${policy.channel} <code>`)}`,
+            `Approve: ${formatCliCommand(`moltx pairing approve ${policy.channel} <code>`)}`,
             `Allowlist DMs: ${policy.policyKey}="allowlist" + ${policy.allowFromKey} entries.`,
             `Public DMs: ${policy.policyKey}="open" + ${policy.allowFromKey} includes "*".`,
             'Multi-user DMs: set session.dmScope="per-channel-peer" to isolate sessions.',
@@ -472,7 +472,7 @@ export async function setupChannels(cfg, runtime, prompter, options) {
                 {
                     value: "__skip__",
                     label: "Skip for now",
-                    hint: `You can add channels later via \`${formatCliCommand("grawke channels add")}\``,
+                    hint: `You can add channels later via \`${formatCliCommand("moltx channels add")}\``,
                 },
             ],
             initialValue: quickstartDefault,

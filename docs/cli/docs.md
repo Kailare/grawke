@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `grawke docs` (search the live docs index)"
+summary: "CLI reference for `moltx docs` (search the live docs index)"
 read_when:
-  - You want to search the live Grawke docs from the terminal
+  - You want to search the live MoltX docs from the terminal
 ---
 
-# `grawke docs`
+# `moltx docs`
 
 Search the live docs index.
 
 ```bash
-grawke docs browser extension
-grawke docs sandbox allowHostControl
+moltx docs browser extension
+moltx docs sandbox allowHostControl
 ```
 

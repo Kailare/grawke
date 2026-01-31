@@ -64,7 +64,7 @@ export function parseCliProfileArgs(argv) {
 }
 function resolveProfileStateDir(profile, homedir) {
     const suffix = profile.toLowerCase() === "default" ? "" : `-${profile}`;
-    return path.join(homedir(), `.grawke${suffix}`);
+    return path.join(homedir(), `.moltx${suffix}`);
 }
 export function applyCliProfileEnv(params) {
     const env = params.env ?? process.env;
@@ -73,14 +73,14 @@ export function applyCliProfileEnv(params) {
     if (!profile)
         return;
     // Convenience only: fill defaults, never override explicit env values.
-    env.GRAWKE_PROFILE = profile;
-    const stateDir = env.GRAWKE_STATE_DIR?.trim() || resolveProfileStateDir(profile, homedir);
-    if (!env.GRAWKE_STATE_DIR?.trim())
-        env.GRAWKE_STATE_DIR = stateDir;
-    if (!env.GRAWKE_CONFIG_PATH?.trim()) {
-        env.GRAWKE_CONFIG_PATH = path.join(stateDir, "grawke.json");
+    env.MOLTX_PROFILE = profile;
+    const stateDir = env.MOLTX_STATE_DIR?.trim() || resolveProfileStateDir(profile, homedir);
+    if (!env.MOLTX_STATE_DIR?.trim())
+        env.MOLTX_STATE_DIR = stateDir;
+    if (!env.MOLTX_CONFIG_PATH?.trim()) {
+        env.MOLTX_CONFIG_PATH = path.join(stateDir, "moltx.json");
     }
-    if (profile === "dev" && !env.GRAWKE_GATEWAY_PORT?.trim()) {
-        env.GRAWKE_GATEWAY_PORT = "19001";
+    if (profile === "dev" && !env.MOLTX_GATEWAY_PORT?.trim()) {
+        env.MOLTX_GATEWAY_PORT = "19001";
     }
 }

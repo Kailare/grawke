@@ -1,11 +1,11 @@
 ---
-summary: "Direct `grawke agent` CLI runs (with optional delivery)"
+summary: "Direct `moltx agent` CLI runs (with optional delivery)"
 read_when:
   - Adding or modifying the agent CLI entrypoint
 ---
-# `grawke agent` (direct agent runs)
+# `moltx agent` (direct agent runs)
 
-`grawke agent` runs a single agent turn without needing an inbound chat message.
+`moltx agent` runs a single agent turn without needing an inbound chat message.
 By default it goes **through the Gateway**; add `--local` to force the embedded
 runtime on the current machine.
 
@@ -21,7 +21,7 @@ runtime on the current machine.
 - Output:
   - default: prints reply text (plus `MEDIA:<url>` lines)
   - `--json`: prints structured payload + metadata
-- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `grawke message --target`).
+- Optional delivery back to a channel with `--deliver` + `--channel` (target formats match `moltx message --target`).
 - Use `--reply-channel`/`--reply-to`/`--reply-account` to override delivery without changing the session.
 
 If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
@@ -29,12 +29,12 @@ If the Gateway is unreachable, the CLI **falls back** to the embedded local run.
 ## Examples
 
 ```bash
-grawke agent --to +15555550123 --message "status update"
-grawke agent --agent ops --message "Summarize logs"
-grawke agent --session-id 1234 --message "Summarize inbox" --thinking medium
-grawke agent --to +15555550123 --message "Trace logs" --verbose on --json
-grawke agent --to +15555550123 --message "Summon reply" --deliver
-grawke agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
+moltx agent --to +15555550123 --message "status update"
+moltx agent --agent ops --message "Summarize logs"
+moltx agent --session-id 1234 --message "Summarize inbox" --thinking medium
+moltx agent --to +15555550123 --message "Trace logs" --verbose on --json
+moltx agent --to +15555550123 --message "Summon reply" --deliver
+moltx agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"
 ```
 
 ## Flags

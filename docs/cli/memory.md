@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke memory` (status/index/search)"
+summary: "CLI reference for `moltx memory` (status/index/search)"
 read_when:
   - You want to index or search semantic memory
   - You’re debugging memory availability or indexing
 ---
 
-# `grawke memory`
+# `moltx memory`
 
 Manage semantic memory indexing and search.
 Provided by the active memory plugin (default: `memory-core`; set `plugins.slots.memory = "none"` to disable).
@@ -17,15 +17,15 @@ Related:
 ## Examples
 
 ```bash
-grawke memory status
-grawke memory status --deep
-grawke memory status --deep --index
-grawke memory status --deep --index --verbose
-grawke memory index
-grawke memory index --verbose
-grawke memory search "release checklist"
-grawke memory status --agent main
-grawke memory index --agent main --verbose
+moltx memory status
+moltx memory status --deep
+moltx memory status --deep --index
+moltx memory status --deep --index --verbose
+moltx memory index
+moltx memory index --verbose
+moltx memory search "release checklist"
+moltx memory status --agent main
+moltx memory index --agent main --verbose
 ```
 
 ## Options

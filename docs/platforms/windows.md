@@ -1,12 +1,12 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing Grawke on Windows
+  - Installing MoltX on Windows
   - Looking for Windows companion app status
 ---
 # Windows (WSL2)
 
-Grawke on Windows is recommended **via WSL2** (Ubuntu recommended). The
+MoltX on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent and makes
 tooling far more compatible (Node/Bun/pnpm, Linux binaries, skills). Native
 Windows installs are untested and more problematic.
@@ -27,19 +27,19 @@ Native Windows companion apps are planned.
 Inside WSL2:
 
 ```
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
 Or:
 
 ```
-grawke gateway install
+moltx gateway install
 ```
 
 Or:
 
 ```
-grawke configure
+moltx configure
 ```
 
 Select **Gateway service** when prompted.
@@ -47,7 +47,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-grawke doctor
+moltx doctor
 ```
 
 ## Advanced: expose WSL services over LAN (portproxy)
@@ -89,7 +89,7 @@ netsh interface portproxy add v4tov4 listenport=$ListenPort listenaddress=0.0.0.
 Notes:
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `grawke status --all` to confirm.
+  `moltx status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -132,17 +132,17 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install Grawke (inside WSL)
+### 3) Install MoltX (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
 git clone https://github.com/clawdbot/clawdbot.git
-cd grawke
+cd moltx
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-grawke onboard
+moltx onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)

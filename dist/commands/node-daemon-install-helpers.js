@@ -29,7 +29,7 @@ export async function buildNodeInstallPlan(params) {
     }
     const environment = buildNodeServiceEnvironment({ env: params.env });
     const description = formatNodeServiceDescription({
-        version: environment.GRAWKE_SERVICE_VERSION,
+        version: environment.MOLTX_SERVICE_VERSION,
     });
     return { programArguments, workingDirectory, environment, description };
 }

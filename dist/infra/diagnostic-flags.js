@@ -1,4 +1,4 @@
-const DIAGNOSTICS_ENV = "GRAWKE_DIAGNOSTICS";
+const DIAGNOSTICS_ENV = "MOLTX_DIAGNOSTICS";
 function normalizeFlag(value) {
     return value.trim().toLowerCase();
 }

@@ -1,4 +1,4 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltx/plugin-sdk";
 import type { CoreConfig, MatrixConfig } from "../types.js";
 import { resolveMatrixConfig } from "./client.js";
 import { credentialsMatchConfig, loadMatrixCredentials } from "./credentials.js";

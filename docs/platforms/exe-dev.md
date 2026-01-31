@@ -1,5 +1,5 @@
 ---
-summary: "Run Grawke Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run MoltX Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -7,7 +7,7 @@ read_when:
 
 # exe.dev
 
-Goal: Grawke Gateway running on an exe.dev VM, reachable from your laptop via:
+Goal: MoltX Gateway running on an exe.dev VM, reachable from your laptop via:
 - **exe.dev HTTPS proxy** (easy, no tunnel) or
 - **SSH tunnel** (most secure; loopback-only Gateway)
 
@@ -17,8 +17,8 @@ If you’re on any other Linux VPS, the same steps apply — you just won’t us
 
 ## Beginner quick path
 
-1) Create VM → install Node 22 → install Grawke  
-2) Run `grawke onboard --install-daemon`  
+1) Create VM → install Node 22 → install MoltX  
+2) Run `moltx onboard --install-daemon`  
 3) Tunnel from laptop (`ssh -N -L 18789:127.0.0.1:18789 …`)  
 4) Open `http://127.0.0.1:18789/` and paste your token
 
@@ -34,16 +34,16 @@ If you’re on any other Linux VPS, the same steps apply — you just won’t us
 From your laptop:
 
 ```bash
-ssh exe.dev new --name=grawke
+ssh exe.dev new --name=moltx
 ```
 
 Then connect:
 
 ```bash
-ssh grawke.exe.xyz
+ssh moltx.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. Grawke stores state under `~/.grawke/` and `~/clawd/`.
+Tip: keep this VM **stateful**. MoltX stores state under `~/.moltx/` and `~/clawd/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -69,13 +69,13 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-## 3) Install Grawke
+## 3) Install MoltX
 
 Recommended on servers: npm global install.
 
 ```bash
-npm i -g grawke@latest
-grawke --version
+npm i -g moltx@latest
+moltx --version
 ```
 
 If native deps fail to install (rare; usually `sharp`), add build tools:
@@ -89,12 +89,12 @@ sudo apt-get install -y build-essential python3
 Run the onboarding wizard on the VM:
 
 ```bash
-grawke onboard --install-daemon
+moltx onboard --install-daemon
 ```
 
 It can set up:
 - `~/clawd` workspace bootstrap
-- `~/.grawke/grawke.json` config
+- `~/.moltx/moltx.json` config
 - model auth profiles
 - model provider config/login
 - Linux systemd **user** service (service)
@@ -108,7 +108,7 @@ If you’re doing OAuth on a headless VM: do OAuth on a normal machine first, th
 Keep Gateway on loopback (default) and tunnel it from your laptop:
 
 ```bash
-ssh -N -L 18789:127.0.0.1:18789 grawke.exe.xyz
+ssh -N -L 18789:127.0.0.1:18789 moltx.exe.xyz
 ```
 
 Open locally:
@@ -121,11 +121,11 @@ Runbook: [Remote access](/gateway/remote)
 To let exe.dev proxy traffic to the VM, bind the Gateway to the LAN interface and set a token:
 
 ```bash
-export GRAWKE_GATEWAY_TOKEN="$(openssl rand -hex 32)"
-grawke gateway --bind lan --port 8080 --token "$GRAWKE_GATEWAY_TOKEN"
+export MOLTX_GATEWAY_TOKEN="$(openssl rand -hex 32)"
+moltx gateway --bind lan --port 8080 --token "$MOLTX_GATEWAY_TOKEN"
 ```
 
-For service runs, persist it in `~/.grawke/grawke.json`:
+For service runs, persist it in `~/.moltx/moltx.json`:
 
 ```json5
 {
@@ -139,17 +139,17 @@ For service runs, persist it in `~/.grawke/grawke.json`:
 ```
 
 Notes:
-- Non-loopback binds require `gateway.auth.token` (or `GRAWKE_GATEWAY_TOKEN`).
+- Non-loopback binds require `gateway.auth.token` (or `MOLTX_GATEWAY_TOKEN`).
 - `gateway.remote.token` is only for remote CLI calls; it does not enable local auth.
 
 Then point exe.dev’s proxy at `8080` (or whatever port you chose) and open your VM’s HTTPS URL:
 
 ```bash
-ssh exe.dev share port grawke 8080
+ssh exe.dev share port moltx 8080
 ```
 
 Open:
-- `https://grawke.exe.xyz/`
+- `https://moltx.exe.xyz/`
 
 In the Control UI, paste the token (UI → Settings → token). The UI sends it as `connect.params.auth.token`.
 
@@ -161,10 +161,10 @@ Control UI details: [Control UI](/web/control-ui)
 
 ## 6) Keep it running (service)
 
-On Linux, Grawke uses a systemd **user** service. After `--install-daemon`, verify:
+On Linux, MoltX uses a systemd **user** service. After `--install-daemon`, verify:
 
 ```bash
-systemctl --user status grawke-gateway[-<profile>].service
+systemctl --user status moltx-gateway[-<profile>].service
 ```
 
 If the service dies after logout, enable lingering:
@@ -178,10 +178,10 @@ More: [Linux](/platforms/linux)
 ## 7) Updates
 
 ```bash
-npm i -g grawke@latest
-grawke doctor
-grawke gateway restart
-grawke health
+npm i -g moltx@latest
+moltx doctor
+moltx gateway restart
+moltx health
 ```
 
 Guide: [Updating](/install/updating)

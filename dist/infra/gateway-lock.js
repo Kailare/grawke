@@ -50,7 +50,7 @@ function isGatewayArgv(args) {
         return true;
     }
     const exe = normalized[0] ?? "";
-    return exe.endsWith("/grawke") || exe === "grawke";
+    return exe.endsWith("/moltx") || exe === "moltx";
 }
 function readLinuxCmdline(pid) {
     try {
@@ -126,7 +126,7 @@ function resolveGatewayLockPath(env) {
 export async function acquireGatewayLock(opts = {}) {
     const env = opts.env ?? process.env;
     const allowInTests = opts.allowInTests === true;
-    if (env.GRAWKE_ALLOW_MULTI_GATEWAY === "1" ||
+    if (env.MOLTX_ALLOW_MULTI_GATEWAY === "1" ||
         (!allowInTests && (env.VITEST || env.NODE_ENV === "test"))) {
         return null;
     }

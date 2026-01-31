@@ -9,14 +9,14 @@ Status: experimental. Direct messages only; groups coming soon per Zalo docs.
 
 ## Plugin required
 Zalo ships as a plugin and is not bundled with the core install.
-- Install via CLI: `grawke plugins install @grawke/zalo`
+- Install via CLI: `moltx plugins install @moltx/zalo`
 - Or select **Zalo** during onboarding and confirm the install prompt
 - Details: [Plugins](/plugin)
 
 ## Quick setup (beginner)
 1) Install the Zalo plugin:
-   - From a source checkout: `grawke plugins install ./extensions/zalo`
-   - From npm (if published): `grawke plugins install @grawke/zalo`
+   - From a source checkout: `moltx plugins install ./extensions/zalo`
+   - From npm (if published): `moltx plugins install @moltx/zalo`
    - Or pick **Zalo** in onboarding and confirm the install prompt
 2) Set the token:
    - Env: `ZALO_BOT_TOKEN=...`
@@ -89,8 +89,8 @@ Multi-account support: use `channels.zalo.accounts` with per-account tokens and 
 ### DM access
 - Default: `channels.zalo.dmPolicy = "pairing"`. Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `grawke pairing list zalo`
-  - `grawke pairing approve zalo <CODE>`
+  - `moltx pairing list zalo`
+  - `moltx pairing approve zalo <CODE>`
 - Pairing is the default token exchange. Details: [Pairing](/start/pairing)
 - `channels.zalo.allowFrom` accepts numeric user IDs (no username lookup available).
 
@@ -124,14 +124,14 @@ Multi-account support: use `channels.zalo.accounts` with per-account tokens and 
 
 ## Delivery targets (CLI/cron)
 - Use a chat id as the target.
-- Example: `grawke message send --channel zalo --target 123456789 --message "hi"`.
+- Example: `moltx message send --channel zalo --target 123456789 --message "hi"`.
 
 ## Troubleshooting
 
 **Bot doesn't respond:**
-- Check that the token is valid: `grawke channels status --probe`
+- Check that the token is valid: `moltx channels status --probe`
 - Verify the sender is approved (pairing or allowFrom)
-- Check gateway logs: `grawke logs --follow`
+- Check gateway logs: `moltx logs --follow`
 
 **Webhook not receiving events:**
 - Ensure webhook URL uses HTTPS

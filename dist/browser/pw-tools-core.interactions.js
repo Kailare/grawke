@@ -330,10 +330,10 @@ export async function screenshotWithLabelsViaPlaywright(opts) {
     try {
         if (boxes.length > 0) {
             await page.evaluate((labels) => {
-                const existing = document.querySelectorAll("[data-grawke-labels]");
+                const existing = document.querySelectorAll("[data-moltx-labels]");
                 existing.forEach((el) => el.remove());
                 const root = document.createElement("div");
-                root.setAttribute("data-grawke-labels", "1");
+                root.setAttribute("data-moltx-labels", "1");
                 root.style.position = "fixed";
                 root.style.left = "0";
                 root.style.top = "0";
@@ -344,7 +344,7 @@ export async function screenshotWithLabelsViaPlaywright(opts) {
                 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
                 for (const label of labels) {
                     const box = document.createElement("div");
-                    box.setAttribute("data-grawke-labels", "1");
+                    box.setAttribute("data-moltx-labels", "1");
                     box.style.position = "absolute";
                     box.style.left = `${label.x}px`;
                     box.style.top = `${label.y}px`;
@@ -353,7 +353,7 @@ export async function screenshotWithLabelsViaPlaywright(opts) {
                     box.style.border = "2px solid #ffb020";
                     box.style.boxSizing = "border-box";
                     const tag = document.createElement("div");
-                    tag.setAttribute("data-grawke-labels", "1");
+                    tag.setAttribute("data-moltx-labels", "1");
                     tag.textContent = label.ref;
                     tag.style.position = "absolute";
                     tag.style.left = `${label.x}px`;
@@ -378,7 +378,7 @@ export async function screenshotWithLabelsViaPlaywright(opts) {
     finally {
         await page
             .evaluate(() => {
-            const existing = document.querySelectorAll("[data-grawke-labels]");
+            const existing = document.querySelectorAll("[data-moltx-labels]");
             existing.forEach((el) => el.remove());
         })
             .catch(() => { });

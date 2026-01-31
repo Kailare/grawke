@@ -246,7 +246,7 @@ export async function modelsAuthLoginCommand(opts, runtime) {
     const workspaceDir = resolveAgentWorkspaceDir(config, defaultAgentId) ?? resolveDefaultAgentWorkspaceDir();
     const providers = resolvePluginProviders({ config, workspaceDir });
     if (providers.length === 0) {
-        throw new Error(`No provider plugins found. Install one via \`${formatCliCommand("grawke plugins install")}\`.`);
+        throw new Error(`No provider plugins found. Install one via \`${formatCliCommand("moltx plugins install")}\`.`);
     }
     const prompter = createClackPrompter();
     const selectedProvider = resolveProviderMatch(providers, opts.provider) ??

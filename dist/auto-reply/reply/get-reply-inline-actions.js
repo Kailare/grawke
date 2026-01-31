@@ -5,7 +5,7 @@ import { isDirectiveOnly } from "./directive-handling.js";
 import { extractInlineSimpleCommand } from "./reply-inline.js";
 import { listSkillCommandsForWorkspace, resolveSkillCommandInvocation } from "../skill-commands.js";
 import { logVerbose } from "../../globals.js";
-import { createGrawkeTools } from "../../agents/grawke-tools.js";
+import { createMoltXTools } from "../../agents/moltx-tools.js";
 import { resolveGatewayMessageChannel } from "../../utils/message-channel.js";
 function extractTextFromToolResult(result) {
     if (!result || typeof result !== "object")
@@ -62,7 +62,7 @@ export async function handleInlineActions(params) {
             const channel = resolveGatewayMessageChannel(ctx.Surface) ??
                 resolveGatewayMessageChannel(ctx.Provider) ??
                 undefined;
-            const tools = createGrawkeTools({
+            const tools = createMoltXTools({
                 agentSessionKey: sessionKey,
                 agentChannel: channel,
                 agentAccountId: ctx.AccountId,

@@ -3,13 +3,13 @@ import { NODE_SERVICE_KIND, NODE_SERVICE_MARKER, NODE_WINDOWS_TASK_SCRIPT_NAME, 
 function withNodeServiceEnv(env) {
     return {
         ...env,
-        GRAWKE_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-        GRAWKE_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-        GRAWKE_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-        GRAWKE_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-        GRAWKE_LOG_PREFIX: "node",
-        GRAWKE_SERVICE_MARKER: NODE_SERVICE_MARKER,
-        GRAWKE_SERVICE_KIND: NODE_SERVICE_KIND,
+        MOLTX_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+        MOLTX_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+        MOLTX_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+        MOLTX_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+        MOLTX_LOG_PREFIX: "node",
+        MOLTX_SERVICE_MARKER: NODE_SERVICE_MARKER,
+        MOLTX_SERVICE_KIND: NODE_SERVICE_KIND,
     };
 }
 function withNodeInstallEnv(args) {
@@ -18,13 +18,13 @@ function withNodeInstallEnv(args) {
         env: withNodeServiceEnv(args.env),
         environment: {
             ...args.environment,
-            GRAWKE_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
-            GRAWKE_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
-            GRAWKE_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
-            GRAWKE_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
-            GRAWKE_LOG_PREFIX: "node",
-            GRAWKE_SERVICE_MARKER: NODE_SERVICE_MARKER,
-            GRAWKE_SERVICE_KIND: NODE_SERVICE_KIND,
+            MOLTX_LAUNCHD_LABEL: resolveNodeLaunchAgentLabel(),
+            MOLTX_SYSTEMD_UNIT: resolveNodeSystemdServiceName(),
+            MOLTX_WINDOWS_TASK_NAME: resolveNodeWindowsTaskName(),
+            MOLTX_TASK_SCRIPT_NAME: NODE_WINDOWS_TASK_SCRIPT_NAME,
+            MOLTX_LOG_PREFIX: "node",
+            MOLTX_SERVICE_MARKER: NODE_SERVICE_MARKER,
+            MOLTX_SERVICE_KIND: NODE_SERVICE_KIND,
         },
     };
 }

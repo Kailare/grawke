@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/signal",
+  "name": "@moltx/signal",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Signal channel plugin",
-  "grawke": {
+  "description": "MoltX Signal channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ]

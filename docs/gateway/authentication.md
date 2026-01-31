@@ -6,8 +6,8 @@ read_when:
 ---
 # Authentication
 
-Grawke supports OAuth and API keys for model providers. For Anthropic
-accounts, we recommend using an **API key**. Grawke can also reuse Claude Code
+MoltX supports OAuth and API keys for model providers. For Anthropic
+accounts, we recommend using an **API key**. MoltX can also reuse Claude Code
 credentials, including the long‑lived token created by `claude setup-token`.
 
 See [/concepts/oauth](/concepts/oauth) for the full OAuth flow and storage
@@ -18,18 +18,18 @@ layout.
 If you’re using Anthropic directly, use an API key.
 
 1) Create an API key in the Anthropic Console.
-2) Put it on the **gateway host** (the machine running `grawke gateway`).
+2) Put it on the **gateway host** (the machine running `moltx gateway`).
 
 ```bash
 export ANTHROPIC_API_KEY="..."
-grawke models status
+moltx models status
 ```
 
 3) If the Gateway runs under systemd/launchd, prefer putting the key in
-`~/.grawke/.env` so the daemon can read it:
+`~/.moltx/.env` so the daemon can read it:
 
 ```bash
-cat >> ~/.grawke/.env <<'EOF'
+cat >> ~/.moltx/.env <<'EOF'
 ANTHROPIC_API_KEY=...
 EOF
 ```
@@ -37,15 +37,15 @@ EOF
 Then restart the daemon (or restart your Gateway process) and re-check:
 
 ```bash
-grawke models status
-grawke doctor
+moltx models status
+moltx doctor
 ```
 
 If you’d rather not manage env vars yourself, the onboarding wizard can store
-API keys for daemon use: `grawke onboard`.
+API keys for daemon use: `moltx onboard`.
 
 See [Help](/help) for details on env inheritance (`env.shellEnv`,
-`~/.grawke/.env`, systemd/launchd).
+`~/.moltx/.env`, systemd/launchd).
 
 ## Anthropic: Claude Code CLI setup-token (supported)
 
@@ -57,17 +57,17 @@ Run it on the **gateway host**:
 claude setup-token
 ```
 
-Then verify and sync into Grawke:
+Then verify and sync into MoltX:
 
 ```bash
-grawke models status
-grawke doctor
+moltx models status
+moltx doctor
 ```
 
 This should create (or refresh) an auth profile like `anthropic:claude-cli` in
 the agent auth store.
 
-Grawke config sets `auth.profiles["anthropic:claude-cli"].mode` to `"oauth"` so
+MoltX config sets `auth.profiles["anthropic:claude-cli"].mode` to `"oauth"` so
 the profile accepts both OAuth and setup-token credentials. Older configs that
 used `"token"` are auto-migrated on load.
 
@@ -79,39 +79,39 @@ This credential is only authorized for use with Claude Code and cannot be used f
 
 …use an Anthropic API key instead.
 
-Alternative: run the wrapper (also updates Grawke config):
+Alternative: run the wrapper (also updates MoltX config):
 
 ```bash
-grawke models auth setup-token --provider anthropic
+moltx models auth setup-token --provider anthropic
 ```
 
 Manual token entry (any provider; writes `auth-profiles.json` + updates config):
 
 ```bash
-grawke models auth paste-token --provider anthropic
-grawke models auth paste-token --provider openrouter
+moltx models auth paste-token --provider anthropic
+moltx models auth paste-token --provider openrouter
 ```
 
 Automation-friendly check (exit `1` when expired/missing, `2` when expiring):
 
 ```bash
-grawke models status --check
+moltx models status --check
 ```
 
 Optional ops scripts (systemd/Termux) are documented here:
 [/automation/auth-monitoring](/automation/auth-monitoring)
 
-`grawke models status` loads Claude Code credentials into Grawke’s
+`moltx models status` loads Claude Code credentials into MoltX’s
 `auth-profiles.json` and shows expiry (warns within 24h by default).
-`grawke doctor` also performs the sync when it runs.
+`moltx doctor` also performs the sync when it runs.
 
 > `claude setup-token` requires an interactive TTY.
 
 ## Checking model auth status
 
 ```bash
-grawke models status
-grawke doctor
+moltx models status
+moltx doctor
 ```
 
 ## Controlling which credential is used
@@ -127,9 +127,9 @@ Use `/model` (or `/model list`) for a compact picker; use `/model status` for th
 Set an explicit auth profile order override for an agent (stored in that agent’s `auth-profiles.json`):
 
 ```bash
-grawke models auth order get --provider anthropic
-grawke models auth order set --provider anthropic anthropic:claude-cli
-grawke models auth order clear --provider anthropic
+moltx models auth order get --provider anthropic
+moltx models auth order set --provider anthropic anthropic:claude-cli
+moltx models auth order clear --provider anthropic
 ```
 
 Use `--agent <id>` to target a specific agent; omit it to use the configured default agent.
@@ -138,12 +138,12 @@ Use `--agent <id>` to target a specific agent; omit it to use the configured def
 
 1. **Claude Code** stores credentials in `~/.claude/.credentials.json` (or
    Keychain on macOS).
-2. **Grawke** syncs those into
-   `~/.grawke/agents/<agentId>/agent/auth-profiles.json` when the auth store is
+2. **MoltX** syncs those into
+   `~/.moltx/agents/<agentId>/agent/auth-profiles.json` when the auth store is
    loaded.
 3. Refreshable OAuth profiles can be refreshed automatically on use. Static
    token profiles (including Claude Code CLI setup-token) are not refreshable by
-   Grawke.
+   MoltX.
 
 ## Troubleshooting
 
@@ -153,12 +153,12 @@ If the Anthropic token profile is missing, run `claude setup-token` on the
 **gateway host**, then re-check:
 
 ```bash
-grawke models status
+moltx models status
 ```
 
 ### Token expiring/expired
 
-Run `grawke models status` to confirm which profile is expiring. If the profile
+Run `moltx models status` to confirm which profile is expiring. If the profile
 is `anthropic:claude-cli`, rerun `claude setup-token`.
 
 ## Requirements

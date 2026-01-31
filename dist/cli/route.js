@@ -14,7 +14,7 @@ async function prepareRoutedCommand(params) {
     }
 }
 export async function tryRouteCli(argv) {
-    if (isTruthyEnvValue(process.env.GRAWKE_DISABLE_ROUTE_FIRST))
+    if (isTruthyEnvValue(process.env.MOLTX_DISABLE_ROUTE_FIRST))
         return false;
     if (hasHelpOrVersion(argv))
         return false;

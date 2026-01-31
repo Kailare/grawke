@@ -1,10 +1,10 @@
 ---
-summary: "CLI reference for `grawke agents` (list/add/delete/set identity)"
+summary: "CLI reference for `moltx agents` (list/add/delete/set identity)"
 read_when:
   - You want multiple isolated agents (workspaces + routing + auth)
 ---
 
-# `grawke agents`
+# `moltx agents`
 
 Manage isolated agents (workspaces + auth + routing).
 
@@ -15,11 +15,11 @@ Related:
 ## Examples
 
 ```bash
-grawke agents list
-grawke agents add work --workspace ~/clawd-work
-grawke agents set-identity --workspace ~/clawd --from-identity
-grawke agents set-identity --agent main --avatar avatars/clawd.png
-grawke agents delete work
+moltx agents list
+moltx agents add work --workspace ~/clawd-work
+moltx agents set-identity --workspace ~/clawd --from-identity
+moltx agents set-identity --agent main --avatar avatars/clawd.png
+moltx agents delete work
 ```
 
 ## Identity files
@@ -41,13 +41,13 @@ Avatar paths resolve relative to the workspace root.
 Load from `IDENTITY.md`:
 
 ```bash
-grawke agents set-identity --workspace ~/clawd --from-identity
+moltx agents set-identity --workspace ~/clawd --from-identity
 ```
 
 Override fields explicitly:
 
 ```bash
-grawke agents set-identity --agent main --name "Clawd" --emoji "🦞" --avatar avatars/clawd.png
+moltx agents set-identity --agent main --name "Clawd" --emoji "🦞" --avatar avatars/clawd.png
 ```
 
 Config sample:

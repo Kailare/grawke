@@ -26,8 +26,8 @@ export const TOOL_GROUPS = {
     "group:messaging": ["message"],
     // Nodes + device tools
     "group:nodes": ["nodes"],
-    // All Grawke native tools (excludes provider plugins).
-    "group:grawke": [
+    // All MoltX native tools (excludes provider plugins).
+    "group:moltx": [
         "browser",
         "canvas",
         "nodes",

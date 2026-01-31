@@ -4,7 +4,7 @@ import { WIDE_AREA_DISCOVERY_DOMAIN, writeWideAreaGatewayZone } from "../infra/w
 import { formatBonjourInstanceName, resolveBonjourCliPath, resolveTailnetDnsHint, } from "./server-discovery.js";
 export async function startGatewayDiscovery(params) {
     let bonjourStop = null;
-    const bonjourEnabled = process.env.GRAWKE_DISABLE_BONJOUR !== "1" &&
+    const bonjourEnabled = process.env.MOLTX_DISABLE_BONJOUR !== "1" &&
         process.env.NODE_ENV !== "test" &&
         !process.env.VITEST;
     const tailscaleEnabled = params.tailscaleMode !== "off";
@@ -12,7 +12,7 @@ export async function startGatewayDiscovery(params) {
     const tailnetDns = needsTailnetDns
         ? await resolveTailnetDnsHint({ enabled: tailscaleEnabled })
         : undefined;
-    const sshPortEnv = process.env.GRAWKE_SSH_PORT?.trim();
+    const sshPortEnv = process.env.MOLTX_SSH_PORT?.trim();
     const sshPortParsed = sshPortEnv ? Number.parseInt(sshPortEnv, 10) : NaN;
     const sshPort = Number.isFinite(sshPortParsed) && sshPortParsed > 0 ? sshPortParsed : undefined;
     try {

@@ -1,9 +1,9 @@
-import { resolveGrawkePackageRoot } from "../infra/grawke-root.js";
+import { resolveMoltXPackageRoot } from "../infra/moltx-root.js";
 import { checkUpdateStatus, compareSemverStrings, } from "../infra/update-check.js";
 import { formatCliCommand } from "../cli/command-format.js";
 import { VERSION } from "../version.js";
 export async function getUpdateCheckResult(params) {
-    const root = await resolveGrawkePackageRoot({
+    const root = await resolveMoltXPackageRoot({
         moduleUrl: import.meta.url,
         argv1: process.argv[1],
         cwd: process.cwd(),
@@ -43,7 +43,7 @@ export function formatUpdateAvailableHint(update) {
         details.push(`npm ${availability.latestVersion}`);
     }
     const suffix = details.length > 0 ? ` (${details.join(" · ")})` : "";
-    return `Update available${suffix}. Run: ${formatCliCommand("grawke update")}`;
+    return `Update available${suffix}. Run: ${formatCliCommand("moltx update")}`;
 }
 export function formatUpdateOneLiner(update) {
     const parts = [];

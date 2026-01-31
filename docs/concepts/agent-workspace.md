@@ -9,7 +9,7 @@ read_when:
 The workspace is the agent's home. It is the only working directory used for
 file tools and for workspace context. Keep it private and treat it as memory.
 
-This is separate from `~/.grawke/`, which stores config, credentials, and
+This is separate from `~/.moltx/`, which stores config, credentials, and
 sessions.
 
 **Important:** the workspace is the **default cwd**, not a hard sandbox. Tools
@@ -17,14 +17,14 @@ resolve relative paths against the workspace, but absolute paths can still reach
 elsewhere on the host unless sandboxing is enabled. If you need isolation, use
 [`agents.defaults.sandbox`](/gateway/sandboxing) (and/or per‑agent sandbox config).
 When sandboxing is enabled and `workspaceAccess` is not `"rw"`, tools operate
-inside a sandbox workspace under `~/.grawke/sandboxes`, not your host workspace.
+inside a sandbox workspace under `~/.moltx/sandboxes`, not your host workspace.
 
 ## Default location
 
 - Default: `~/clawd`
-- If `GRAWKE_PROFILE` is set and not `"default"`, the default becomes
+- If `MOLTX_PROFILE` is set and not `"default"`, the default becomes
   `~/clawd-<profile>`.
-- Override in `~/.grawke/grawke.json`:
+- Override in `~/.moltx/moltx.json`:
 
 ```json5
 {
@@ -34,7 +34,7 @@ inside a sandbox workspace under `~/.grawke/sandboxes`, not your host workspace.
 }
 ```
 
-`grawke onboard`, `grawke configure`, or `grawke setup` will create the
+`moltx onboard`, `moltx configure`, or `moltx setup` will create the
 workspace and seed the bootstrap files if they are missing.
 
 If you already manage the workspace files yourself, you can disable bootstrap
@@ -46,20 +46,20 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/grawke`. Keeping multiple workspace
+Older installs may have created `~/moltx`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/grawke`).
+extra folders, archive or move them to Trash (for example `trash ~/moltx`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`grawke doctor` warns when it detects extra workspace directories.
+`moltx doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
-These are the standard files Grawke expects inside the workspace:
+These are the standard files MoltX expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -112,20 +112,20 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, Grawke injects a "missing file" marker into
+If any bootstrap file is missing, MoltX injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust the limit with `agents.defaults.bootstrapMaxChars` (default: 20000).
-`grawke setup` can recreate missing defaults without overwriting existing
+`moltx setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
 
-These live under `~/.grawke/` and should NOT be committed to the workspace repo:
+These live under `~/.moltx/` and should NOT be committed to the workspace repo:
 
-- `~/.grawke/grawke.json` (config)
-- `~/.grawke/credentials/` (OAuth tokens, API keys)
-- `~/.grawke/agents/<agentId>/sessions/` (session transcripts + metadata)
-- `~/.grawke/skills/` (managed skills)
+- `~/.moltx/moltx.json` (config)
+- `~/.moltx/credentials/` (OAuth tokens, API keys)
+- `~/.moltx/agents/<agentId>/sessions/` (session transcripts + metadata)
+- `~/.moltx/skills/` (managed skills)
 
 If you need to migrate sessions or config, copy them separately and keep them
 out of version control.
@@ -199,11 +199,11 @@ git push
 Even in a private repo, avoid storing secrets in the workspace:
 
 - API keys, OAuth tokens, passwords, or private credentials.
-- Anything under `~/.grawke/`.
+- Anything under `~/.moltx/`.
 - Raw dumps of chats or sensitive attachments.
 
 If you must store sensitive references, use placeholders and keep the real
-secret elsewhere (password manager, environment variables, or `~/.grawke/`).
+secret elsewhere (password manager, environment variables, or `~/.moltx/`).
 
 Suggested `.gitignore` starter:
 
@@ -218,9 +218,9 @@ Suggested `.gitignore` starter:
 ## Moving the workspace to a new machine
 
 1. Clone the repo to the desired path (default `~/clawd`).
-2. Set `agents.defaults.workspace` to that path in `~/.grawke/grawke.json`.
-3. Run `grawke setup --workspace <path>` to seed any missing files.
-4. If you need sessions, copy `~/.grawke/agents/<agentId>/sessions/` from the
+2. Set `agents.defaults.workspace` to that path in `~/.moltx/moltx.json`.
+3. Run `moltx setup --workspace <path>` to seed any missing files.
+4. If you need sessions, copy `~/.moltx/agents/<agentId>/sessions/` from the
    old machine separately.
 
 ## Advanced notes

@@ -272,7 +272,7 @@ function buildChatCommands() {
         defineChatCommand({
             key: "restart",
             nativeName: "restart",
-            description: "Restart Grawke.",
+            description: "Restart MoltX.",
             textAlias: "/restart",
         }),
         defineChatCommand({

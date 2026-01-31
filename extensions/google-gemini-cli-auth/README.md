@@ -1,4 +1,4 @@
-# Google Gemini CLI Auth (Grawke plugin)
+# Google Gemini CLI Auth (MoltX plugin)
 
 OAuth provider plugin for **Gemini CLI** (Google Code Assist).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Gemini CLI** (Google Code Assist).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-grawke plugins enable google-gemini-cli-auth
+moltx plugins enable google-gemini-cli-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-grawke models auth login --provider google-gemini-cli --set-default
+moltx models auth login --provider google-gemini-cli --set-default
 ```
 
 ## Requirements
@@ -31,5 +31,5 @@ brew install gemini-cli
 
 Override auto-detected credentials with:
 
-- `GRAWKE_GEMINI_OAUTH_CLIENT_ID` / `GEMINI_CLI_OAUTH_CLIENT_ID`
-- `GRAWKE_GEMINI_OAUTH_CLIENT_SECRET` / `GEMINI_CLI_OAUTH_CLIENT_SECRET`
+- `MOLTX_GEMINI_OAUTH_CLIENT_ID` / `GEMINI_CLI_OAUTH_CLIENT_ID`
+- `MOLTX_GEMINI_OAUTH_CLIENT_SECRET` / `GEMINI_CLI_OAUTH_CLIENT_SECRET`

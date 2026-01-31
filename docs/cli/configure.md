@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `grawke configure` (interactive configuration prompts)"
+summary: "CLI reference for `moltx configure` (interactive configuration prompts)"
 read_when:
   - You want to tweak credentials, devices, or agent defaults interactively
 ---
 
-# `grawke configure`
+# `moltx configure`
 
 Interactive prompt to set up credentials, devices, and agent defaults.
 
 Note: The **Model** section now includes a multi-select for the
 `agents.defaults.models` allowlist (what shows up in `/model` and the model picker).
 
-Tip: `grawke config` without a subcommand opens the same wizard. Use
-`grawke config get|set|unset` for non-interactive edits.
+Tip: `moltx config` without a subcommand opens the same wizard. Use
+`moltx config get|set|unset` for non-interactive edits.
 
 Related:
 - Gateway configuration reference: [Configuration](/gateway/configuration)
@@ -25,6 +25,6 @@ Notes:
 ## Examples
 
 ```bash
-grawke configure
-grawke configure --section models --section channels
+moltx configure
+moltx configure --section models --section channels
 ```

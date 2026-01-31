@@ -1,16 +1,16 @@
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
-  GrawkeConfig,
-} from "grawke/plugin-sdk";
-import { jsonResult, readStringParam } from "grawke/plugin-sdk";
+  MoltXConfig,
+} from "moltx/plugin-sdk";
+import { jsonResult, readStringParam } from "moltx/plugin-sdk";
 
 import { listEnabledZaloAccounts } from "./accounts.js";
 import { sendMessageZalo } from "./send.js";
 
 const providerId = "zalo";
 
-function listEnabledAccounts(cfg: GrawkeConfig) {
+function listEnabledAccounts(cfg: MoltXConfig) {
   return listEnabledZaloAccounts(cfg).filter(
     (account) => account.enabled && account.tokenSource !== "none",
   );
@@ -18,7 +18,7 @@ function listEnabledAccounts(cfg: GrawkeConfig) {
 
 export const zaloMessageActions: ChannelMessageActionAdapter = {
   listActions: ({ cfg }) => {
-    const accounts = listEnabledAccounts(cfg as GrawkeConfig);
+    const accounts = listEnabledAccounts(cfg as MoltXConfig);
     if (accounts.length === 0) return [];
     const actions = new Set<ChannelMessageActionName>(["send"]);
     return Array.from(actions);
@@ -44,7 +44,7 @@ export const zaloMessageActions: ChannelMessageActionAdapter = {
       const result = await sendMessageZalo(to ?? "", content ?? "", {
         accountId: accountId ?? undefined,
         mediaUrl: mediaUrl ?? undefined,
-        cfg: cfg as GrawkeConfig,
+        cfg: cfg as MoltXConfig,
       });
 
       if (!result.ok) {

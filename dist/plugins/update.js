@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import { resolveUserPath } from "../utils.js";
-import { discoverGrawkePlugins } from "./discovery.js";
+import { discoverMoltXPlugins } from "./discovery.js";
 import { installPluginFromNpmSpec, resolvePluginInstallDir } from "./install.js";
 import { recordPluginInstall } from "./installs.js";
 import { loadPluginManifest } from "./manifest.js";
@@ -15,7 +15,7 @@ async function readInstalledPackageVersion(dir) {
     }
 }
 function resolveBundledPluginSources(params) {
-    const discovery = discoverGrawkePlugins({ workspaceDir: params.workspaceDir });
+    const discovery = discoverMoltXPlugins({ workspaceDir: params.workspaceDir });
     const bundled = new Map();
     for (const candidate of discovery.candidates) {
         if (candidate.origin !== "bundled")
@@ -26,7 +26,7 @@ function resolveBundledPluginSources(params) {
         const pluginId = manifest.manifest.id;
         if (bundled.has(pluginId))
             continue;
-        const npmSpec = candidate.packageGrawke?.install?.npmSpec?.trim() ||
+        const npmSpec = candidate.packageMoltX?.install?.npmSpec?.trim() ||
             candidate.packageName?.trim() ||
             undefined;
         bundled.set(pluginId, {

@@ -62,7 +62,7 @@ export async function fetchClaudeUsage(token, timeoutMs, fetchFn) {
     const res = await fetchJson("https://api.anthropic.com/api/oauth/usage", {
         headers: {
             Authorization: `Bearer ${token}`,
-            "User-Agent": "grawke",
+            "User-Agent": "moltx",
             Accept: "application/json",
             "anthropic-version": "2023-06-01",
             "anthropic-beta": "oauth-2025-04-20",

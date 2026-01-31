@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 
 import type WebSocket from "ws";
 
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 
 export type ResponsePrefixContext = {
   model?: string;
@@ -114,20 +114,20 @@ function normalizeAgentId(value: string | undefined | null): string {
   );
 }
 
-type AgentEntry = NonNullable<NonNullable<GrawkeConfig["agents"]>["list"]>[number];
+type AgentEntry = NonNullable<NonNullable<MoltXConfig["agents"]>["list"]>[number];
 
-function listAgents(cfg: GrawkeConfig): AgentEntry[] {
+function listAgents(cfg: MoltXConfig): AgentEntry[] {
   const list = cfg.agents?.list;
   if (!Array.isArray(list)) return [];
   return list.filter((entry): entry is AgentEntry => Boolean(entry && typeof entry === "object"));
 }
 
-function resolveAgentEntry(cfg: GrawkeConfig, agentId: string): AgentEntry | undefined {
+function resolveAgentEntry(cfg: MoltXConfig, agentId: string): AgentEntry | undefined {
   const id = normalizeAgentId(agentId);
   return listAgents(cfg).find((entry) => normalizeAgentId(entry.id) === id);
 }
 
-export function resolveIdentityName(cfg: GrawkeConfig, agentId: string): string | undefined {
+export function resolveIdentityName(cfg: MoltXConfig, agentId: string): string | undefined {
   const entry = resolveAgentEntry(cfg, agentId);
   return entry?.identity?.name?.trim() || undefined;
 }

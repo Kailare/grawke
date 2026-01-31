@@ -3,33 +3,33 @@ import { isRich, theme } from "../../terminal/theme.js";
 import { formatCliBannerLine, hasEmittedCliBanner } from "../banner.js";
 const EXAMPLES = [
     [
-        "grawke channels login --verbose",
+        "moltx channels login --verbose",
         "Link personal WhatsApp Web and show QR + connection logs.",
     ],
     [
-        'grawke message send --target +15555550123 --message "Hi" --json',
+        'moltx message send --target +15555550123 --message "Hi" --json',
         "Send via your web session and print JSON result.",
     ],
-    ["grawke gateway --port 18789", "Run the WebSocket Gateway locally."],
-    ["grawke --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-    ["grawke gateway --force", "Kill anything bound to the default gateway port, then start it."],
-    ["grawke gateway ...", "Gateway control via WebSocket."],
+    ["moltx gateway --port 18789", "Run the WebSocket Gateway locally."],
+    ["moltx --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
+    ["moltx gateway --force", "Kill anything bound to the default gateway port, then start it."],
+    ["moltx gateway ...", "Gateway control via WebSocket."],
     [
-        'grawke agent --to +15555550123 --message "Run summary" --deliver',
+        'moltx agent --to +15555550123 --message "Run summary" --deliver',
         "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
     ],
     [
-        'grawke message send --channel telegram --target @mychat --message "Hi"',
+        'moltx message send --channel telegram --target @mychat --message "Hi"',
         "Send via your Telegram bot.",
     ],
 ];
 export function configureProgramHelp(program, ctx) {
     program
-        .name("grawke")
+        .name("moltx")
         .description("")
         .version(ctx.programVersion)
-        .option("--dev", "Dev profile: isolate state under ~/.grawke-dev, default gateway port 19001, and shift derived ports (browser/canvas)")
-        .option("--profile <name>", "Use a named profile (isolates GRAWKE_STATE_DIR/GRAWKE_CONFIG_PATH under ~/.grawke-<name>)");
+        .option("--dev", "Dev profile: isolate state under ~/.moltx-dev, default gateway port 19001, and shift derived ports (browser/canvas)")
+        .option("--profile <name>", "Use a named profile (isolates MOLTX_STATE_DIR/MOLTX_CONFIG_PATH under ~/.moltx-<name>)");
     program.option("--no-color", "Disable ANSI colors", false);
     program.configureHelp({
         optionTerm: (option) => theme.option(option.flags),

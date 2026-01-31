@@ -1,5 +1,5 @@
-import type { GrawkePluginApi, GrawkeConfig } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi, MoltXConfig } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { nostrPlugin } from "./src/channel.js";
 import { setNostrRuntime, getNostrRuntime } from "./src/runtime.js";
@@ -12,7 +12,7 @@ const plugin = {
   name: "Nostr",
   description: "Nostr DM channel plugin via NIP-04",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     setNostrRuntime(api.runtime);
     api.registerChannel({ plugin: nostrPlugin });
 
@@ -20,13 +20,13 @@ const plugin = {
     const httpHandler = createNostrProfileHttpHandler({
       getConfigProfile: (accountId: string) => {
         const runtime = getNostrRuntime();
-        const cfg = runtime.config.loadConfig() as GrawkeConfig;
+        const cfg = runtime.config.loadConfig() as MoltXConfig;
         const account = resolveNostrAccount({ cfg, accountId });
         return account.profile;
       },
       updateConfigProfile: async (accountId: string, profile: NostrProfile) => {
         const runtime = getNostrRuntime();
-        const cfg = runtime.config.loadConfig() as GrawkeConfig;
+        const cfg = runtime.config.loadConfig() as MoltXConfig;
 
         // Build the config patch for channels.nostr.profile
         const channels = (cfg.channels ?? {}) as Record<string, unknown>;
@@ -49,7 +49,7 @@ const plugin = {
       },
       getAccountInfo: (accountId: string) => {
         const runtime = getNostrRuntime();
-        const cfg = runtime.config.loadConfig() as GrawkeConfig;
+        const cfg = runtime.config.loadConfig() as MoltXConfig;
         const account = resolveNostrAccount({ cfg, accountId });
         if (!account.configured || !account.publicKey) {
           return null;

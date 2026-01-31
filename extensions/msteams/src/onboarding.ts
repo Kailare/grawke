@@ -1,16 +1,16 @@
 import type {
   ChannelOnboardingAdapter,
   ChannelOnboardingDmPolicy,
-  GrawkeConfig,
+  MoltXConfig,
   DmPolicy,
   WizardPrompter,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import {
   addWildcardAllowFrom,
   DEFAULT_ACCOUNT_ID,
   formatDocsLink,
   promptChannelAccessConfig,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { resolveMSTeamsCredentials } from "./token.js";
 import {
@@ -21,7 +21,7 @@ import {
 
 const channel = "msteams" as const;
 
-function setMSTeamsDmPolicy(cfg: GrawkeConfig, dmPolicy: DmPolicy) {
+function setMSTeamsDmPolicy(cfg: MoltXConfig, dmPolicy: DmPolicy) {
   const allowFrom =
     dmPolicy === "open"
       ? addWildcardAllowFrom(cfg.channels?.msteams?.allowFrom)?.map((entry) => String(entry))
@@ -39,7 +39,7 @@ function setMSTeamsDmPolicy(cfg: GrawkeConfig, dmPolicy: DmPolicy) {
   };
 }
 
-function setMSTeamsAllowFrom(cfg: GrawkeConfig, allowFrom: string[]): GrawkeConfig {
+function setMSTeamsAllowFrom(cfg: MoltXConfig, allowFrom: string[]): MoltXConfig {
   return {
     ...cfg,
     channels: {
@@ -64,9 +64,9 @@ function looksLikeGuid(value: string): boolean {
 }
 
 async function promptMSTeamsAllowFrom(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   prompter: WizardPrompter;
-}): Promise<GrawkeConfig> {
+}): Promise<MoltXConfig> {
   const existing = params.cfg.channels?.msteams?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -144,9 +144,9 @@ async function noteMSTeamsCredentialHelp(prompter: WizardPrompter): Promise<void
 }
 
 function setMSTeamsGroupPolicy(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): GrawkeConfig {
+): MoltXConfig {
   return {
     ...cfg,
     channels: {
@@ -161,9 +161,9 @@ function setMSTeamsGroupPolicy(
 }
 
 function setMSTeamsTeamsAllowlist(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   entries: Array<{ teamKey: string; channelKey?: string }>,
-): GrawkeConfig {
+): MoltXConfig {
   const baseTeams = cfg.channels?.msteams?.teams ?? {};
   const teams: Record<string, { channels?: Record<string, unknown> }> = { ...baseTeams };
   for (const entry of entries) {

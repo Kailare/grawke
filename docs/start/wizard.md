@@ -7,7 +7,7 @@ read_when:
 
 # Onboarding Wizard (CLI)
 
-The onboarding wizard is the **recommended** way to set up Grawke on macOS,
+The onboarding wizard is the **recommended** way to set up MoltX on macOS,
 Linux, or Windows (via WSL2; strongly recommended).
 It configures a local Gateway or a remote Gateway connection, plus channels, skills,
 and workspace defaults in one guided flow.
@@ -15,17 +15,17 @@ and workspace defaults in one guided flow.
 Primary entrypoint:
 
 ```bash
-grawke onboard
+moltx onboard
 ```
 
 Follow‑up reconfiguration:
 
 ```bash
-grawke configure
+moltx configure
 ```
 
 Recommended: set up a Brave Search API key so the agent can use `web_search`
-(`web_fetch` works without a key). Easiest path: `grawke configure --section web`
+(`web_fetch` works without a key). Easiest path: `moltx configure --section web`
 which stores `tools.web.search.apiKey`. Docs: [Web tools](/tools/web).
 
 ## QuickStart vs Advanced
@@ -59,7 +59,7 @@ It does **not** install or change anything on the remote host.
 To add more isolated agents (separate workspace + sessions + auth), use:
 
 ```bash
-grawke agents add <name>
+moltx agents add <name>
 ```
 
 Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (and `--workspace`) for scripts.
@@ -67,11 +67,11 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
 ## Flow details (local)
 
 1) **Existing config detection**
-   - If `~/.grawke/grawke.json` exists, choose **Keep / Modify / Reset**.
+   - If `~/.moltx/moltx.json` exists, choose **Keep / Modify / Reset**.
    - Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset**
      (or pass `--reset`).
    - If the config is invalid or contains legacy keys, the wizard stops and asks
-     you to run `grawke doctor` before continuing.
+     you to run `moltx doctor` before continuing.
    - Reset uses `trash` (never `rm`) and offers scopes:
      - Config only
      - Config + credentials + sessions
@@ -84,7 +84,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **OpenAI Code (Codex) subscription (Codex CLI)**: if `~/.codex/auth.json` exists, the wizard can reuse it.
    - **OpenAI Code (Codex) subscription (OAuth)**: browser flow; paste the `code#state`.
      - Sets `agents.defaults.model` to `openai-codex/gpt-5.2` when model is unset or `openai/*`.
-   - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.grawke/.env` so launchd can read it.
+   - **OpenAI API key**: uses `OPENAI_API_KEY` if present or prompts for a key, then saves it to `~/.moltx/.env` so launchd can read it.
    - **OpenCode Zen (multi-model proxy)**: prompts for `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`, get it at https://opencode.ai/auth).
    - **API key**: stores the key for you.
    - **Vercel AI Gateway (multi-model proxy)**: prompts for `AI_GATEWAY_API_KEY`.
@@ -99,7 +99,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **Skip**: no auth configured yet.
    - Pick a default model from detected options (or enter provider/model manually).
    - Wizard runs a model check and warns if the configured model is unknown or missing auth.
-  - OAuth credentials live in `~/.grawke/credentials/oauth.json`; auth profiles live in `~/.grawke/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
+  - OAuth credentials live in `~/.moltx/credentials/oauth.json`; auth profiles live in `~/.moltx/agents/<agentId>/agent/auth-profiles.json` (API keys + OAuth).
    - More detail: [/concepts/oauth](/concepts/oauth)
 
 3) **Workspace**
@@ -121,7 +121,7 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
   - Mattermost (plugin): bot token + base URL.
    - Signal: optional `signal-cli` install + account config.
    - iMessage: local `imsg` CLI path + DB access.
-  - DM security: default is pairing. First DM sends a code; approve via `grawke pairing approve <channel> <code>` or use allowlists.
+  - DM security: default is pairing. First DM sends a code; approve via `moltx pairing approve <channel> <code>` or use allowlists.
 
 6) **Daemon install**
    - macOS: LaunchAgent
@@ -132,8 +132,8 @@ Tip: `--json` does **not** imply non-interactive mode. Use `--non-interactive` (
    - **Runtime selection:** Node (recommended; required for WhatsApp/Telegram). Bun is **not recommended**.
 
 7) **Health check**
-   - Starts the Gateway (if needed) and runs `grawke health`.
-   - Tip: `grawke status --deep` adds gateway health probes to status output (requires a reachable gateway).
+   - Starts the Gateway (if needed) and runs `moltx health`.
+   - Tip: `moltx status --deep` adds gateway health probes to status output (requires a reachable gateway).
 
 8) **Skills (recommended)**
    - Reads the available skills and checks requirements.
@@ -162,7 +162,7 @@ Notes:
 
 ## Add another agent
 
-Use `grawke agents add <name>` to create a separate agent with its own workspace,
+Use `moltx agents add <name>` to create a separate agent with its own workspace,
 sessions, and auth profiles. Running without `--workspace` launches the wizard.
 
 What it sets:
@@ -180,7 +180,7 @@ Notes:
 Use `--non-interactive` to automate or script onboarding:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -196,7 +196,7 @@ Add `--json` for a machine‑readable summary.
 Gemini example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice gemini-api-key \
   --gemini-api-key "$GEMINI_API_KEY" \
@@ -207,7 +207,7 @@ grawke onboard --non-interactive \
 Z.AI example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice zai-api-key \
   --zai-api-key "$ZAI_API_KEY" \
@@ -218,7 +218,7 @@ grawke onboard --non-interactive \
 Vercel AI Gateway example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice ai-gateway-api-key \
   --ai-gateway-api-key "$AI_GATEWAY_API_KEY" \
@@ -229,7 +229,7 @@ grawke onboard --non-interactive \
 Moonshot example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice moonshot-api-key \
   --moonshot-api-key "$MOONSHOT_API_KEY" \
@@ -240,7 +240,7 @@ grawke onboard --non-interactive \
 Synthetic example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice synthetic-api-key \
   --synthetic-api-key "$SYNTHETIC_API_KEY" \
@@ -251,7 +251,7 @@ grawke onboard --non-interactive \
 OpenCode Zen example:
 
 ```bash
-grawke onboard --non-interactive \
+moltx onboard --non-interactive \
   --mode local \
   --auth-choice opencode-zen \
   --opencode-zen-api-key "$OPENCODE_API_KEY" \
@@ -262,7 +262,7 @@ grawke onboard --non-interactive \
 Add agent (non‑interactive) example:
 
 ```bash
-grawke agents add work \
+moltx agents add work \
   --workspace ~/clawd-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
@@ -279,7 +279,7 @@ Clients (macOS app, Control UI) can render steps without re‑implementing onboa
 
 The wizard can install `signal-cli` from GitHub releases:
 - Downloads the appropriate release asset.
-- Stores it under `~/.grawke/tools/signal-cli/<version>/`.
+- Stores it under `~/.moltx/tools/signal-cli/<version>/`.
 - Writes `channels.signal.cliPath` to your config.
 
 Notes:
@@ -289,7 +289,7 @@ Notes:
 
 ## What the wizard writes
 
-Typical fields in `~/.grawke/grawke.json`:
+Typical fields in `~/.moltx/moltx.json`:
 - `agents.defaults.workspace`
 - `agents.defaults.model` / `models.providers` (if Minimax chosen)
 - `gateway.*` (mode, bind, auth, tailscale)
@@ -302,10 +302,10 @@ Typical fields in `~/.grawke/grawke.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`grawke agents add` writes `agents.list[]` and optional `bindings`.
+`moltx agents add` writes `agents.list[]` and optional `bindings`.
 
-WhatsApp credentials go under `~/.grawke/credentials/whatsapp/<accountId>/`.
-Sessions are stored under `~/.grawke/agents/<agentId>/sessions/`.
+WhatsApp credentials go under `~/.moltx/credentials/whatsapp/<accountId>/`.
+Sessions are stored under `~/.moltx/agents/<agentId>/sessions/`.
 
 Some channels are delivered as plugins. When you pick one during onboarding, the wizard
 will prompt to install it (npm or a local path) before it can be configured.

@@ -95,8 +95,8 @@ vi.mock("@opentelemetry/semantic-conventions", () => ({
   },
 }));
 
-vi.mock("grawke/plugin-sdk", async () => {
-  const actual = await vi.importActual<typeof import("grawke/plugin-sdk")>("grawke/plugin-sdk");
+vi.mock("moltx/plugin-sdk", async () => {
+  const actual = await vi.importActual<typeof import("moltx/plugin-sdk")>("moltx/plugin-sdk");
   return {
     ...actual,
     registerLogTransport: registerLogTransportMock,
@@ -104,7 +104,7 @@ vi.mock("grawke/plugin-sdk", async () => {
 });
 
 import { createDiagnosticsOtelService } from "./service.js";
-import { emitDiagnosticEvent } from "grawke/plugin-sdk";
+import { emitDiagnosticEvent } from "moltx/plugin-sdk";
 
 describe("diagnostics-otel service", () => {
   beforeEach(() => {
@@ -191,20 +191,20 @@ describe("diagnostics-otel service", () => {
       attempt: 2,
     });
 
-    expect(telemetryState.counters.get("grawke.webhook.received")?.add).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("grawke.webhook.duration_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("grawke.message.queued")?.add).toHaveBeenCalled();
-    expect(telemetryState.counters.get("grawke.message.processed")?.add).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("grawke.message.duration_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("grawke.queue.wait_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("grawke.session.stuck")?.add).toHaveBeenCalled();
-    expect(telemetryState.histograms.get("grawke.session.stuck_age_ms")?.record).toHaveBeenCalled();
-    expect(telemetryState.counters.get("grawke.run.attempt")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("moltx.webhook.received")?.add).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("moltx.webhook.duration_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("moltx.message.queued")?.add).toHaveBeenCalled();
+    expect(telemetryState.counters.get("moltx.message.processed")?.add).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("moltx.message.duration_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("moltx.queue.wait_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("moltx.session.stuck")?.add).toHaveBeenCalled();
+    expect(telemetryState.histograms.get("moltx.session.stuck_age_ms")?.record).toHaveBeenCalled();
+    expect(telemetryState.counters.get("moltx.run.attempt")?.add).toHaveBeenCalled();
 
     const spanNames = telemetryState.tracer.startSpan.mock.calls.map((call) => call[0]);
-    expect(spanNames).toContain("grawke.webhook.processed");
-    expect(spanNames).toContain("grawke.message.processed");
-    expect(spanNames).toContain("grawke.session.stuck");
+    expect(spanNames).toContain("moltx.webhook.processed");
+    expect(spanNames).toContain("moltx.message.processed");
+    expect(spanNames).toContain("moltx.session.stuck");
 
     expect(registerLogTransportMock).toHaveBeenCalledTimes(1);
     expect(registeredTransports).toHaveLength(1);

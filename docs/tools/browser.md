@@ -8,7 +8,7 @@ read_when:
 
 # Browser (clawd-managed)
 
-Grawke can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
+MoltX can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
 It is isolated from your personal browser and is managed through a small local
 control server.
 
@@ -32,10 +32,10 @@ agent automation and verification.
 ## Quick start
 
 ```bash
-grawke browser --browser-profile clawd status
-grawke browser --browser-profile clawd start
-grawke browser --browser-profile clawd open https://example.com
-grawke browser --browser-profile clawd snapshot
+moltx browser --browser-profile clawd status
+moltx browser --browser-profile clawd start
+moltx browser --browser-profile clawd open https://example.com
+moltx browser --browser-profile clawd snapshot
 ```
 
 If you get “Browser disabled”, enable it in config (see below) and restart the
@@ -44,14 +44,14 @@ Gateway.
 ## Profiles: `clawd` vs `chrome`
 
 - `clawd`: managed, isolated browser (no extension required).
-- `chrome`: extension relay to your **system browser** (requires the Grawke
+- `chrome`: extension relay to your **system browser** (requires the MoltX
   extension to be attached to a tab).
 
 Set `browser.defaultProfile: "clawd"` if you want managed mode by default.
 
 ## Configuration
 
-Browser settings live in `~/.grawke/grawke.json`.
+Browser settings live in `~/.moltx/moltx.json`.
 
 ```json5
 {
@@ -78,7 +78,7 @@ Browser settings live in `~/.grawke/grawke.json`.
 
 Notes:
 - `controlUrl` defaults to `http://127.0.0.1:18791`.
-- If you override the Gateway port (`gateway.port` or `GRAWKE_GATEWAY_PORT`),
+- If you override the Gateway port (`gateway.port` or `MOLTX_GATEWAY_PORT`),
   the default browser ports shift to stay in the same “family” (control = gateway + 2).
 - `cdpUrl` defaults to `controlUrl + 1` when unset.
 - `remoteCdpTimeoutMs` applies to remote (non-loopback) CDP reachability checks.
@@ -92,13 +92,13 @@ Notes:
 ## Use Brave (or another Chromium-based browser)
 
 If your **system default** browser is Chromium-based (Chrome/Brave/Edge/etc),
-Grawke uses it automatically. Set `browser.executablePath` to override
+MoltX uses it automatically. Set `browser.executablePath` to override
 auto-detection:
 
 CLI example:
 
 ```bash
-grawke config set browser.executablePath "/usr/bin/google-chrome"
+moltx config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -131,7 +131,7 @@ grawke config set browser.executablePath "/usr/bin/google-chrome"
 - **Remote control:** `controlUrl` is non-loopback. The Gateway **does not** start
   a local server; it assumes you are pointing at an existing server elsewhere.
 - **Remote CDP:** set `browser.profiles.<name>.cdpUrl` (or `browser.cdpUrl`) to
-  attach to a remote Chromium-based browser. In this case, Grawke will not launch a local browser.
+  attach to a remote Chromium-based browser. In this case, MoltX will not launch a local browser.
 
 ## Remote browser (control server)
 
@@ -162,13 +162,13 @@ Remote CDP URLs can include auth:
 - Query tokens (e.g., `https://provider.example?token=<token>`)
 - HTTP Basic auth (e.g., `https://user:pass@provider.example`)
 
-Grawke preserves the auth when calling `/json/*` endpoints and when connecting
+MoltX preserves the auth when calling `/json/*` endpoints and when connecting
 to the CDP WebSocket. Prefer environment variables or secrets managers for
 tokens instead of committing them to config files.
 
 ### Node browser proxy (zero-config default)
 
-If you run a **node host** on the machine that has your browser, Grawke can
+If you run a **node host** on the machine that has your browser, MoltX can
 auto-route browser tool calls to that node without any custom `controlUrl`
 setup. This is the default path for remote gateways.
 
@@ -182,7 +182,7 @@ Notes:
 ### Browserless (hosted remote CDP)
 
 [Browserless](https://browserless.io) is a hosted Chromium service that exposes
-CDP endpoints over HTTPS. You can point a Grawke browser profile at a
+CDP endpoints over HTTPS. You can point a MoltX browser profile at a
 Browserless region endpoint and authenticate with your API key.
 
 Example:
@@ -213,7 +213,7 @@ Run a standalone browser control server (recommended when your Gateway is remote
 
 ```bash
 # on the machine that runs Chrome/Brave/Edge
-grawke browser serve --bind <browser-host> --port 18791 --token <token>
+moltx browser serve --bind <browser-host> --port 18791 --token <token>
 ```
 
 Then point your Gateway at it:
@@ -234,7 +234,7 @@ Then point your Gateway at it:
 And set the auth token in the Gateway environment:
 
 ```bash
-export GRAWKE_BROWSER_CONTROL_TOKEN="<token>"
+export MOLTX_BROWSER_CONTROL_TOKEN="<token>"
 ```
 
 Option B: store the token in the Gateway config instead (same shared token):
@@ -260,14 +260,14 @@ Key ideas:
 
 ### Tokens (what is shared with what?)
 
-- `browser.controlToken` / `GRAWKE_BROWSER_CONTROL_TOKEN` is **only** for authenticating browser control HTTP requests to `browser.controlUrl`.
+- `browser.controlToken` / `MOLTX_BROWSER_CONTROL_TOKEN` is **only** for authenticating browser control HTTP requests to `browser.controlUrl`.
 - It is **not** the Gateway token (`gateway.auth.token`) and **not** a node pairing token.
 - You *can* reuse the same string value, but it’s better to keep them separate to reduce blast radius.
 
 ### Binding (don’t expose to your LAN by accident)
 
 Recommended:
-- Keep `grawke browser serve` bound to loopback (`127.0.0.1`) and publish it via Tailscale.
+- Keep `moltx browser serve` bound to loopback (`127.0.0.1`) and publish it via Tailscale.
 - Or bind to a Tailnet IP only (never `0.0.0.0`) and require a token.
 
 Avoid:
@@ -275,7 +275,7 @@ Avoid:
 
 ### TLS / HTTPS (recommended approach: terminate in front)
 
-Best practice here: keep `grawke browser serve` on HTTP and terminate TLS in front.
+Best practice here: keep `moltx browser serve` on HTTP and terminate TLS in front.
 
 If you’re already using Tailscale, you have two good options:
 
@@ -286,7 +286,7 @@ If you’re already using Tailscale, you have two good options:
 
 ```bash
 # on the browser machine
-grawke browser serve --bind 127.0.0.1 --port 18791 --token <token>
+moltx browser serve --bind 127.0.0.1 --port 18791 --token <token>
 tailscale serve https / http://127.0.0.1:18791
 ```
 
@@ -298,7 +298,7 @@ Notes:
 
 ## Profiles (multi-browser)
 
-Grawke supports multiple named profiles (routing configs). Profiles can be:
+MoltX supports multiple named profiles (routing configs). Profiles can be:
 - **clawd-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
 - **remote**: an explicit CDP URL (Chromium-based browser running elsewhere)
 - **extension relay**: your existing Chrome tab(s) via the local relay + Chrome extension
@@ -313,17 +313,17 @@ All control endpoints accept `?profile=<name>`; the CLI uses `--browser-profile`
 
 ## Chrome extension relay (use your existing Chrome)
 
-Grawke can also drive **your existing Chrome tabs** (no separate “clawd” Chrome instance) via a local CDP relay + a Chrome extension.
+MoltX can also drive **your existing Chrome tabs** (no separate “clawd” Chrome instance) via a local CDP relay + a Chrome extension.
 
 Full guide: [Chrome extension](/tools/chrome-extension)
 
 Flow:
-- You run a **browser control server** (Gateway on the same machine, or `grawke browser serve`).
+- You run a **browser control server** (Gateway on the same machine, or `moltx browser serve`).
 - A local **relay server** listens at a loopback `cdpUrl` (default: `http://127.0.0.1:18792`).
-- You click the **Grawke Browser Relay** extension icon on a tab to attach (it does not auto-attach).
+- You click the **MoltX Browser Relay** extension icon on a tab to attach (it does not auto-attach).
 - The agent controls that tab via the normal `browser` tool, by selecting the right profile.
 
-If the Gateway runs on the same machine as Chrome (default setup), you usually **do not** need `grawke browser serve`.
+If the Gateway runs on the same machine as Chrome (default setup), you usually **do not** need `moltx browser serve`.
 Use `browser serve` only when the Gateway runs elsewhere (remote mode).
 
 ### Sandboxed sessions
@@ -338,21 +338,21 @@ Chrome extension relay takeover requires host browser control, so either:
 1) Load the extension (dev/unpacked):
 
 ```bash
-grawke browser extension install
+moltx browser extension install
 ```
 
 - Chrome → `chrome://extensions` → enable “Developer mode”
-- “Load unpacked” → select the directory printed by `grawke browser extension path`
+- “Load unpacked” → select the directory printed by `moltx browser extension path`
 - Pin the extension, then click it on the tab you want to control (badge shows `ON`).
 
 2) Use it:
-- CLI: `grawke browser --browser-profile chrome tabs`
+- CLI: `moltx browser --browser-profile chrome tabs`
 - Agent tool: `browser` with `profile="chrome"`
 
 Optional: if you want a different name or relay port, create your own profile:
 
 ```bash
-grawke browser create-profile \
+moltx browser create-profile \
   --name my-chrome \
   --driver extension \
   --cdp-url http://127.0.0.1:18792 \
@@ -371,7 +371,7 @@ Notes:
 
 ## Browser selection
 
-When launching locally, Grawke picks the first available:
+When launching locally, MoltX picks the first available:
 1. Chrome
 2. Brave
 3. Edge
@@ -414,7 +414,7 @@ For the Chrome extension relay driver, ARIA snapshots and screenshots require Pl
 
 If you see `Playwright is not available in this gateway build`, install the full
 Playwright package (not `playwright-core`) and restart the gateway, or reinstall
-Grawke with browser support.
+MoltX with browser support.
 
 ## How it works (internal)
 
@@ -434,76 +434,76 @@ All commands accept `--browser-profile <name>` to target a specific profile.
 All commands also accept `--json` for machine-readable output (stable payloads).
 
 Basics:
-- `grawke browser status`
-- `grawke browser start`
-- `grawke browser stop`
-- `grawke browser tabs`
-- `grawke browser tab`
-- `grawke browser tab new`
-- `grawke browser tab select 2`
-- `grawke browser tab close 2`
-- `grawke browser open https://example.com`
-- `grawke browser focus abcd1234`
-- `grawke browser close abcd1234`
+- `moltx browser status`
+- `moltx browser start`
+- `moltx browser stop`
+- `moltx browser tabs`
+- `moltx browser tab`
+- `moltx browser tab new`
+- `moltx browser tab select 2`
+- `moltx browser tab close 2`
+- `moltx browser open https://example.com`
+- `moltx browser focus abcd1234`
+- `moltx browser close abcd1234`
 
 Inspection:
-- `grawke browser screenshot`
-- `grawke browser screenshot --full-page`
-- `grawke browser screenshot --ref 12`
-- `grawke browser screenshot --ref e12`
-- `grawke browser snapshot`
-- `grawke browser snapshot --format aria --limit 200`
-- `grawke browser snapshot --interactive --compact --depth 6`
-- `grawke browser snapshot --efficient`
-- `grawke browser snapshot --labels`
-- `grawke browser snapshot --selector "#main" --interactive`
-- `grawke browser snapshot --frame "iframe#main" --interactive`
-- `grawke browser console --level error`
-- `grawke browser errors --clear`
-- `grawke browser requests --filter api --clear`
-- `grawke browser pdf`
-- `grawke browser responsebody "**/api" --max-chars 5000`
+- `moltx browser screenshot`
+- `moltx browser screenshot --full-page`
+- `moltx browser screenshot --ref 12`
+- `moltx browser screenshot --ref e12`
+- `moltx browser snapshot`
+- `moltx browser snapshot --format aria --limit 200`
+- `moltx browser snapshot --interactive --compact --depth 6`
+- `moltx browser snapshot --efficient`
+- `moltx browser snapshot --labels`
+- `moltx browser snapshot --selector "#main" --interactive`
+- `moltx browser snapshot --frame "iframe#main" --interactive`
+- `moltx browser console --level error`
+- `moltx browser errors --clear`
+- `moltx browser requests --filter api --clear`
+- `moltx browser pdf`
+- `moltx browser responsebody "**/api" --max-chars 5000`
 
 Actions:
-- `grawke browser navigate https://example.com`
-- `grawke browser resize 1280 720`
-- `grawke browser click 12 --double`
-- `grawke browser click e12 --double`
-- `grawke browser type 23 "hello" --submit`
-- `grawke browser press Enter`
-- `grawke browser hover 44`
-- `grawke browser scrollintoview e12`
-- `grawke browser drag 10 11`
-- `grawke browser select 9 OptionA OptionB`
-- `grawke browser download e12 /tmp/report.pdf`
-- `grawke browser waitfordownload /tmp/report.pdf`
-- `grawke browser upload /tmp/file.pdf`
-- `grawke browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `grawke browser dialog --accept`
-- `grawke browser wait --text "Done"`
-- `grawke browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `grawke browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `grawke browser highlight e12`
-- `grawke browser trace start`
-- `grawke browser trace stop`
+- `moltx browser navigate https://example.com`
+- `moltx browser resize 1280 720`
+- `moltx browser click 12 --double`
+- `moltx browser click e12 --double`
+- `moltx browser type 23 "hello" --submit`
+- `moltx browser press Enter`
+- `moltx browser hover 44`
+- `moltx browser scrollintoview e12`
+- `moltx browser drag 10 11`
+- `moltx browser select 9 OptionA OptionB`
+- `moltx browser download e12 /tmp/report.pdf`
+- `moltx browser waitfordownload /tmp/report.pdf`
+- `moltx browser upload /tmp/file.pdf`
+- `moltx browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `moltx browser dialog --accept`
+- `moltx browser wait --text "Done"`
+- `moltx browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `moltx browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `moltx browser highlight e12`
+- `moltx browser trace start`
+- `moltx browser trace stop`
 
 State:
-- `grawke browser cookies`
-- `grawke browser cookies set session abc123 --url "https://example.com"`
-- `grawke browser cookies clear`
-- `grawke browser storage local get`
-- `grawke browser storage local set theme dark`
-- `grawke browser storage session clear`
-- `grawke browser set offline on`
-- `grawke browser set headers --json '{"X-Debug":"1"}'`
-- `grawke browser set credentials user pass`
-- `grawke browser set credentials --clear`
-- `grawke browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `grawke browser set geo --clear`
-- `grawke browser set media dark`
-- `grawke browser set timezone America/New_York`
-- `grawke browser set locale en-US`
-- `grawke browser set device "iPhone 14"`
+- `moltx browser cookies`
+- `moltx browser cookies set session abc123 --url "https://example.com"`
+- `moltx browser cookies clear`
+- `moltx browser storage local get`
+- `moltx browser storage local set theme dark`
+- `moltx browser storage session clear`
+- `moltx browser set offline on`
+- `moltx browser set headers --json '{"X-Debug":"1"}'`
+- `moltx browser set credentials user pass`
+- `moltx browser set credentials --clear`
+- `moltx browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `moltx browser set geo --clear`
+- `moltx browser set media dark`
+- `moltx browser set timezone America/New_York`
+- `moltx browser set locale en-US`
+- `moltx browser set device "iPhone 14"`
 
 Notes:
 - `upload` and `dialog` are **arming** calls; run them before the click/press
@@ -523,16 +523,16 @@ Notes:
 
 ## Snapshots and refs
 
-Grawke supports two “snapshot” styles:
+MoltX supports two “snapshot” styles:
 
-- **AI snapshot (numeric refs)**: `grawke browser snapshot` (default; `--format ai`)
+- **AI snapshot (numeric refs)**: `moltx browser snapshot` (default; `--format ai`)
   - Output: a text snapshot that includes numeric refs.
-  - Actions: `grawke browser click 12`, `grawke browser type 23 "hello"`.
+  - Actions: `moltx browser click 12`, `moltx browser type 23 "hello"`.
   - Internally, the ref is resolved via Playwright’s `aria-ref`.
 
-- **Role snapshot (role refs like `e12`)**: `grawke browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
+- **Role snapshot (role refs like `e12`)**: `moltx browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
   - Output: a role-based list/tree with `[ref=e12]` (and optional `[nth=1]`).
-  - Actions: `grawke browser click e12`, `grawke browser highlight e12`.
+  - Actions: `moltx browser click e12`, `moltx browser highlight e12`.
   - Internally, the ref is resolved via `getByRole(...)` (plus `nth()` for duplicates).
   - Add `--labels` to include a viewport screenshot with overlayed `e12` labels.
 
@@ -545,18 +545,18 @@ Ref behavior:
 You can wait on more than just time/text:
 
 - Wait for URL (globs supported by Playwright):
-  - `grawke browser wait --url "**/dash"`
+  - `moltx browser wait --url "**/dash"`
 - Wait for load state:
-  - `grawke browser wait --load networkidle`
+  - `moltx browser wait --load networkidle`
 - Wait for a JS predicate:
-  - `grawke browser wait --fn "window.ready===true"`
+  - `moltx browser wait --fn "window.ready===true"`
 - Wait for a selector to become visible:
-  - `grawke browser wait "#main"`
+  - `moltx browser wait "#main"`
 
 These can be combined:
 
 ```bash
-grawke browser wait "#main" \
+moltx browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -567,16 +567,16 @@ grawke browser wait "#main" \
 
 When an action fails (e.g. “not visible”, “strict mode violation”, “covered”):
 
-1. `grawke browser snapshot --interactive`
+1. `moltx browser snapshot --interactive`
 2. Use `click <ref>` / `type <ref>` (prefer role refs in interactive mode)
-3. If it still fails: `grawke browser highlight <ref>` to see what Playwright is targeting
+3. If it still fails: `moltx browser highlight <ref>` to see what Playwright is targeting
 4. If the page behaves oddly:
-   - `grawke browser errors --clear`
-   - `grawke browser requests --filter api --clear`
+   - `moltx browser errors --clear`
+   - `moltx browser requests --filter api --clear`
 5. For deep debugging: record a trace:
-   - `grawke browser trace start`
+   - `moltx browser trace start`
    - reproduce the issue
-   - `grawke browser trace stop` (prints `TRACE:<path>`)
+   - `moltx browser trace stop` (prints `TRACE:<path>`)
 
 ## JSON output
 
@@ -585,10 +585,10 @@ When an action fails (e.g. “not visible”, “strict mode violation”, “co
 Examples:
 
 ```bash
-grawke browser status --json
-grawke browser snapshot --interactive --json
-grawke browser requests --filter api --json
-grawke browser cookies --json
+moltx browser status --json
+moltx browser snapshot --interactive --json
+moltx browser requests --filter api --json
+moltx browser cookies --json
 ```
 
 Role snapshots in JSON include `refs` plus a small `stats` block (lines/chars/refs/interactive) so tools can reason about payload size and density.

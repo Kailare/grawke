@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import * as readline from "node:readline";
 import { Readable, Writable } from "node:stream";
 import { ClientSideConnection, PROTOCOL_VERSION, ndJsonStream, } from "@agentclientprotocol/sdk";
-import { ensureGrawkeCliOnPath } from "../infra/path-env.js";
+import { ensureMoltXCliOnPath } from "../infra/path-env.js";
 function toArgs(value) {
     if (!value)
         return [];
@@ -50,8 +50,8 @@ export async function createAcpClient(opts = {}) {
     const cwd = opts.cwd ?? process.cwd();
     const verbose = Boolean(opts.verbose);
     const log = verbose ? (msg) => console.error(`[acp-client] ${msg}`) : () => { };
-    ensureGrawkeCliOnPath({ cwd });
-    const serverCommand = opts.serverCommand ?? "grawke";
+    ensureMoltXCliOnPath({ cwd });
+    const serverCommand = opts.serverCommand ?? "moltx";
     const serverArgs = buildServerArgs(opts);
     log(`spawning: ${serverCommand} ${serverArgs.join(" ")}`);
     const agent = spawn(serverCommand, serverArgs, {
@@ -88,7 +88,7 @@ export async function createAcpClient(opts = {}) {
             fs: { readTextFile: true, writeTextFile: true },
             terminal: true,
         },
-        clientInfo: { name: "grawke-acp-client", version: "1.0.0" },
+        clientInfo: { name: "moltx-acp-client", version: "1.0.0" },
     });
     log("creating session");
     const session = await client.newSession({
@@ -107,7 +107,7 @@ export async function runAcpClientInteractive(opts = {}) {
         input: process.stdin,
         output: process.stdout,
     });
-    console.log("Grawke ACP client");
+    console.log("MoltX ACP client");
     console.log(`Session: ${sessionId}`);
     console.log('Type a prompt, or "exit" to quit.\n');
     const prompt = () => {

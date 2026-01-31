@@ -17,7 +17,7 @@ Back to the main browser docs: [Browser](/tools/browser).
 
 ## Which Chrome profile is used?
 
-Grawke controls a **dedicated Chrome profile** (named `clawd`, orange‑tinted UI). This is separate from your daily browser profile.
+MoltX controls a **dedicated Chrome profile** (named `clawd`, orange‑tinted UI). This is separate from your daily browser profile.
 
 Two easy ways to access it:
 
@@ -25,8 +25,8 @@ Two easy ways to access it:
 2) **Open it via CLI**:
 
 ```bash
-grawke browser start
-grawke browser open https://x.com
+moltx browser start
+moltx browser open https://x.com
 ```
 
 If you have multiple profiles, pass `--browser-profile <name>` (the default is `clawd`).
@@ -61,7 +61,7 @@ If the agent is sandboxed, the browser tool defaults to the sandbox. To allow ho
 Then target the host browser:
 
 ```bash
-grawke browser open https://x.com --browser-profile clawd --target host
+moltx browser open https://x.com --browser-profile clawd --target host
 ```
 
 Or disable sandboxing for the agent that posts updates.

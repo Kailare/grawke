@@ -3,10 +3,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
 import { GATEWAY_SERVICE_KIND, GATEWAY_SERVICE_MARKER, LEGACY_GATEWAY_LAUNCH_AGENT_LABELS, LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES, LEGACY_GATEWAY_WINDOWS_TASK_NAMES, resolveGatewayLaunchAgentLabel, resolveGatewaySystemdServiceName, resolveGatewayWindowsTaskName, } from "./constants.js";
-const EXTRA_MARKERS = ["grawke"];
+const EXTRA_MARKERS = ["moltx"];
 const execFileAsync = promisify(execFile);
 export function renderGatewayServiceCleanupHints(env = process.env) {
-    const profile = env.GRAWKE_PROFILE;
+    const profile = env.MOLTX_PROFILE;
     switch (process.platform) {
         case "darwin": {
             const label = resolveGatewayLaunchAgentLabel(profile);
@@ -39,32 +39,32 @@ function containsMarker(content) {
 }
 function hasGatewayServiceMarker(content) {
     const lower = content.toLowerCase();
-    return (lower.includes("grawke_service_marker") &&
+    return (lower.includes("moltx_service_marker") &&
         lower.includes(GATEWAY_SERVICE_MARKER.toLowerCase()) &&
-        lower.includes("grawke_service_kind") &&
+        lower.includes("moltx_service_kind") &&
         lower.includes(GATEWAY_SERVICE_KIND.toLowerCase()));
 }
-function isGrawkeGatewayLaunchdService(label, contents) {
+function isMoltXGatewayLaunchdService(label, contents) {
     if (hasGatewayServiceMarker(contents))
         return true;
     const lowerContents = contents.toLowerCase();
     if (!lowerContents.includes("gateway"))
         return false;
-    return label.startsWith("com.grawke.");
+    return label.startsWith("com.moltx.");
 }
-function isGrawkeGatewaySystemdService(name, contents) {
+function isMoltXGatewaySystemdService(name, contents) {
     if (hasGatewayServiceMarker(contents))
         return true;
-    if (!name.startsWith("grawke-gateway"))
+    if (!name.startsWith("moltx-gateway"))
         return false;
     return contents.toLowerCase().includes("gateway");
 }
-function isGrawkeGatewayTaskName(name) {
+function isMoltXGatewayTaskName(name) {
     const normalized = name.trim().toLowerCase();
     if (!normalized)
         return false;
     const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-    return normalized === defaultName || normalized.startsWith("grawke gateway");
+    return normalized === defaultName || normalized.startsWith("moltx gateway");
 }
 function tryExtractPlistLabel(contents) {
     const match = contents.match(/<key>Label<\/key>\s*<string>([\s\S]*?)<\/string>/i);
@@ -107,7 +107,7 @@ async function scanLaunchdDir(params) {
         const label = tryExtractPlistLabel(contents) ?? labelFromName;
         if (isIgnoredLaunchdLabel(label))
             continue;
-        if (isGrawkeGatewayLaunchdService(label, contents))
+        if (isMoltXGatewayLaunchdService(label, contents))
             continue;
         results.push({
             platform: "darwin",
@@ -143,7 +143,7 @@ async function scanSystemdDir(params) {
         }
         if (!containsMarker(contents))
             continue;
-        if (isGrawkeGatewaySystemdService(name, contents))
+        if (isMoltXGatewaySystemdService(name, contents))
             continue;
         results.push({
             platform: "linux",
@@ -291,7 +291,7 @@ export async function findExtraGatewayServices(env, opts = {}) {
             const name = task.name.trim();
             if (!name)
                 continue;
-            if (isGrawkeGatewayTaskName(name))
+            if (isMoltXGatewayTaskName(name))
                 continue;
             if (LEGACY_GATEWAY_WINDOWS_TASK_NAMES.includes(name))
                 continue;

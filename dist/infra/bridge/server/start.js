@@ -9,7 +9,7 @@ import { encodeLine } from "./encode.js";
 import { shouldAlsoListenOnLoopback } from "./loopback.js";
 import { isNodeBridgeTestEnv } from "./test-env.js";
 export async function startNodeBridgeServer(opts) {
-    if (isNodeBridgeTestEnv() && process.env.GRAWKE_ENABLE_BRIDGE_IN_TESTS !== "1") {
+    if (isNodeBridgeTestEnv() && process.env.MOLTX_ENABLE_BRIDGE_IN_TESTS !== "1") {
         return createDisabledNodeBridgeServer();
     }
     const serverName = typeof opts.serverName === "string" && opts.serverName.trim()

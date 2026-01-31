@@ -114,7 +114,7 @@ async function findPackageRoot(candidates) {
             try {
                 const raw = await fs.readFile(pkgPath, "utf-8");
                 const parsed = JSON.parse(raw);
-                if (parsed?.name === "grawke")
+                if (parsed?.name === "moltx")
                     return current;
             }
             catch {
@@ -198,7 +198,7 @@ function normalizeTag(tag) {
     const trimmed = tag?.trim();
     if (!trimmed)
         return "latest";
-    return trimmed.startsWith("grawke@") ? trimmed.slice("grawke@".length) : trimmed;
+    return trimmed.startsWith("moltx@") ? trimmed.slice("moltx@".length) : trimmed;
 }
 export async function runGatewayUpdate(opts = {}) {
     const startedAt = Date.now();
@@ -238,7 +238,7 @@ export async function runGatewayUpdate(opts = {}) {
             status: "error",
             mode: "unknown",
             root: gitRoot,
-            reason: "not-grawke-root",
+            reason: "not-moltx-root",
             steps: [],
             durationMs: Date.now() - startedAt,
         };
@@ -351,7 +351,7 @@ export async function runGatewayUpdate(opts = {}) {
                 };
             }
             const manager = await detectPackageManager(gitRoot);
-            const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-update-preflight-"));
+            const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-update-preflight-"));
             const worktreeDir = path.join(preflightRoot, "worktree");
             const worktreeStep = await runStep(step("preflight worktree", ["git", "-C", gitRoot, "worktree", "add", "--detach", worktreeDir, upstreamSha], gitRoot));
             steps.push(worktreeStep);
@@ -485,7 +485,7 @@ export async function runGatewayUpdate(opts = {}) {
         steps.push(buildStep);
         const uiBuildStep = await runStep(step("ui:build", managerScriptArgs(manager, "ui:build"), gitRoot));
         steps.push(uiBuildStep);
-        const doctorStep = await runStep(step("grawke doctor", managerScriptArgs(manager, "grawke", ["doctor", "--non-interactive"]), gitRoot, { GRAWKE_UPDATE_IN_PROGRESS: "1" }));
+        const doctorStep = await runStep(step("moltx doctor", managerScriptArgs(manager, "moltx", ["doctor", "--non-interactive"]), gitRoot, { MOLTX_UPDATE_IN_PROGRESS: "1" }));
         steps.push(doctorStep);
         const failedStep = steps.find((s) => s.exitCode !== 0);
         const afterShaStep = await runStep(step("git rev-parse HEAD (after)", ["git", "-C", gitRoot, "rev-parse", "HEAD"], gitRoot));
@@ -517,7 +517,7 @@ export async function runGatewayUpdate(opts = {}) {
     const beforeVersion = await readPackageVersion(pkgRoot);
     const globalManager = await detectGlobalInstallManagerForRoot(runCommand, pkgRoot, timeoutMs);
     if (globalManager) {
-        const spec = `grawke@${normalizeTag(opts.tag)}`;
+        const spec = `moltx@${normalizeTag(opts.tag)}`;
         const updateStep = await runStep({
             runCommand,
             name: "global update",

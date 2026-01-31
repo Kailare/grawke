@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveStateDir } from "../config/paths.js";
-import { resolveGrawkePackageRoot } from "./grawke-root.js";
+import { resolveMoltXPackageRoot } from "./moltx-root.js";
 import { compareSemverStrings, resolveNpmChannelTag, checkUpdateStatus } from "./update-check.js";
 import { normalizeUpdateChannel, DEFAULT_PACKAGE_CHANNEL } from "./update-channels.js";
 import { VERSION } from "../version.js";
@@ -44,7 +44,7 @@ export async function runGatewayUpdateCheck(params) {
         if (now - lastCheckedAt < UPDATE_CHECK_INTERVAL_MS)
             return;
     }
-    const root = await resolveGrawkePackageRoot({
+    const root = await resolveMoltXPackageRoot({
         moduleUrl: import.meta.url,
         argv1: process.argv[1],
         cwd: process.cwd(),
@@ -74,7 +74,7 @@ export async function runGatewayUpdateCheck(params) {
     if (cmp != null && cmp < 0) {
         const shouldNotify = state.lastNotifiedVersion !== resolved.version || state.lastNotifiedTag !== tag;
         if (shouldNotify) {
-            params.log.info(`update available (${tag}): v${resolved.version} (current v${VERSION}). Run: ${formatCliCommand("grawke update")}`);
+            params.log.info(`update available (${tag}): v${resolved.version} (current v${VERSION}). Run: ${formatCliCommand("moltx update")}`);
             nextState.lastNotifiedVersion = resolved.version;
             nextState.lastNotifiedTag = tag;
         }

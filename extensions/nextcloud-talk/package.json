@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/nextcloud-talk",
+  "name": "@moltx/nextcloud-talk",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Nextcloud Talk channel plugin",
-  "grawke": {
+  "description": "MoltX Nextcloud Talk channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@grawke/nextcloud-talk",
+      "npmSpec": "@moltx/nextcloud-talk",
       "localPath": "extensions/nextcloud-talk",
       "defaultChoice": "npm"
     }

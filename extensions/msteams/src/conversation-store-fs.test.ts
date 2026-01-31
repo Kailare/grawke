@@ -4,7 +4,7 @@ import path from "node:path";
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import type { PluginRuntime } from "grawke/plugin-sdk";
+import type { PluginRuntime } from "moltx/plugin-sdk";
 import type { StoredConversationReference } from "./conversation-store.js";
 import { createMSTeamsConversationStoreFs } from "./conversation-store-fs.js";
 import { setMSTeamsRuntime } from "./runtime.js";
@@ -12,10 +12,10 @@ import { setMSTeamsRuntime } from "./runtime.js";
 const runtimeStub = {
   state: {
     resolveStateDir: (env: NodeJS.ProcessEnv = process.env, homedir?: () => string) => {
-      const override = env.GRAWKE_STATE_DIR?.trim();
+      const override = env.MOLTX_STATE_DIR?.trim();
       if (override) return override;
       const resolvedHome = homedir ? homedir() : os.homedir();
-      return path.join(resolvedHome, ".grawke");
+      return path.join(resolvedHome, ".moltx");
     },
   },
 } as unknown as PluginRuntime;
@@ -26,11 +26,11 @@ describe("msteams conversation store (fs)", () => {
   });
 
   it("filters and prunes expired entries (but keeps legacy ones)", async () => {
-    const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "grawke-msteams-store-"));
+    const stateDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "moltx-msteams-store-"));
 
     const env: NodeJS.ProcessEnv = {
       ...process.env,
-      GRAWKE_STATE_DIR: stateDir,
+      MOLTX_STATE_DIR: stateDir,
     };
 
     const store = createMSTeamsConversationStoreFs({ env, ttlMs: 1_000 });

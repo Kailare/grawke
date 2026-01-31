@@ -1,6 +1,6 @@
-import { loadGrawkePlugins } from "../plugins/loader.js";
+import { loadMoltXPlugins } from "../plugins/loader.js";
 export function loadGatewayPlugins(params) {
-    const pluginRegistry = loadGrawkePlugins({
+    const pluginRegistry = loadMoltXPlugins({
         config: params.cfg,
         workspaceDir: params.workspaceDir,
         logger: {

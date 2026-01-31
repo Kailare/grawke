@@ -1,21 +1,21 @@
 ---
-summary: "Use Z.AI (GLM models) with Grawke"
+summary: "Use Z.AI (GLM models) with MoltX"
 read_when:
-  - You want Z.AI / GLM models in Grawke
+  - You want Z.AI / GLM models in MoltX
   - You need a simple ZAI_API_KEY setup
 ---
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. Grawke uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. MoltX uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup
 
 ```bash
-grawke onboard --auth-choice zai-api-key
+moltx onboard --auth-choice zai-api-key
 # or non-interactive
-grawke onboard --zai-api-key "$ZAI_API_KEY"
+moltx onboard --zai-api-key "$ZAI_API_KEY"
 ```
 
 ## Config snippet

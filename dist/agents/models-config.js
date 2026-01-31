@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { loadConfig } from "../config/config.js";
-import { resolveGrawkeAgentDir } from "./agent-paths.js";
+import { resolveMoltXAgentDir } from "./agent-paths.js";
 import { normalizeProviders, resolveImplicitBedrockProvider, resolveImplicitCopilotProvider, resolveImplicitProviders, } from "./models-config.providers.js";
 const DEFAULT_MODE = "merge";
 function isRecord(value) {
@@ -57,9 +57,9 @@ async function readJson(pathname) {
         return null;
     }
 }
-export async function ensureGrawkeModelsJson(config, agentDirOverride) {
+export async function ensureMoltXModelsJson(config, agentDirOverride) {
     const cfg = config ?? loadConfig();
-    const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveGrawkeAgentDir();
+    const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveMoltXAgentDir();
     const explicitProviders = (cfg.models?.providers ?? {});
     const implicitProviders = await resolveImplicitProviders({ agentDir });
     const providers = mergeProviders({

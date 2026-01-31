@@ -26,9 +26,9 @@ function formatAuthIssueHint(issue) {
         return "Run `claude setup-token` on the gateway host.";
     }
     if (issue.provider === "openai-codex" && issue.profileId === CODEX_CLI_PROFILE_ID) {
-        return `Run \`codex login\` (or \`${formatCliCommand("grawke configure")}\` → OpenAI Codex OAuth).`;
+        return `Run \`codex login\` (or \`${formatCliCommand("moltx configure")}\` → OpenAI Codex OAuth).`;
     }
-    return `Re-auth via \`${formatCliCommand("grawke configure")}\` or \`${formatCliCommand("grawke onboard")}\`.`;
+    return `Re-auth via \`${formatCliCommand("moltx configure")}\` or \`${formatCliCommand("moltx onboard")}\`.`;
 }
 function formatAuthIssueLine(issue) {
     const remaining = issue.remainingMs !== undefined ? ` (${formatRemainingShort(issue.remainingMs)})` : "";

@@ -15,12 +15,12 @@ An **agent** is a fully scoped brain with its own:
 
 - **Workspace** (files, AGENTS.md/SOUL.md/USER.md, local notes, persona rules).
 - **State directory** (`agentDir`) for auth profiles, model registry, and per-agent config.
-- **Session store** (chat history + routing state) under `~/.grawke/agents/<agentId>/sessions`.
+- **Session store** (chat history + routing state) under `~/.moltx/agents/<agentId>/sessions`.
 
 Auth profiles are **per-agent**. Each agent reads from its own:
 
 ```
-~/.grawke/agents/<agentId>/agent/auth-profiles.json
+~/.moltx/agents/<agentId>/agent/auth-profiles.json
 ```
 
 Main agent credentials are **not** shared automatically. Never reuse `agentDir`
@@ -28,7 +28,7 @@ across agents (it causes auth/session collisions). If you want to share creds,
 copy `auth-profiles.json` into the other agent's `agentDir`.
 
 Skills are per-agent via each workspace’s `skills/` folder, with shared skills
-available from `~/.grawke/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
+available from `~/.moltx/skills`. See [Skills: per-agent vs shared](/tools/skills#per-agent-vs-shared-skills).
 
 The Gateway can host **one agent** (default) or **many agents** side-by-side.
 
@@ -39,27 +39,27 @@ reach other host locations unless sandboxing is enabled. See
 
 ## Paths (quick map)
 
-- Config: `~/.grawke/grawke.json` (or `GRAWKE_CONFIG_PATH`)
-- State dir: `~/.grawke` (or `GRAWKE_STATE_DIR`)
+- Config: `~/.moltx/moltx.json` (or `MOLTX_CONFIG_PATH`)
+- State dir: `~/.moltx` (or `MOLTX_STATE_DIR`)
 - Workspace: `~/clawd` (or `~/clawd-<agentId>`)
-- Agent dir: `~/.grawke/agents/<agentId>/agent` (or `agents.list[].agentDir`)
-- Sessions: `~/.grawke/agents/<agentId>/sessions`
+- Agent dir: `~/.moltx/agents/<agentId>/agent` (or `agents.list[].agentDir`)
+- Sessions: `~/.moltx/agents/<agentId>/sessions`
 
 ### Single-agent mode (default)
 
-If you do nothing, Grawke runs a single agent:
+If you do nothing, MoltX runs a single agent:
 
 - `agentId` defaults to **`main`**.
 - Sessions are keyed as `agent:main:<mainKey>`.
-- Workspace defaults to `~/clawd` (or `~/clawd-<profile>` when `GRAWKE_PROFILE` is set).
-- State defaults to `~/.grawke/agents/main/agent`.
+- Workspace defaults to `~/clawd` (or `~/clawd-<profile>` when `MOLTX_PROFILE` is set).
+- State defaults to `~/.moltx/agents/main/agent`.
 
 ## Agent helper
 
 Use the agent wizard to add a new isolated agent:
 
 ```bash
-grawke agents add work
+moltx agents add work
 ```
 
 Then add `bindings` (or let the wizard do it) to route inbound messages.
@@ -67,7 +67,7 @@ Then add `bindings` (or let the wizard do it) to route inbound messages.
 Verify with:
 
 ```bash
-grawke agents list --bindings
+moltx agents list --bindings
 ```
 
 ## Multiple agents = multiple people, multiple personalities
@@ -139,7 +139,7 @@ multiple phone numbers without mixing sessions.
 
 ## Example: two WhatsApps → two agents
 
-`~/.grawke/grawke.json` (JSON5):
+`~/.moltx/moltx.json` (JSON5):
 
 ```js
 {
@@ -150,13 +150,13 @@ multiple phone numbers without mixing sessions.
         default: true,
         name: "Home",
         workspace: "~/clawd-home",
-        agentDir: "~/.grawke/agents/home/agent",
+        agentDir: "~/.moltx/agents/home/agent",
       },
       {
         id: "work",
         name: "Work",
         workspace: "~/clawd-work",
-        agentDir: "~/.grawke/agents/work/agent",
+        agentDir: "~/.moltx/agents/work/agent",
       },
     ],
   },
@@ -189,12 +189,12 @@ multiple phone numbers without mixing sessions.
     whatsapp: {
       accounts: {
         personal: {
-          // Optional override. Default: ~/.grawke/credentials/whatsapp/personal
-          // authDir: "~/.grawke/credentials/whatsapp/personal",
+          // Optional override. Default: ~/.moltx/credentials/whatsapp/personal
+          // authDir: "~/.moltx/credentials/whatsapp/personal",
         },
         biz: {
-          // Optional override. Default: ~/.grawke/credentials/whatsapp/biz
-          // authDir: "~/.grawke/credentials/whatsapp/biz",
+          // Optional override. Default: ~/.moltx/credentials/whatsapp/biz
+          // authDir: "~/.moltx/credentials/whatsapp/biz",
         },
       },
     },

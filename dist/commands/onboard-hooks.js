@@ -51,9 +51,9 @@ export async function setupInternalHooks(cfg, runtime, prompter) {
         `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
         "",
         "You can manage hooks later with:",
-        `  ${formatCliCommand("grawke hooks list")}`,
-        `  ${formatCliCommand("grawke hooks enable <name>")}`,
-        `  ${formatCliCommand("grawke hooks disable <name>")}`,
+        `  ${formatCliCommand("moltx hooks list")}`,
+        `  ${formatCliCommand("moltx hooks enable <name>")}`,
+        `  ${formatCliCommand("moltx hooks disable <name>")}`,
     ].join("\n"), "Hooks Configured");
     return next;
 }

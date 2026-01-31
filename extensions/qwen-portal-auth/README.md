@@ -1,4 +1,4 @@
-# Qwen OAuth (Grawke plugin)
+# Qwen OAuth (MoltX plugin)
 
 OAuth provider plugin for **Qwen** (free-tier OAuth).
 
@@ -7,7 +7,7 @@ OAuth provider plugin for **Qwen** (free-tier OAuth).
 Bundled plugins are disabled by default. Enable this one:
 
 ```bash
-grawke plugins enable qwen-portal-auth
+moltx plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -15,7 +15,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-grawke models auth login --provider qwen-portal --set-default
+moltx models auth login --provider qwen-portal --set-default
 ```
 
 ## Notes

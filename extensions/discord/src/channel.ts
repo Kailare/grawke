@@ -25,7 +25,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedDiscordAccount,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { getDiscordRuntime } from "./runtime.js";
 

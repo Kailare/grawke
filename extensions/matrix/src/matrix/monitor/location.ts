@@ -4,7 +4,7 @@ import {
   formatLocationText,
   toLocationContext,
   type NormalizedLocation,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 import { EventType } from "./types.js";
 
 export type MatrixLocationPayload = {

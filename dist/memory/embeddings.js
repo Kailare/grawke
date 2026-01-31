@@ -160,7 +160,7 @@ function formatLocalSetupError(err) {
         "To enable local embeddings:",
         "1) Use Node 22 LTS (recommended for installs/updates)",
         missing
-            ? "2) Reinstall Grawke (this should install node-llama-cpp): npm i -g grawke@latest"
+            ? "2) Reinstall MoltX (this should install node-llama-cpp): npm i -g moltx@latest"
             : null,
         "3) If you use pnpm: pnpm approve-builds (select node-llama-cpp), then pnpm rebuild node-llama-cpp",
         'Or set agents.defaults.memorySearch.provider = "openai" (remote).',

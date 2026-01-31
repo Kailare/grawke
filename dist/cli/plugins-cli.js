@@ -66,7 +66,7 @@ function logSlotWarnings(warnings) {
 export function registerPluginsCli(program) {
     const plugins = program
         .command("plugins")
-        .description("Manage Grawke plugins/extensions")
+        .description("Manage MoltX plugins/extensions")
         .addHelpText("after", () => `\n${theme.muted("Docs:")} ${formatDocsLink("/cli/plugins", "docs.clawd.bot/cli/plugins")}\n`);
     plugins
         .command("list")

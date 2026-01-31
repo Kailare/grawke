@@ -1,7 +1,7 @@
-import type { GrawkePluginApi } from "../../src/plugins/types.js";
+import type { MoltXPluginApi } from "../../src/plugins/types.js";
 
 import { createLlmTaskTool } from "./src/llm-task-tool.js";
 
-export default function register(api: GrawkePluginApi) {
+export default function register(api: MoltXPluginApi) {
   api.registerTool(createLlmTaskTool(api), { optional: true });
 }

@@ -1,5 +1,5 @@
 import type { MatrixClient } from "matrix-bot-sdk";
-import type { PluginRuntime } from "grawke/plugin-sdk";
+import type { PluginRuntime } from "moltx/plugin-sdk";
 
 import type { MatrixAuth } from "../client.js";
 import type { MatrixRawEvent } from "./types.js";

@@ -1,15 +1,15 @@
 import type {
   ChannelMessageActionAdapter,
   ChannelMessageActionName,
-  GrawkeConfig,
-} from "grawke/plugin-sdk";
+  MoltXConfig,
+} from "moltx/plugin-sdk";
 import {
   createActionGate,
   jsonResult,
   readNumberParam,
   readReactionParams,
   readStringParam,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { listEnabledGoogleChatAccounts, resolveGoogleChatAccount } from "./accounts.js";
 import {
@@ -24,13 +24,13 @@ import { resolveGoogleChatOutboundSpace } from "./targets.js";
 
 const providerId = "googlechat";
 
-function listEnabledAccounts(cfg: GrawkeConfig) {
+function listEnabledAccounts(cfg: MoltXConfig) {
   return listEnabledGoogleChatAccounts(cfg).filter(
     (account) => account.enabled && account.credentialSource !== "none",
   );
 }
 
-function isReactionsEnabled(accounts: ReturnType<typeof listEnabledAccounts>, cfg: GrawkeConfig) {
+function isReactionsEnabled(accounts: ReturnType<typeof listEnabledAccounts>, cfg: MoltXConfig) {
   for (const account of accounts) {
     const gate = createActionGate(
       (account.config.actions ?? (cfg.channels?.["googlechat"] as { actions?: unknown })?.actions) as Record<
@@ -49,11 +49,11 @@ function resolveAppUserNames(account: { config: { botUser?: string | null } }) {
 
 export const googlechatMessageActions: ChannelMessageActionAdapter = {
   listActions: ({ cfg }) => {
-    const accounts = listEnabledAccounts(cfg as GrawkeConfig);
+    const accounts = listEnabledAccounts(cfg as MoltXConfig);
     if (accounts.length === 0) return [];
     const actions = new Set<ChannelMessageActionName>([]);
     actions.add("send");
-    if (isReactionsEnabled(accounts, cfg as GrawkeConfig)) {
+    if (isReactionsEnabled(accounts, cfg as MoltXConfig)) {
       actions.add("react");
       actions.add("reactions");
     }
@@ -69,7 +69,7 @@ export const googlechatMessageActions: ChannelMessageActionAdapter = {
   },
   handleAction: async ({ action, params, cfg, accountId }) => {
     const account = resolveGoogleChatAccount({
-      cfg: cfg as GrawkeConfig,
+      cfg: cfg as MoltXConfig,
       accountId,
     });
     if (account.credentialSource === "none") {

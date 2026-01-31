@@ -1,6 +1,6 @@
 import { format } from "node:util";
 
-import type { RuntimeEnv, ReplyPayload, GrawkeConfig } from "grawke/plugin-sdk";
+import type { RuntimeEnv, ReplyPayload, MoltXConfig } from "moltx/plugin-sdk";
 
 import { getTlonRuntime } from "../runtime.js";
 import { resolveTlonAccount } from "../types.js";
@@ -31,7 +31,7 @@ type ChannelAuthorization = {
 };
 
 function resolveChannelAuthorization(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   channelNest: string,
 ): { mode: "restricted" | "open"; allowedShips: string[] } {
   const tlonConfig = cfg.channels?.tlon as
@@ -49,7 +49,7 @@ function resolveChannelAuthorization(
 
 export async function monitorTlonProvider(opts: MonitorTlonOpts = {}): Promise<void> {
   const core = getTlonRuntime();
-  const cfg = core.config.loadConfig() as GrawkeConfig;
+  const cfg = core.config.loadConfig() as MoltXConfig;
   if (cfg.channels?.tlon?.enabled === false) return;
 
   const logger = core.logging.getChildLogger({ module: "tlon-auto-reply" });

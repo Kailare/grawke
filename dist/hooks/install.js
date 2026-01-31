@@ -22,14 +22,14 @@ export function resolveHookInstallDir(hookId, hooksDir) {
     const hooksBase = hooksDir ? resolveUserPath(hooksDir) : path.join(CONFIG_DIR, "hooks");
     return path.join(hooksBase, safeDirName(hookId));
 }
-async function ensureGrawkeHooks(manifest) {
-    const hooks = manifest.grawke?.hooks;
+async function ensureMoltXHooks(manifest) {
+    const hooks = manifest.moltx?.hooks;
     if (!Array.isArray(hooks)) {
-        throw new Error("package.json missing grawke.hooks");
+        throw new Error("package.json missing moltx.hooks");
     }
     const list = hooks.map((e) => (typeof e === "string" ? e.trim() : "")).filter(Boolean);
     if (list.length === 0) {
-        throw new Error("package.json grawke.hooks is empty");
+        throw new Error("package.json moltx.hooks is empty");
     }
     return list;
 }
@@ -71,7 +71,7 @@ async function installHookPackageFromDir(params) {
     }
     let hookEntries;
     try {
-        hookEntries = await ensureGrawkeHooks(manifest);
+        hookEntries = await ensureMoltXHooks(manifest);
     }
     catch (err) {
         return { ok: false, error: String(err) };
@@ -208,7 +208,7 @@ export async function installHooksFromArchive(params) {
     if (!resolveArchiveKind(archivePath)) {
         return { ok: false, error: `unsupported archive: ${archivePath}` };
     }
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-hook-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-hook-"));
     const extractDir = path.join(tmpDir, "extract");
     await fs.mkdir(extractDir, { recursive: true });
     logger.info?.(`Extracting ${archivePath}…`);
@@ -255,7 +255,7 @@ export async function installHooksFromNpmSpec(params) {
     const spec = params.spec.trim();
     if (!spec)
         return { ok: false, error: "missing npm spec" };
-    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "grawke-hook-pack-"));
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "moltx-hook-pack-"));
     logger.info?.(`Downloading ${spec}…`);
     const res = await runCommandWithTimeout(["npm", "pack", spec], {
         timeoutMs: Math.max(timeoutMs, 300_000),

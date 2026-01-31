@@ -1,4 +1,4 @@
-import type { GrawkeConfig, RuntimeEnv } from "grawke/plugin-sdk";
+import type { MoltXConfig, RuntimeEnv } from "moltx/plugin-sdk";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import {
   buildFileInfoCard,
@@ -27,7 +27,7 @@ export type MSTeamsActivityHandler = {
 };
 
 export type MSTeamsMessageHandlerDeps = {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   runtime: RuntimeEnv;
   appId: string;
   adapter: MSTeamsAdapter;

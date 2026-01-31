@@ -6,7 +6,7 @@ import {
   GroupPolicySchema,
   MarkdownConfigSchema,
   requireOpenAllowFrom,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 const MattermostAccountSchemaBase = z
   .object({

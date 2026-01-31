@@ -24,12 +24,12 @@ export function resolveUserPathWithHome(input, home) {
     return path.resolve(trimmed);
 }
 export function resolveGatewayStateDir(env) {
-    const override = env.GRAWKE_STATE_DIR?.trim();
+    const override = env.MOLTX_STATE_DIR?.trim();
     if (override) {
         const home = override.startsWith("~") ? resolveHomeDir(env) : undefined;
         return resolveUserPathWithHome(override, home);
     }
     const home = resolveHomeDir(env);
-    const suffix = resolveGatewayProfileSuffix(env.GRAWKE_PROFILE);
-    return path.join(home, `.grawke${suffix}`);
+    const suffix = resolveGatewayProfileSuffix(env.MOLTX_PROFILE);
+    return path.join(home, `.moltx${suffix}`);
 }

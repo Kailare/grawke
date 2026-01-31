@@ -4,12 +4,12 @@ description: "Run BOOT.md on gateway startup"
 homepage: https://docs.clawd.bot/hooks#boot-md
 metadata:
   {
-    "grawke":
+    "moltx":
       {
         "emoji": "🚀",
         "events": ["gateway:startup"],
         "requires": { "config": ["workspace.dir"] },
-        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with Grawke" }],
+        "install": [{ "id": "bundled", "kind": "bundled", "label": "Bundled with MoltX" }],
       },
   }
 ---

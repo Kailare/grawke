@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/zalo",
+  "name": "@moltx/zalo",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Zalo channel plugin",
-  "grawke": {
+  "description": "MoltX Zalo channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,13 +21,13 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@grawke/zalo",
+      "npmSpec": "@moltx/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }
   },
   "dependencies": {
-    "grawke": "workspace:*",
+    "moltx": "workspace:*",
     "undici": "7.19.0"
   }
 }

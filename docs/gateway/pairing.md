@@ -35,11 +35,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-grawke nodes pending
-grawke nodes approve <requestId>
-grawke nodes reject <requestId>
-grawke nodes status
-grawke nodes rename --node <id|name|ip> --name "Living Room iPad"
+moltx nodes pending
+moltx nodes approve <requestId>
+moltx nodes reject <requestId>
+moltx nodes status
+moltx nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.
@@ -74,12 +74,12 @@ If silent approval fails, it falls back to the normal “Approve/Reject” promp
 
 ## Storage (local, private)
 
-Pairing state is stored under the Gateway state directory (default `~/.grawke`):
+Pairing state is stored under the Gateway state directory (default `~/.moltx`):
 
-- `~/.grawke/nodes/paired.json`
-- `~/.grawke/nodes/pending.json`
+- `~/.moltx/nodes/paired.json`
+- `~/.moltx/nodes/pending.json`
 
-If you override `GRAWKE_STATE_DIR`, the `nodes/` folder moves with it.
+If you override `MOLTX_STATE_DIR`, the `nodes/` folder moves with it.
 
 Security notes:
 - Tokens are secrets; treat `paired.json` as sensitive.

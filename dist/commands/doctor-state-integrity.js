@@ -96,7 +96,7 @@ function findOtherStateDirs(stateDir) {
                 continue;
             if (entry.name.startsWith("."))
                 continue;
-            const candidate = path.resolve(root, entry.name, ".grawke");
+            const candidate = path.resolve(root, entry.name, ".moltx");
             if (candidate === resolvedState)
                 continue;
             if (existsDir(candidate))
@@ -111,7 +111,7 @@ export async function noteStateIntegrity(cfg, prompter, configPath) {
     const env = process.env;
     const homedir = os.homedir;
     const stateDir = resolveStateDir(env, homedir);
-    const defaultStateDir = path.join(homedir(), ".grawke");
+    const defaultStateDir = path.join(homedir(), ".moltx");
     const oauthDir = resolveOAuthDir(env, stateDir);
     const agentId = resolveDefaultAgentId(cfg);
     const sessionsDir = resolveSessionTranscriptsDirForAgent(agentId, env, homedir);
@@ -326,7 +326,7 @@ export function noteWorkspaceBackupTip(workspaceDir) {
         return;
     note([
         "- Tip: back up the workspace in a private git repo (GitHub or GitLab).",
-        "- Keep ~/.grawke out of git; it contains credentials and session history.",
+        "- Keep ~/.moltx out of git; it contains credentials and session history.",
         "- Details: /concepts/agent-workspace#git-backup-recommended",
     ].join("\n"), "Workspace");
 }

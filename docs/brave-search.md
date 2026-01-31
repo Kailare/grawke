@@ -7,7 +7,7 @@ read_when:
 
 # Brave Search API
 
-Grawke uses Brave Search as the default provider for `web_search`.
+MoltX uses Brave Search as the default provider for `web_search`.
 
 ## Get an API key
 

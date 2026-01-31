@@ -1,5 +1,5 @@
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { emptyPluginConfigSchema } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { emptyPluginConfigSchema } from "moltx/plugin-sdk";
 
 import { bluebubblesPlugin } from "./src/channel.js";
 import { handleBlueBubblesWebhookRequest } from "./src/monitor.js";
@@ -10,7 +10,7 @@ const plugin = {
   name: "BlueBubbles",
   description: "BlueBubbles channel plugin (macOS app)",
   configSchema: emptyPluginConfigSchema(),
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     setBlueBubblesRuntime(api.runtime);
     api.registerChannel({ plugin: bluebubblesPlugin });
     api.registerHttpHandler(handleBlueBubblesWebhookRequest);

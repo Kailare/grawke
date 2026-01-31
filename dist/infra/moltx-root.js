@@ -15,7 +15,7 @@ async function findPackageRoot(startDir, maxDepth = 12) {
     let current = path.resolve(startDir);
     for (let i = 0; i < maxDepth; i += 1) {
         const name = await readPackageName(current);
-        if (name === "grawke")
+        if (name === "moltx")
             return current;
         const parent = path.dirname(current);
         if (parent === current)
@@ -36,7 +36,7 @@ function candidateDirsFromArgv1(argv1) {
     }
     return candidates;
 }
-export async function resolveGrawkePackageRoot(opts) {
+export async function resolveMoltXPackageRoot(opts) {
     const candidates = [];
     if (opts.moduleUrl) {
         candidates.push(path.dirname(fileURLToPath(opts.moduleUrl)));

@@ -66,7 +66,7 @@ function parseFrontmatterBool(value, fallback) {
     const parsed = parseBooleanValue(value);
     return parsed === undefined ? fallback : parsed;
 }
-export function resolveGrawkeMetadata(frontmatter) {
+export function resolveMoltXMetadata(frontmatter) {
     const raw = getFrontmatterValue(frontmatter, "metadata");
     if (!raw)
         return undefined;
@@ -74,24 +74,24 @@ export function resolveGrawkeMetadata(frontmatter) {
         const parsed = JSON5.parse(raw);
         if (!parsed || typeof parsed !== "object")
             return undefined;
-        const grawke = parsed.grawke;
-        if (!grawke || typeof grawke !== "object")
+        const moltx = parsed.moltx;
+        if (!moltx || typeof moltx !== "object")
             return undefined;
-        const grawkeObj = grawke;
-        const requiresRaw = typeof grawkeObj.requires === "object" && grawkeObj.requires !== null
-            ? grawkeObj.requires
+        const moltxObj = moltx;
+        const requiresRaw = typeof moltxObj.requires === "object" && moltxObj.requires !== null
+            ? moltxObj.requires
             : undefined;
-        const installRaw = Array.isArray(grawkeObj.install) ? grawkeObj.install : [];
+        const installRaw = Array.isArray(moltxObj.install) ? moltxObj.install : [];
         const install = installRaw
             .map((entry) => parseInstallSpec(entry))
             .filter((entry) => Boolean(entry));
-        const osRaw = normalizeStringList(grawkeObj.os);
+        const osRaw = normalizeStringList(moltxObj.os);
         return {
-            always: typeof grawkeObj.always === "boolean" ? grawkeObj.always : undefined,
-            emoji: typeof grawkeObj.emoji === "string" ? grawkeObj.emoji : undefined,
-            homepage: typeof grawkeObj.homepage === "string" ? grawkeObj.homepage : undefined,
-            skillKey: typeof grawkeObj.skillKey === "string" ? grawkeObj.skillKey : undefined,
-            primaryEnv: typeof grawkeObj.primaryEnv === "string" ? grawkeObj.primaryEnv : undefined,
+            always: typeof moltxObj.always === "boolean" ? moltxObj.always : undefined,
+            emoji: typeof moltxObj.emoji === "string" ? moltxObj.emoji : undefined,
+            homepage: typeof moltxObj.homepage === "string" ? moltxObj.homepage : undefined,
+            skillKey: typeof moltxObj.skillKey === "string" ? moltxObj.skillKey : undefined,
+            primaryEnv: typeof moltxObj.primaryEnv === "string" ? moltxObj.primaryEnv : undefined,
             os: osRaw.length > 0 ? osRaw : undefined,
             requires: requiresRaw
                 ? {
@@ -115,5 +115,5 @@ export function resolveSkillInvocationPolicy(frontmatter) {
     };
 }
 export function resolveSkillKey(skill, entry) {
-    return entry?.grawke?.skillKey ?? skill.name;
+    return entry?.moltx?.skillKey ?? skill.name;
 }

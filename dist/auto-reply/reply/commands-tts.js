@@ -23,7 +23,7 @@ function ttsUsage() {
             "/tts provider edge\n" +
             "/tts limit 2000\n" +
             "/tts summary off\n" +
-            "/tts audio Hello from Grawke",
+            "/tts audio Hello from MoltX",
     };
 }
 export const handleTtsCommands = async (params, allowTextCommands) => {

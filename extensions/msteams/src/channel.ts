@@ -1,10 +1,10 @@
-import type { ChannelMessageActionName, ChannelPlugin, GrawkeConfig } from "grawke/plugin-sdk";
+import type { ChannelMessageActionName, ChannelPlugin, MoltXConfig } from "moltx/plugin-sdk";
 import {
   buildChannelConfigSchema,
   DEFAULT_ACCOUNT_ID,
   MSTeamsConfigSchema,
   PAIRING_APPROVED_MESSAGE,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 import { msteamsOnboardingAdapter } from "./onboarding.js";
 import { msteamsOutbound } from "./outbound.js";
@@ -102,7 +102,7 @@ export const msteamsPlugin: ChannelPlugin<ResolvedMSTeamsAccount> = {
       },
     }),
     deleteAccount: ({ cfg }) => {
-      const next = { ...cfg } as GrawkeConfig;
+      const next = { ...cfg } as MoltXConfig;
       const nextChannels = { ...cfg.channels };
       delete nextChannels.msteams;
       if (Object.keys(nextChannels).length > 0) {

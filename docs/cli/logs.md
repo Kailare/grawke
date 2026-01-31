@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `grawke logs` (tail gateway logs via RPC)"
+summary: "CLI reference for `moltx logs` (tail gateway logs via RPC)"
 read_when:
   - You need to tail Gateway logs remotely (without SSH)
   - You want JSON log lines for tooling
 ---
 
-# `grawke logs`
+# `moltx logs`
 
 Tail Gateway file logs over RPC (works in remote mode).
 
@@ -15,9 +15,9 @@ Related:
 ## Examples
 
 ```bash
-grawke logs
-grawke logs --follow
-grawke logs --json
-grawke logs --limit 500
+moltx logs
+moltx logs --follow
+moltx logs --json
+moltx logs --limit 500
 ```
 

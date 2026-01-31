@@ -1,4 +1,4 @@
-import type { ChannelGroupContext } from "grawke/plugin-sdk";
+import type { ChannelGroupContext } from "moltx/plugin-sdk";
 
 import { resolveMattermostAccount } from "./mattermost/accounts.js";
 

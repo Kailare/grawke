@@ -7,30 +7,30 @@ import { formatHelpExamples } from "./help-format.js";
 // --- Helpers ---
 const SANDBOX_EXAMPLES = {
     main: [
-        ["grawke sandbox list", "List all sandbox containers."],
-        ["grawke sandbox list --browser", "List only browser containers."],
-        ["grawke sandbox recreate --all", "Recreate all containers."],
-        ["grawke sandbox recreate --session main", "Recreate a specific session."],
-        ["grawke sandbox recreate --agent mybot", "Recreate agent containers."],
-        ["grawke sandbox explain", "Explain effective sandbox config."],
+        ["moltx sandbox list", "List all sandbox containers."],
+        ["moltx sandbox list --browser", "List only browser containers."],
+        ["moltx sandbox recreate --all", "Recreate all containers."],
+        ["moltx sandbox recreate --session main", "Recreate a specific session."],
+        ["moltx sandbox recreate --agent mybot", "Recreate agent containers."],
+        ["moltx sandbox explain", "Explain effective sandbox config."],
     ],
     list: [
-        ["grawke sandbox list", "List all sandbox containers."],
-        ["grawke sandbox list --browser", "List only browser containers."],
-        ["grawke sandbox list --json", "JSON output."],
+        ["moltx sandbox list", "List all sandbox containers."],
+        ["moltx sandbox list --browser", "List only browser containers."],
+        ["moltx sandbox list --json", "JSON output."],
     ],
     recreate: [
-        ["grawke sandbox recreate --all", "Recreate all containers."],
-        ["grawke sandbox recreate --session main", "Recreate a specific session."],
-        ["grawke sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-        ["grawke sandbox recreate --browser --all", "Recreate only browser containers."],
-        ["grawke sandbox recreate --all --force", "Skip confirmation."],
+        ["moltx sandbox recreate --all", "Recreate all containers."],
+        ["moltx sandbox recreate --session main", "Recreate a specific session."],
+        ["moltx sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+        ["moltx sandbox recreate --browser --all", "Recreate only browser containers."],
+        ["moltx sandbox recreate --all --force", "Skip confirmation."],
     ],
     explain: [
-        ["grawke sandbox explain", "Show effective sandbox config."],
-        ["grawke sandbox explain --session agent:main:main", "Explain a specific session."],
-        ["grawke sandbox explain --agent work", "Explain an agent sandbox."],
-        ["grawke sandbox explain --json", "JSON output."],
+        ["moltx sandbox explain", "Show effective sandbox config."],
+        ["moltx sandbox explain --session agent:main:main", "Explain a specific session."],
+        ["moltx sandbox explain --agent work", "Explain an agent sandbox."],
+        ["moltx sandbox explain --json", "JSON output."],
     ],
 };
 function createRunner(commandFn) {

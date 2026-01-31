@@ -31,19 +31,19 @@ export function registerAgentCommands(program, args) {
         .addHelpText("after", () => `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-        ['grawke agent --to +15555550123 --message "status update"', "Start a new session."],
-        ['grawke agent --agent ops --message "Summarize logs"', "Use a specific agent."],
+        ['moltx agent --to +15555550123 --message "status update"', "Start a new session."],
+        ['moltx agent --agent ops --message "Summarize logs"', "Use a specific agent."],
         [
-            'grawke agent --session-id 1234 --message "Summarize inbox" --thinking medium',
+            'moltx agent --session-id 1234 --message "Summarize inbox" --thinking medium',
             "Target a session with explicit thinking level.",
         ],
         [
-            'grawke agent --to +15555550123 --message "Trace logs" --verbose on --json',
+            'moltx agent --to +15555550123 --message "Trace logs" --verbose on --json',
             "Enable verbose logging and JSON output.",
         ],
-        ['grawke agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
+        ['moltx agent --to +15555550123 --message "Summon reply" --deliver', "Deliver reply."],
         [
-            'grawke agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
+            'moltx agent --agent ops --message "Generate report" --deliver --reply-channel slack --reply-to "#reports"',
             "Send reply to a different channel/target.",
         ],
     ])}
@@ -116,11 +116,11 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.clawd.bot/cli/agent
         .addHelpText("after", () => `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-        ['grawke agents set-identity --agent main --name "Clawd" --emoji "🦞"', "Set name + emoji."],
-        ["grawke agents set-identity --agent main --avatar avatars/clawd.png", "Set avatar path."],
-        ["grawke agents set-identity --workspace ~/clawd --from-identity", "Load from IDENTITY.md."],
+        ['moltx agents set-identity --agent main --name "Clawd" --emoji "🦞"', "Set name + emoji."],
+        ["moltx agents set-identity --agent main --avatar avatars/clawd.png", "Set avatar path."],
+        ["moltx agents set-identity --workspace ~/clawd --from-identity", "Load from IDENTITY.md."],
         [
-            "grawke agents set-identity --identity-file ~/clawd/IDENTITY.md --agent main",
+            "moltx agents set-identity --identity-file ~/clawd/IDENTITY.md --agent main",
             "Use a specific IDENTITY.md.",
         ],
     ])}

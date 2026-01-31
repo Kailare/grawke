@@ -1,4 +1,4 @@
-import type { GrawkeConfig } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
 import { getPublicKeyFromPrivate } from "./nostr-bus.js";
 import { DEFAULT_RELAYS } from "./nostr-bus.js";
 import type { NostrProfile } from "./config-schema.js";
@@ -30,7 +30,7 @@ const DEFAULT_ACCOUNT_ID = "default";
 /**
  * List all configured Nostr account IDs
  */
-export function listNostrAccountIds(cfg: GrawkeConfig): string[] {
+export function listNostrAccountIds(cfg: MoltXConfig): string[] {
   const nostrCfg = (cfg.channels as Record<string, unknown> | undefined)?.nostr as
     | NostrAccountConfig
     | undefined;
@@ -46,7 +46,7 @@ export function listNostrAccountIds(cfg: GrawkeConfig): string[] {
 /**
  * Get the default account ID
  */
-export function resolveDefaultNostrAccountId(cfg: GrawkeConfig): string {
+export function resolveDefaultNostrAccountId(cfg: MoltXConfig): string {
   const ids = listNostrAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) return DEFAULT_ACCOUNT_ID;
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
@@ -56,7 +56,7 @@ export function resolveDefaultNostrAccountId(cfg: GrawkeConfig): string {
  * Resolve a Nostr account from config
  */
 export function resolveNostrAccount(opts: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   accountId?: string | null;
 }): ResolvedNostrAccount {
   const accountId = opts.accountId ?? DEFAULT_ACCOUNT_ID;

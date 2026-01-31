@@ -3,7 +3,7 @@ import path from "node:path";
 import { CONFIG_DIR, resolveUserPath } from "../utils.js";
 import { resolveBundledHooksDir } from "./bundled-dir.js";
 import { shouldIncludeHook } from "./config.js";
-import { parseFrontmatter, resolveGrawkeMetadata, resolveHookInvocationPolicy, } from "./frontmatter.js";
+import { parseFrontmatter, resolveMoltXMetadata, resolveHookInvocationPolicy, } from "./frontmatter.js";
 function filterHookEntries(entries, config, eligibility) {
     return entries.filter((entry) => shouldIncludeHook({ entry, config, eligibility }));
 }
@@ -20,7 +20,7 @@ function readHookPackageManifest(dir) {
     }
 }
 function resolvePackageHooks(manifest) {
-    const raw = manifest.grawke?.hooks;
+    const raw = manifest.moltx?.hooks;
     if (!Array.isArray(raw))
         return [];
     return raw.map((entry) => (typeof entry === "string" ? entry.trim() : "")).filter(Boolean);
@@ -127,7 +127,7 @@ export function loadHookEntriesFromDir(params) {
                 pluginId: params.pluginId,
             },
             frontmatter,
-            grawke: resolveGrawkeMetadata(frontmatter),
+            moltx: resolveMoltXMetadata(frontmatter),
             invocation: resolveHookInvocationPolicy(frontmatter),
         };
         return entry;
@@ -144,23 +144,23 @@ function loadHookEntries(workspaceDir, opts) {
     const bundledHooks = bundledHooksDir
         ? loadHooksFromDir({
             dir: bundledHooksDir,
-            source: "grawke-bundled",
+            source: "moltx-bundled",
         })
         : [];
     const extraHooks = extraDirs.flatMap((dir) => {
         const resolved = resolveUserPath(dir);
         return loadHooksFromDir({
             dir: resolved,
-            source: "grawke-workspace", // Extra dirs treated as workspace
+            source: "moltx-workspace", // Extra dirs treated as workspace
         });
     });
     const managedHooks = loadHooksFromDir({
         dir: managedHooksDir,
-        source: "grawke-managed",
+        source: "moltx-managed",
     });
     const workspaceHooks = loadHooksFromDir({
         dir: workspaceHooksDir,
-        source: "grawke-workspace",
+        source: "moltx-workspace",
     });
     const merged = new Map();
     // Precedence: extra < bundled < managed < workspace (workspace wins)
@@ -184,7 +184,7 @@ function loadHookEntries(workspaceDir, opts) {
         return {
             hook,
             frontmatter,
-            grawke: resolveGrawkeMetadata(frontmatter),
+            moltx: resolveMoltXMetadata(frontmatter),
             invocation: resolveHookInvocationPolicy(frontmatter),
         };
     });
@@ -195,7 +195,7 @@ export function buildWorkspaceHookSnapshot(workspaceDir, opts) {
     return {
         hooks: eligible.map((entry) => ({
             name: entry.hook.name,
-            events: entry.grawke?.events ?? [],
+            events: entry.moltx?.events ?? [],
         })),
         resolvedHooks: eligible.map((entry) => entry.hook),
         version: opts?.snapshotVersion,

@@ -42,7 +42,7 @@ export function collectBlueBubblesStatusIssues(accounts) {
                 accountId,
                 kind: "config",
                 message: "Not configured (missing serverUrl or password).",
-                fix: "Run: grawke channels add bluebubbles --http-url <server-url> --password <password>",
+                fix: "Run: moltx channels add bluebubbles --http-url <server-url> --password <password>",
             });
             continue;
         }

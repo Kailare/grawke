@@ -12,7 +12,7 @@ function resolveHomeDir() {
 export async function noteMacLaunchAgentOverrides() {
     if (process.platform !== "darwin")
         return;
-    const markerPath = path.join(resolveHomeDir(), ".grawke", "disable-launchagent");
+    const markerPath = path.join(resolveHomeDir(), ".moltx", "disable-launchagent");
     const hasMarker = fs.existsSync(markerPath);
     if (!hasMarker)
         return;
@@ -48,19 +48,19 @@ export async function noteMacLaunchctlGatewayEnvOverrides(cfg, deps) {
     if (!hasConfigGatewayCreds(cfg))
         return;
     const getenv = deps?.getenv ?? launchctlGetenv;
-    const envToken = await getenv("GRAWKE_GATEWAY_TOKEN");
-    const envPassword = await getenv("GRAWKE_GATEWAY_PASSWORD");
+    const envToken = await getenv("MOLTX_GATEWAY_TOKEN");
+    const envPassword = await getenv("MOLTX_GATEWAY_PASSWORD");
     if (!envToken && !envPassword)
         return;
     const lines = [
         "- launchctl environment overrides detected (can cause confusing unauthorized errors).",
-        envToken ? "- `GRAWKE_GATEWAY_TOKEN` is set; it overrides config tokens." : undefined,
+        envToken ? "- `MOLTX_GATEWAY_TOKEN` is set; it overrides config tokens." : undefined,
         envPassword
-            ? "- `GRAWKE_GATEWAY_PASSWORD` is set; it overrides config passwords."
+            ? "- `MOLTX_GATEWAY_PASSWORD` is set; it overrides config passwords."
             : undefined,
         "- Clear overrides and restart the app/gateway:",
-        envToken ? "  launchctl unsetenv GRAWKE_GATEWAY_TOKEN" : undefined,
-        envPassword ? "  launchctl unsetenv GRAWKE_GATEWAY_PASSWORD" : undefined,
+        envToken ? "  launchctl unsetenv MOLTX_GATEWAY_TOKEN" : undefined,
+        envPassword ? "  launchctl unsetenv MOLTX_GATEWAY_PASSWORD" : undefined,
     ].filter((line) => Boolean(line));
     (deps?.noteFn ?? note)(lines.join("\n"), "Gateway (macOS)");
 }

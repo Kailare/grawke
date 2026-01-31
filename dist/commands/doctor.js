@@ -5,12 +5,12 @@ import { DEFAULT_MODEL, DEFAULT_PROVIDER } from "../agents/defaults.js";
 import { loadModelCatalog } from "../agents/model-catalog.js";
 import { getModelRefStatus, resolveConfiguredModelRef, resolveHooksGmailModel, } from "../agents/model-selection.js";
 import { formatCliCommand } from "../cli/command-format.js";
-import { CONFIG_PATH_GRAWKE, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
+import { CONFIG_PATH_MOLTX, readConfigFileSnapshot, writeConfigFile } from "../config/config.js";
 import { logConfigUpdated } from "../config/logging.js";
 import { resolveGatewayService } from "../daemon/service.js";
 import { resolveGatewayAuth } from "../gateway/auth.js";
 import { buildGatewayConnectionDetails } from "../gateway/call.js";
-import { resolveGrawkePackageRoot } from "../infra/grawke-root.js";
+import { resolveMoltXPackageRoot } from "../infra/moltx-root.js";
 import { defaultRuntime } from "../runtime.js";
 import { note } from "../terminal/note.js";
 import { stylePromptTitle } from "../terminal/prompt-style.js";
@@ -41,8 +41,8 @@ function resolveMode(cfg) {
 export async function doctorCommand(runtime = defaultRuntime, options = {}) {
     const prompter = createDoctorPrompter({ runtime, options });
     printWizardHeader(runtime);
-    intro("Grawke doctor");
-    const root = await resolveGrawkePackageRoot({
+    intro("MoltX doctor");
+    const root = await resolveMoltXPackageRoot({
         moduleUrl: import.meta.url,
         argv1: process.argv[1],
         cwd: process.cwd(),
@@ -63,15 +63,15 @@ export async function doctorCommand(runtime = defaultRuntime, options = {}) {
         confirm: (p) => prompter.confirm(p),
     });
     let cfg = configResult.cfg;
-    const configPath = configResult.path ?? CONFIG_PATH_GRAWKE;
+    const configPath = configResult.path ?? CONFIG_PATH_MOLTX;
     if (!cfg.gateway?.mode) {
         const lines = [
             "gateway.mode is unset; gateway start will be blocked.",
-            `Fix: run ${formatCliCommand("grawke configure")} and set Gateway mode (local/remote).`,
-            `Or set directly: ${formatCliCommand("grawke config set gateway.mode local")}`,
+            `Fix: run ${formatCliCommand("moltx configure")} and set Gateway mode (local/remote).`,
+            `Or set directly: ${formatCliCommand("moltx config set gateway.mode local")}`,
         ];
         if (!fs.existsSync(configPath)) {
-            lines.push(`Missing config: run ${formatCliCommand("grawke setup")} first.`);
+            lines.push(`Missing config: run ${formatCliCommand("moltx setup")} first.`);
         }
         note(lines.join("\n"), "Gateway");
     }
@@ -139,7 +139,7 @@ export async function doctorCommand(runtime = defaultRuntime, options = {}) {
             }
         }
     }
-    await noteStateIntegrity(cfg, prompter, configResult.path ?? CONFIG_PATH_GRAWKE);
+    await noteStateIntegrity(cfg, prompter, configResult.path ?? CONFIG_PATH_MOLTX);
     cfg = await maybeRepairSandboxImages(cfg, runtime, prompter);
     noteSandboxScopeWarnings(cfg);
     await maybeMigrateLegacyGatewayService(cfg, resolveMode(cfg), runtime, prompter);
@@ -224,13 +224,13 @@ export async function doctorCommand(runtime = defaultRuntime, options = {}) {
         cfg = applyWizardMetadata(cfg, { command: "doctor", mode: resolveMode(cfg) });
         await writeConfigFile(cfg);
         logConfigUpdated(runtime);
-        const backupPath = `${CONFIG_PATH_GRAWKE}.bak`;
+        const backupPath = `${CONFIG_PATH_MOLTX}.bak`;
         if (fs.existsSync(backupPath)) {
             runtime.log(`Backup: ${shortenHomePath(backupPath)}`);
         }
     }
     else {
-        runtime.log(`Run "${formatCliCommand("grawke doctor --fix")}" to apply changes.`);
+        runtime.log(`Run "${formatCliCommand("moltx doctor --fix")}" to apply changes.`);
     }
     if (options.workspaceSuggestions !== false) {
         const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));

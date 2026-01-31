@@ -1,5 +1,5 @@
 /**
- * Grawke Memory (LanceDB) Plugin
+ * MoltX Memory (LanceDB) Plugin
  *
  * Long-term memory with vector search for AI conversations.
  * Uses LanceDB for storage and OpenAI for embeddings.
@@ -10,8 +10,8 @@ import { Type } from "@sinclair/typebox";
 import * as lancedb from "@lancedb/lancedb";
 import OpenAI from "openai";
 import { randomUUID } from "node:crypto";
-import type { GrawkePluginApi } from "grawke/plugin-sdk";
-import { stringEnum } from "grawke/plugin-sdk";
+import type { MoltXPluginApi } from "moltx/plugin-sdk";
+import { stringEnum } from "moltx/plugin-sdk";
 
 import {
   MEMORY_CATEGORIES,
@@ -220,7 +220,7 @@ const memoryPlugin = {
   kind: "memory" as const,
   configSchema: memoryConfigSchema,
 
-  register(api: GrawkePluginApi) {
+  register(api: MoltXPluginApi) {
     const cfg = memoryConfigSchema.parse(api.pluginConfig);
     const resolvedDbPath = api.resolvePath(cfg.dbPath!);
     const vectorDim = vectorDimsForModel(cfg.embedding.model ?? "text-embedding-3-small");

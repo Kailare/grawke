@@ -3,7 +3,7 @@ import type {
   DmConfig,
   DmPolicy,
   GroupPolicy,
-} from "grawke/plugin-sdk";
+} from "moltx/plugin-sdk";
 
 export type NextcloudTalkRoomConfig = {
   requireMention?: boolean;

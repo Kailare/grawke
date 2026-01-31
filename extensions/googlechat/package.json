@@ -1,9 +1,9 @@
 {
-  "name": "@grawke/googlechat",
+  "name": "@moltx/googlechat",
   "version": "2026.1.24",
   "type": "module",
-  "description": "Grawke Google Chat channel plugin",
-  "grawke": {
+  "description": "MoltX Google Chat channel plugin",
+  "moltx": {
     "extensions": [
       "./index.ts"
     ],
@@ -22,7 +22,7 @@
       "order": 55
     },
     "install": {
-      "npmSpec": "@grawke/googlechat",
+      "npmSpec": "@moltx/googlechat",
       "localPath": "extensions/googlechat",
       "defaultChoice": "npm"
     }
@@ -31,9 +31,9 @@
     "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
-    "grawke": "workspace:*"
+    "moltx": "workspace:*"
   },
   "peerDependencies": {
-    "grawke": ">=2026.1.24"
+    "moltx": ">=2026.1.24"
   }
 }

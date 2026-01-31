@@ -1,55 +1,55 @@
 ---
-summary: "CLI reference for `grawke devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `moltx devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 ---
 
-# `grawke devices`
+# `moltx devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `grawke devices list`
+### `moltx devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-grawke devices list
-grawke devices list --json
+moltx devices list
+moltx devices list --json
 ```
 
-### `grawke devices approve <requestId>`
+### `moltx devices approve <requestId>`
 
 Approve a pending device pairing request.
 
 ```
-grawke devices approve <requestId>
+moltx devices approve <requestId>
 ```
 
-### `grawke devices reject <requestId>`
+### `moltx devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-grawke devices reject <requestId>
+moltx devices reject <requestId>
 ```
 
-### `grawke devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `moltx devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-grawke devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+moltx devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `grawke devices revoke --device <id> --role <role>`
+### `moltx devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-grawke devices revoke --device <deviceId> --role node
+moltx devices revoke --device <deviceId> --role node
 ```
 
 ## Common options

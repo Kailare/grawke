@@ -1,20 +1,20 @@
 ---
 name: tmux
 description: Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.
-metadata: {"grawke":{"emoji":"🧵","os":["darwin","linux"],"requires":{"bins":["tmux"]}}}
+metadata: {"moltx":{"emoji":"🧵","os":["darwin","linux"],"requires":{"bins":["tmux"]}}}
 ---
 
-# tmux Skill (Grawke)
+# tmux Skill (MoltX)
 
 Use tmux only when you need an interactive TTY. Prefer exec background mode for long-running, non-interactive tasks.
 
 ## Quickstart (isolated socket, exec tool)
 
 ```bash
-SOCKET_DIR="${GRAWKE_TMUX_SOCKET_DIR:-${TMPDIR:-/tmp}/grawke-tmux-sockets}"
+SOCKET_DIR="${MOLTX_TMUX_SOCKET_DIR:-${TMPDIR:-/tmp}/moltx-tmux-sockets}"
 mkdir -p "$SOCKET_DIR"
-SOCKET="$SOCKET_DIR/grawke.sock"
-SESSION=grawke-python
+SOCKET="$SOCKET_DIR/moltx.sock"
+SESSION=moltx-python
 
 tmux -S "$SOCKET" new -d -s "$SESSION" -n shell
 tmux -S "$SOCKET" send-keys -t "$SESSION":0.0 -- 'PYTHON_BASIC_REPL=1 python3 -q' Enter
@@ -31,8 +31,8 @@ To monitor:
 
 ## Socket convention
 
-- Use `GRAWKE_TMUX_SOCKET_DIR` (default `${TMPDIR:-/tmp}/grawke-tmux-sockets`).
-- Default socket path: `"$GRAWKE_TMUX_SOCKET_DIR/grawke.sock"`.
+- Use `MOLTX_TMUX_SOCKET_DIR` (default `${TMPDIR:-/tmp}/moltx-tmux-sockets`).
+- Default socket path: `"$MOLTX_TMUX_SOCKET_DIR/moltx.sock"`.
 
 ## Targeting panes and naming
 
@@ -43,7 +43,7 @@ To monitor:
 ## Finding sessions
 
 - List sessions on your socket: `{baseDir}/scripts/find-sessions.sh -S "$SOCKET"`.
-- Scan all sockets: `{baseDir}/scripts/find-sessions.sh --all` (uses `GRAWKE_TMUX_SOCKET_DIR`).
+- Scan all sockets: `{baseDir}/scripts/find-sessions.sh --all` (uses `MOLTX_TMUX_SOCKET_DIR`).
 
 ## Sending input safely
 

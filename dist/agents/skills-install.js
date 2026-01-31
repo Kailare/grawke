@@ -40,7 +40,7 @@ function resolveInstallId(spec, index) {
     return (spec.id ?? `${spec.kind}-${index}`).trim();
 }
 function findInstallSpec(entry, installId) {
-    const specs = entry.grawke?.install ?? [];
+    const specs = entry.moltx?.install ?? [];
     for (const [index, spec] of specs.entries()) {
         if (resolveInstallId(spec, index) === installId)
             return spec;

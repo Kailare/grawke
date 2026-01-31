@@ -52,8 +52,8 @@ export async function handlePortError(err, port, context, runtime = defaultRunti
         if (details) {
             runtime.error(info("Port listener details:"));
             runtime.error(details);
-            if (/grawke|src\/index\.ts|dist\/index\.js/.test(details)) {
-                runtime.error(warn("It looks like another grawke instance is already running. Stop it or pick a different port."));
+            if (/moltx|src\/index\.ts|dist\/index\.js/.test(details)) {
+                runtime.error(warn("It looks like another moltx instance is already running. Stop it or pick a different port."));
             }
         }
         runtime.error(info("Resolve by stopping the process using the port or passing --port <free-port>."));

@@ -1,5 +1,5 @@
-import type { GrawkeConfig } from "grawke/plugin-sdk";
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "grawke/plugin-sdk";
+import type { MoltXConfig } from "moltx/plugin-sdk";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "moltx/plugin-sdk";
 
 import type { MattermostAccountConfig, MattermostChatMode } from "../types.js";
 import { normalizeMattermostBaseUrl } from "./client.js";
@@ -24,26 +24,26 @@ export type ResolvedMattermostAccount = {
   blockStreamingCoalesce?: MattermostAccountConfig["blockStreamingCoalesce"];
 };
 
-function listConfiguredAccountIds(cfg: GrawkeConfig): string[] {
+function listConfiguredAccountIds(cfg: MoltXConfig): string[] {
   const accounts = cfg.channels?.mattermost?.accounts;
   if (!accounts || typeof accounts !== "object") return [];
   return Object.keys(accounts).filter(Boolean);
 }
 
-export function listMattermostAccountIds(cfg: GrawkeConfig): string[] {
+export function listMattermostAccountIds(cfg: MoltXConfig): string[] {
   const ids = listConfiguredAccountIds(cfg);
   if (ids.length === 0) return [DEFAULT_ACCOUNT_ID];
   return ids.sort((a, b) => a.localeCompare(b));
 }
 
-export function resolveDefaultMattermostAccountId(cfg: GrawkeConfig): string {
+export function resolveDefaultMattermostAccountId(cfg: MoltXConfig): string {
   const ids = listMattermostAccountIds(cfg);
   if (ids.includes(DEFAULT_ACCOUNT_ID)) return DEFAULT_ACCOUNT_ID;
   return ids[0] ?? DEFAULT_ACCOUNT_ID;
 }
 
 function resolveAccountConfig(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   accountId: string,
 ): MattermostAccountConfig | undefined {
   const accounts = cfg.channels?.mattermost?.accounts;
@@ -52,7 +52,7 @@ function resolveAccountConfig(
 }
 
 function mergeMattermostAccountConfig(
-  cfg: GrawkeConfig,
+  cfg: MoltXConfig,
   accountId: string,
 ): MattermostAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.mattermost ??
@@ -69,7 +69,7 @@ function resolveMattermostRequireMention(config: MattermostAccountConfig): boole
 }
 
 export function resolveMattermostAccount(params: {
-  cfg: GrawkeConfig;
+  cfg: MoltXConfig;
   accountId?: string | null;
 }): ResolvedMattermostAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -108,7 +108,7 @@ export function resolveMattermostAccount(params: {
   };
 }
 
-export function listEnabledMattermostAccounts(cfg: GrawkeConfig): ResolvedMattermostAccount[] {
+export function listEnabledMattermostAccounts(cfg: MoltXConfig): ResolvedMattermostAccount[] {
   return listMattermostAccountIds(cfg)
     .map((accountId) => resolveMattermostAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

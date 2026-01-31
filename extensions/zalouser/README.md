@@ -1,6 +1,6 @@
-# @grawke/zalouser
+# @moltx/zalouser
 
-Grawke extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
+MoltX extension for Zalo Personal Account messaging via [zca-cli](https://zca-cli.dev).
 
 > **Warning:** Using Zalo automation may result in account suspension or ban. Use at your own risk. This is an unofficial integration.
 
@@ -73,7 +73,7 @@ See [zca-cli](https://zca-cli.dev) for manual download (binaries for macOS/Linux
 ### Option 1: Onboarding Wizard (Recommended)
 
 ```bash
-grawke onboard
+moltx onboard
 # Select "Zalo Personal" from channel list
 # Follow QR code login flow
 ```
@@ -81,14 +81,14 @@ grawke onboard
 ### Option 2: Login (QR, on the Gateway machine)
 
 ```bash
-grawke channels login --channel zalouser
+moltx channels login --channel zalouser
 # Scan QR code with Zalo app
 ```
 
 ### Send a Message
 
 ```bash
-grawke message send --channel zalouser --target <threadId> --message "Hello from Grawke!"
+moltx message send --channel zalouser --target <threadId> --message "Hello from MoltX!"
 ```
 
 ## Configuration
@@ -123,19 +123,19 @@ channels:
 ### Authentication
 
 ```bash
-grawke channels login --channel zalouser              # Login via QR
-grawke channels login --channel zalouser --account work
-grawke channels status --probe
-grawke channels logout --channel zalouser
+moltx channels login --channel zalouser              # Login via QR
+moltx channels login --channel zalouser --account work
+moltx channels status --probe
+moltx channels logout --channel zalouser
 ```
 
 ### Directory (IDs, contacts, groups)
 
 ```bash
-grawke directory self --channel zalouser
-grawke directory peers list --channel zalouser --query "name"
-grawke directory groups list --channel zalouser --query "work"
-grawke directory groups members --channel zalouser --group-id <id>
+moltx directory self --channel zalouser
+moltx directory peers list --channel zalouser --query "name"
+moltx directory groups list --channel zalouser --query "work"
+moltx directory groups members --channel zalouser --group-id <id>
 ```
 
 ### Account Management
@@ -152,16 +152,16 @@ zca account label <profile> "Work Account"
 
 ```bash
 # Text
-grawke message send --channel zalouser --target <threadId> --message "message"
+moltx message send --channel zalouser --target <threadId> --message "message"
 
 # Media (URL)
-grawke message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
+moltx message send --channel zalouser --target <threadId> --message "caption" --media-url "https://example.com/img.jpg"
 ```
 
 ### Listener
 
 The listener runs inside the Gateway when the channel is enabled. For debugging,
-use `grawke channels logs --channel zalouser` or run `zca listen` directly.
+use `moltx channels logs --channel zalouser` or run `zca listen` directly.
 
 ### Data Access
 
@@ -187,8 +187,8 @@ zca me id
 Use `--profile` or `-p` to work with multiple accounts:
 
 ```bash
-grawke channels login --channel zalouser --account work
-grawke message send --channel zalouser --account work --target <id> --message "Hello"
+moltx channels login --channel zalouser --account work
+moltx message send --channel zalouser --account work --target <id> --message "Hello"
 ZCA_PROFILE=work zca listen
 ```
 
